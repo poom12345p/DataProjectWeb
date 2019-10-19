@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "mariadb": "^2.1.1",
+    "mariadb": "^2.1.2",
     "mysql2": "^1.7.0",
     "mysql3": "^0.3.3",
     "pg": "^7.12.1",
