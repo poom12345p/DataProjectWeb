@@ -1,10 +1,17 @@
 var urlParams = new URLSearchParams(location.search);
-let list1 = document.querySelector('.list-pro-color')
-let vendors = [];
-let sizes = ['1:10', '1:12', '1:18', '1:24', '1:32', '1:50', '1:72', '1:700'];
+let list1 = document.querySelector('.list-pro-color');
 var numberRow = 10;
 var numberPage = 10;
-if(urlParams.get('page')==null) location.href = `/Productslist?page=1`;
+if (urlParams.get('page') == null) urlParams.set('page', '1');
+let vendors = [];
+let sizes = [];
+if (urlParams.get('vendors') != null && urlParams.get('vendors') != '') urlParams.get('vendors').split(',').forEach(vendor => {
+  vendors.push(vendor);
+  console.log('ve ' + vendor);
+});
+if (urlParams.get('sizes') != null && urlParams.get('sizes') != '') urlParams.get('sizes').split(',').forEach(size => {
+  sizes.push(size);
+});
 
 $(document).ready(function () {
 
@@ -21,6 +28,7 @@ $(document).ready(function () {
     type: 'GET',
     dataType: 'json', // this URL returns data in JSON format
     success: (data) => {
+      console.log(urlParams.get('vendors') + ' vvd ' + vendors);
       console.log(vendors.length);
       // console.log('You received some data!', data);
       var page = urlParams.get('page');
@@ -98,7 +106,7 @@ $(document).ready(function () {
       }
       catch (err) { }
       var bar = document.createElement('div');
-      bar.className='pagi-bar';
+      bar.className = 'pagi-bar';
       console.log('mp ' + maxpage);
       var add = 0;
       if (page < 6 || maxpage < 11) add = 0;
@@ -149,13 +157,13 @@ $(document).ready(function () {
 function pageclick(page) {
   console.log('pc ' + page.innerHTML);
   console.log(location.hostname);
-  location.href = `/Productslist?page=${page.innerHTML}`;
+  location.href = `/Productslist?page=${page.innerHTML}&sizes=${sizes}&vendors=${vendors}`;
 }
 
 function nextpage() {
   var current = parseInt(document.querySelector('.current-page').innerHTML) + 1;
   console.log('np ' + current);
-  location.href = `/Productslist?page=${current}`;
+  location.href = `/Productslist?page=${current}&sizes=${sizes}&vendors=${vendors}`;
 }
 
 function findSizes(data) {
@@ -182,3 +190,28 @@ function findVendors(data) {
   return find;
 }
 
+function scaleclick(click) {
+  console.log(click.value + '  ' + click.checked);
+  if (click.checked == true) sizes.push(click.value);
+  else {
+    let temp = [];
+    sizes.forEach(value => {
+      if (click.value != value) temp.push(value);
+    });
+    sizes = temp;
+  }
+  console.log('sizes ' + sizes);
+  location.href = `/Productslist?page=${urlParams.get('page')}&sizes=${sizes}&vendors=${vendors}`;
+}
+function vendorclick(click) {
+  if (click.checked == true) vendors.push(click.value);
+  else {
+    let temp = [];
+    vendors.forEach(value => {
+      if (click.value != value) temp.push(value);
+    });
+    vendors = temp;
+  }
+  location.href = `/Productslist?page=${urlParams.get('page')}&sizes=${sizes}&vendors=${vendors}`;
+
+}

@@ -20,7 +20,7 @@ $(document).ready(function() {
                 {      
                     
                     
-                   var checkbox = "<input type='checkbox'name ='scale' value='"+data[i].productScale+"'onclick ='scaleclick()' />"
+                   var checkbox = "<input type='checkbox'name ='scale' value='"+data[i].productScale+"'onclick ='scaleclick(this)' autocomplete='off' />"
 
                     document.querySelector('.widget-content').innerHTML += checkbox + data[i].productScale + "<br/>"
             
@@ -41,7 +41,7 @@ $(document).ready(function() {
                 {      
                     
                     
-                   var checkbox = "<input type='checkbox'name ='vendor' value='"+data[i].productVendor+"'onclick ='vendorclick()' />"
+                   var checkbox = "<input type='checkbox'name ='vendor' value='"+data[i].productVendor+"'onclick ='vendorclick(this)' autocomplete='off' />"
 
                     document.querySelector('.vendor').innerHTML += checkbox + data[i].productVendor + "<br/>"
             
@@ -52,7 +52,7 @@ $(document).ready(function() {
       }
     });
 });
-function scaleclick(){
+/*function scaleclick(){
     var cboxes = document.getElementsByName('scale');
     console.log(cboxes);
     alert(cboxes[0].value + cboxes[0].checked);
@@ -65,7 +65,7 @@ function vendorclick(){
   alert(cboxes[0].value + cboxes[0].checked);
   alert(cboxes[1].value + cboxes[1].checked);
 
-}
+}*/
 // const path = require('path');
 // const db=require('../../routes/api/data');
 // function createlist()
