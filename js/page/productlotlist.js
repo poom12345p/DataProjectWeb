@@ -50,7 +50,7 @@ $(document).ready(function() {
                 
                 console.log(list1);
       }
-    })
+    });
 });
 function scaleclick(){
     var cboxes = document.getElementsByName('scale');
