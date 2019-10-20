@@ -31,9 +31,6 @@ $(document).ready(function () {
 
           document.querySelector('.widget-content').innerHTML += checkbox + data[i].productScale + "<br/>"
         }
-
-
-
       }
 
       console.log(list1);
@@ -47,12 +44,19 @@ $(document).ready(function () {
     success: (data) => {
       console.log('You received some data!', data);
       for (var i = 0; i < data.length; i++) {
+        let status = false;
+        sizes.forEach(size => {
+          if (data[i].productScale == size) status = true;
+        });
+        if (status == true) {
+          var checkbox = "<input type='checkbox'name ='vendor' value='" + data[i].productVendor + "'onclick ='vendorclick(this)' autocomplete='off' checked='true' />"
 
+          document.querySelector('.vendor').innerHTML += checkbox + data[i].productVendor + "<br/>"
+        } else {
+          var checkbox = "<input type='checkbox'name ='vendor' value='" + data[i].productVendor + "'onclick ='vendorclick(this)' autocomplete='off' />"
 
-        var checkbox = "<input type='checkbox'name ='vendor' value='" + data[i].productVendor + "'onclick ='vendorclick(this)' autocomplete='off' />"
-
-        document.querySelector('.vendor').innerHTML += checkbox + data[i].productVendor + "<br/>"
-
+          document.querySelector('.vendor').innerHTML += checkbox + data[i].productVendor + "<br/>"
+        }
 
       }
 
