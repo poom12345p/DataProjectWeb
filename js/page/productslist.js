@@ -59,7 +59,7 @@ $(document).ready(function () {
                         <a href="http://demo.7uptheme.com/html/kuteshop/detail.html"
                           class="product-thumb-link">
                           <img data-color="black" class="active"
-                            src="./image/2(1).jpg"
+                            src="./image/2(1).png"
                             alt="">
                           <img data-color="purple"
                             src="./image/3(1).jpg"
