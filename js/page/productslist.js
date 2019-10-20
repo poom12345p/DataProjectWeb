@@ -1,10 +1,18 @@
 var urlParams = new URLSearchParams(location.search);
-let list1 = document.querySelector('.list-pro-color')
-let vendors = [];
-let sizes = ['1:10', '1:12', '1:18', '1:24', '1:32', '1:50', '1:72', '1:700'];
+let list1 = document.querySelector('.list-pro-color');
+let pagi = document.querySelector('.pagi-bar');
 var numberRow = 10;
 var numberPage = 10;
-if(urlParams.get('page')==null) location.href = `/Productslist?page=1`;
+if (urlParams.get('page') == null) urlParams.set('page', '1');
+let vendors = [];
+let sizes = [];
+if (urlParams.get('vendors') != null && urlParams.get('vendors') != '') urlParams.get('vendors').split(',').forEach(vendor => {
+  vendors.push(vendor);
+  console.log('ve ' + vendor);
+});
+if (urlParams.get('sizes') != null && urlParams.get('sizes') != '') urlParams.get('sizes').split(',').forEach(size => {
+  sizes.push(size);
+});
 
 $(document).ready(function () {
 
@@ -21,19 +29,28 @@ $(document).ready(function () {
     type: 'GET',
     dataType: 'json', // this URL returns data in JSON format
     success: (data) => {
+      console.log(urlParams.get('vendors') + ' vvd ' + vendors);
       console.log(vendors.length);
       // console.log('You received some data!', data);
+      {
+        let filther = [];
+        for (var i = 0; i < data.length; i++) {
+          if ((sizes.length > 0 ? findSizes(data[i]) : true) && (vendors.length > 0 ? findVendors(data[i]) : true)) {
+            filther.push(data[i]);
+          }
+        }
+        data = filther;
+      }
       var page = urlParams.get('page');
       var maxpage = (data.length % numberRow == 0 ? data.length / numberRow : (data.length - (data.length % numberRow)) / numberRow + 1);
       console.log('page ' + page);
       try {
         for (var i = numberRow * (page - 1); i < numberRow * page; i++) {
-          if ((sizes.length > 0 ? findSizes(data[i]) : true) && (vendors.length > 0 ? findVendors(data[i]) : true)) {
-            //ex. http://localhost:9000/productslist?page=1
-            // var page =urlParams.get('page');
-            // list1.innerHTML+=`${data[i].productName}|${data[i].productScale} <br>`;
-            // Product list
-            list1.innerHTML += `
+          //ex. http://localhost:9000/productslist?page=1
+          // var page =urlParams.get('page');
+          // list1.innerHTML+=`${data[i].productName}|${data[i].productScale} <br>`;
+          // Product list
+          list1.innerHTML += `
                   <div class="item-product-list">
                   <div class="row">
                   <div class="col-md-3 col-sm-4 col-xs-12">
@@ -42,7 +59,7 @@ $(document).ready(function () {
                         <a href="http://demo.7uptheme.com/html/kuteshop/detail.html"
                           class="product-thumb-link">
                           <img data-color="black" class="active"
-                            src="./image/2(1).jpg"
+                            src="./image/2(1).png"
                             alt="">
                           <img data-color="purple"
                             src="./image/3(1).jpg"
@@ -93,12 +110,12 @@ $(document).ready(function () {
                 </div>
                 </div>
 									<!-- End Item -->`;
-          }
+
         }
       }
       catch (err) { }
       var bar = document.createElement('div');
-      bar.className='pagi-bar';
+      bar.className = 'pagi-bar';
       console.log('mp ' + maxpage);
       var add = 0;
       if (page < 6 || maxpage < 11) add = 0;
@@ -116,11 +133,14 @@ $(document).ready(function () {
 											href="#">${i}</a>`;
         }
       }
-      bar.innerHTML += `
+      if (page < maxpage) {
+        bar.innerHTML += `
                     <a class="next-page" onclick='nextpage()'
 											href="#"><i
                         aria-hidden="true" class="fa fa-caret-right"></i></a>`;
+      }
       list1.appendChild(bar);
+      pagi.innerHTML = bar.innerHTML;
     }
   });
 
@@ -149,13 +169,13 @@ $(document).ready(function () {
 function pageclick(page) {
   console.log('pc ' + page.innerHTML);
   console.log(location.hostname);
-  location.href = `/Productslist?page=${page.innerHTML}`;
+  location.href = `/Productslist?page=${page.innerHTML}&sizes=${sizes}&vendors=${vendors}`;
 }
 
 function nextpage() {
   var current = parseInt(document.querySelector('.current-page').innerHTML) + 1;
   console.log('np ' + current);
-  location.href = `/Productslist?page=${current}`;
+  location.href = `/Productslist?page=${current}&sizes=${sizes}&vendors=${vendors}`;
 }
 
 function findSizes(data) {
@@ -182,3 +202,28 @@ function findVendors(data) {
   return find;
 }
 
+function scaleclick(click) {
+  console.log(click.value + '  ' + click.checked);
+  if (click.checked == true) sizes.push(click.value);
+  else {
+    let temp = [];
+    sizes.forEach(value => {
+      if (click.value != value) temp.push(value);
+    });
+    sizes = temp;
+  }
+  console.log('sizes ' + sizes);
+  location.href = `/Productslist?page=1&sizes=${sizes}&vendors=${vendors}`;
+}
+function vendorclick(click) {
+  if (click.checked == true) vendors.push(click.value);
+  else {
+    let temp = [];
+    vendors.forEach(value => {
+      if (click.value != value) temp.push(value);
+    });
+    vendors = temp;
+  }
+  location.href = `/Productslist?page=1&sizes=${sizes}&vendors=${vendors}`;
+
+}
