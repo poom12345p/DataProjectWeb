@@ -45,8 +45,8 @@ $(document).ready(function () {
       console.log('You received some data!', data);
       for (var i = 0; i < data.length; i++) {
         let status = false;
-        sizes.forEach(size => {
-          if (data[i].productScale == size) status = true;
+        vendors.forEach(vendor => {
+          if (data[i].productVendor == vendor) status = true;
         });
         if (status == true) {
           var checkbox = "<input type='checkbox'name ='vendor' value='" + data[i].productVendor + "'onclick ='vendorclick(this)' autocomplete='off' checked='true' />"
