@@ -31,17 +31,25 @@ $(document).ready(function () {
       console.log(urlParams.get('vendors') + ' vvd ' + vendors);
       console.log(vendors.length);
       // console.log('You received some data!', data);
+      {
+        let filther = [];
+        for (var i = 0; i < data.length; i++) {
+          if ((sizes.length > 0 ? findSizes(data[i]) : true) && (vendors.length > 0 ? findVendors(data[i]) : true)) {
+            filther.push(data[i]);
+          }
+        }
+        data = filther;
+      }
       var page = urlParams.get('page');
       var maxpage = (data.length % numberRow == 0 ? data.length / numberRow : (data.length - (data.length % numberRow)) / numberRow + 1);
       console.log('page ' + page);
       try {
         for (var i = numberRow * (page - 1); i < numberRow * page; i++) {
-          if ((sizes.length > 0 ? findSizes(data[i]) : true) && (vendors.length > 0 ? findVendors(data[i]) : true)) {
-            //ex. http://localhost:9000/productslist?page=1
-            // var page =urlParams.get('page');
-            // list1.innerHTML+=`${data[i].productName}|${data[i].productScale} <br>`;
-            // Product list
-            list1.innerHTML += `
+          //ex. http://localhost:9000/productslist?page=1
+          // var page =urlParams.get('page');
+          // list1.innerHTML+=`${data[i].productName}|${data[i].productScale} <br>`;
+          // Product list
+          list1.innerHTML += `
                   <div class="item-product-list">
                   <div class="row">
                   <div class="col-md-3 col-sm-4 col-xs-12">
@@ -101,7 +109,7 @@ $(document).ready(function () {
                 </div>
                 </div>
 									<!-- End Item -->`;
-          }
+
         }
       }
       catch (err) { }
