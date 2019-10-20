@@ -1,13 +1,4 @@
 let list = document.querySelector('.widget-content');
-//let vendors = [];
-//let sizes = [];
-/*if (urlParams.get('vendors') != null && urlParams.get('vendors') != '') urlParams.get('vendors').split(',').forEach(vendor => {
-  vendors.push(vendor);
-  console.log('ve ' + vendor);
-});
-if (urlParams.get('sizes') != null && urlParams.get('sizes') != '') urlParams.get('sizes').split(',').forEach(size => {
-  sizes.push(size);
-});*/
 
 $(document).ready(function () {
 
