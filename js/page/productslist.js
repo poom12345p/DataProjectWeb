@@ -1,5 +1,6 @@
 var urlParams = new URLSearchParams(location.search);
 let list1 = document.querySelector('.list-pro-color');
+let pagi = document.querySelector('.pagi-bar');
 var numberRow = 10;
 var numberPage = 10;
 if (urlParams.get('page') == null) urlParams.set('page', '1');
@@ -132,11 +133,14 @@ $(document).ready(function () {
 											href="#">${i}</a>`;
         }
       }
-      bar.innerHTML += `
+      if (page < maxpage) {
+        bar.innerHTML += `
                     <a class="next-page" onclick='nextpage()'
 											href="#"><i
                         aria-hidden="true" class="fa fa-caret-right"></i></a>`;
+      }
       list1.appendChild(bar);
+      pagi.innerHTML = bar.innerHTML;
     }
   });
 
@@ -209,7 +213,7 @@ function scaleclick(click) {
     sizes = temp;
   }
   console.log('sizes ' + sizes);
-  location.href = `/Productslist?page=${urlParams.get('page')}&sizes=${sizes}&vendors=${vendors}`;
+  location.href = `/Productslist?page=1&sizes=${sizes}&vendors=${vendors}`;
 }
 function vendorclick(click) {
   if (click.checked == true) vendors.push(click.value);
@@ -220,6 +224,6 @@ function vendorclick(click) {
     });
     vendors = temp;
   }
-  location.href = `/Productslist?page=${urlParams.get('page')}&sizes=${sizes}&vendors=${vendors}`;
+  location.href = `/Productslist?page=1&sizes=${sizes}&vendors=${vendors}`;
 
 }
