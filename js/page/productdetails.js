@@ -1,7 +1,7 @@
 let list =document.querySelector('.list-pro-color')
 $(document).ready(function() {
 
-    console.log(list);
+    console.log(list1);
     const requestURL = '/data/productdetails';
     console.log('making ajax request to:', requestURL);
     // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
@@ -16,9 +16,9 @@ $(document).ready(function() {
         console.log('You received some data!', data);
         for(var i=0;i<data.length;i++)
                 {      
-                    list.innerHTML+=`${data[i].productLine} <br>`
+                    list1.innerHTML+=`${data[i].productLine} <br>`
                 }
-                console.log(list);
+                console.log(list1);
       }
     });
 });
