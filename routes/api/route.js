@@ -134,7 +134,8 @@ router.get('/search/products/code=:code',(req,res)=>{
 router.get('/search/products/allSize',(req,res)=>{
   //console.log(`${req.params.size}`);
   products.findAll({
-    attributes: [Sequelize.literal('DISTINCT `productScale`'), 'productScale']
+    attributes: [Sequelize.literal('DISTINCT `productScale`'), 'productScale'],
+    order: ['productScale']
   })
  // db.query(`SELECT productScale FROM products GROUP by productScale`, { type: db.QueryTypes.SELECT})
   .then(result => {
@@ -147,7 +148,8 @@ router.get('/search/products/allSize',(req,res)=>{
 router.get('/search/products/allVendor',(req,res)=>{
   //console.log(`${req.params.size}`);\
   products.findAll({
-    attributes: [Sequelize.literal('DISTINCT `productVendor`'), 'productVendor']
+    attributes: [Sequelize.literal('DISTINCT `productVendor`'), 'productVendor'],
+    order: ['productVendor']
   })
  // db.query(`SELECT productVendor FROM products GROUP by productVendor`, { type: db.QueryTypes.SELECT})
   .then(result => {console.log(result);
