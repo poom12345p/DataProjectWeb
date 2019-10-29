@@ -259,6 +259,38 @@ router.get('/data/customers/number=:number',(req,res)=>{
   })
   .catch(err => {console.log(err);});
 });
+
+router.get('/customerinfor',(req,res)=>{
+  res.sendFile(path.join(__dirname,`..`,`..`,`Profile.html`));
+ // res.send(result);
+});
+
+router.get('/customerorder',(req,res)=>{
+  res.sendFile(path.join(__dirname,`..`,`..`,`Customer_DetailOrder.html`));
+ // res.send(result);
+});
+
+router.get('/data/customers',(req,res)=>{
+  
+  db.query(`SELECT *
+  FROM customers
+  ORDER by customerNumber,customerName`, { type: db.QueryTypes.SELECT})
+  .then(result => {console.log(result);
+  res.send(result);
+  })
+  .catch(err => {console.log(err);});
+});
+
+router.get('/data/customerorder',(req,res)=>{
+  
+  db.query(`SELECT *
+  FROM orders
+  ORDER by customerNumber`, { type: db.QueryTypes.SELECT})
+  .then(result => {console.log(result);
+  res.send(result);
+  })
+  .catch(err => {console.log(err);});
+});
 ///////////////////employees//////////////////////////
 router.get('/search/employees/allTitle',(req,res)=>{
   employees.findAll({
@@ -330,6 +362,22 @@ router.get('/data/employees/:number',(req,res)=>{
   .then(result => {console.log(result);
   res.send(result[0]);
   
+  })
+  .catch(err => {console.log(err);});
+});
+
+router.get('/employeeinfor',(req,res)=>{
+  res.sendFile(path.join(__dirname,`..`,`..`,`EmployeeInfo.html`));
+ // res.send(result);
+});
+
+router.get('/data/employees',(req,res)=>{
+  
+  db.query(`SELECT *
+  FROM employees
+  ORDER by employeeNumber,firstName`, { type: db.QueryTypes.SELECT})
+  .then(result => {console.log(result);
+  res.send(result);
   })
   .catch(err => {console.log(err);});
 });
