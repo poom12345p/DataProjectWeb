@@ -19,6 +19,8 @@ if (urlParams.get('sizes') != null && urlParams.get('sizes') != '') urlParams.ge
 $(document).ready(function () {
 
   //let list=$("");
+  var user = JSON.parse(localStorage.getItem('User'));
+  console.log(user);
   console.log(list1);
   const requestURL = '/search/products';
   console.log('making ajax request to:', requestURL);
