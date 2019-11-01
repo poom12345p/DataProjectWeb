@@ -194,7 +194,7 @@ router.get('/search/customers',(req,res)=>{
 
 
 
-router.get('/sreach/customers/name=:name',(req,res)=>{
+router.get('/search/customers/name=:name',(req,res)=>{
 
   customers.findAll({
    
@@ -260,10 +260,16 @@ router.get('/data/customers/number=:number',(req,res)=>{
   .catch(err => {console.log(err);});
 });
 
-router.get('/customerinfor',(req,res)=>{
+router.get('/customers',(req,res)=>{
   res.sendFile(path.join(__dirname,`..`,`..`,`Profile.html`));
  // res.send(result);
 });
+
+router.get('/customerlist',(req,res)=>{
+  res.sendFile(path.join(__dirname,`..`,`..`,`CustomerList.html`));
+ // res.send(result);
+});
+
 
 router.get('/customerorder',(req,res)=>{
   res.sendFile(path.join(__dirname,`..`,`..`,`Customer_DetailOrder.html`));
