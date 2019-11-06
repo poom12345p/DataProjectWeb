@@ -27,9 +27,6 @@ const db= data.define('employees',{
     },
     jobTitle:{
         type:   Sequelize.TEXT
-    },
-    password:{
-        type:   Sequelize.TEXT
     }
    
 }, {
