@@ -25,11 +25,11 @@ $(document).ready(function () {
         if (status == true) {
           var checkbox = "<input type='checkbox'name ='scale' value='" + data[i].productScale + "'onclick ='scaleclick(this)' autocomplete='off' checked='true' />"
 
-          document.querySelector('.widget-content').innerHTML += checkbox + data[i].productScale + "<br/>"
+          document.querySelector('.widget-content').innerHTML += checkbox + " " + data[i].productScale + "<br/>"
         } else {
           var checkbox = "<input type='checkbox'name ='scale' value='" + data[i].productScale + "'onclick ='scaleclick(this)' autocomplete='off' />"
 
-          document.querySelector('.widget-content').innerHTML += checkbox + data[i].productScale + "<br/>"
+          document.querySelector('.widget-content').innerHTML += checkbox + " " + data[i].productScale + "<br/>"
         }
       }
 
@@ -51,11 +51,11 @@ $(document).ready(function () {
         if (status == true) {
           var checkbox = "<input type='checkbox'name ='vendor' value='" + data[i].productVendor + "'onclick ='vendorclick(this)' autocomplete='off' checked='true' />"
 
-          document.querySelector('.vendor').innerHTML += checkbox + data[i].productVendor + "<br/>"
+          document.querySelector('.vendor').innerHTML += checkbox + " " + data[i].productVendor + "<br/>"
         } else {
           var checkbox = "<input type='checkbox'name ='vendor' value='" + data[i].productVendor + "'onclick ='vendorclick(this)' autocomplete='off' />"
 
-          document.querySelector('.vendor').innerHTML += checkbox + data[i].productVendor + "<br/>"
+          document.querySelector('.vendor').innerHTML += checkbox + " " + data[i].productVendor + "<br/>"
         }
 
       }
@@ -69,12 +69,14 @@ $(document).ready(function () {
     console.log(cboxes);
     alert(cboxes[0].value + cboxes[0].checked);
     alert(cboxes[1].value + cboxes[1].checked);
+
 }
 function vendorclick(){
   var cboxes = document.getElementsByName('vendor');
   console.log(cboxes);
   alert(cboxes[0].value + cboxes[0].checked);
   alert(cboxes[1].value + cboxes[1].checked);
+
 }*/
 // const path = require('path');
 // const db=require('../../routes/api/data');
