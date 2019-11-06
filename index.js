@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 const app =express();
-const passport = require('passport');
 const session = require('express-session');
 const PORT = process.env.PORT||9000;
 

@@ -42,7 +42,7 @@ $(document).ready(function() {
             //     contacts.push(myContact);
             //     localStorage.setItem('contacts', JSON.stringify(contacts));
             //   }
-            localStorage.setItem('User', JSON.stringify(user));
+            sessionStorage.setItem('USER', JSON.stringify(user));
              location.replace(location.origin + `/productslist`)
             },
           
