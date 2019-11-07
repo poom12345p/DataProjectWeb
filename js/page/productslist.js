@@ -68,15 +68,14 @@ $(document).ready(function () {
 function searchText(e) {
   e.preventDefault();
   let type = document.querySelector('a.category-toggle-link').innerHTML;
-  console.log("ftxt " + type + " dd " + searchForm.querySelector('input[type=text]').value);
   let textSearch = searchForm.querySelector('input[type=text]').value;
-  let filther = [];
-  for (var i = 0; i < dataMem.length; i++) {
-    if (dataMem[i].productName.search(textSearch) != -1) {
-      filther.push(dataMem[i]);
+  dataMem = [];
+  for (var i = 0; i < dataAll.length; i++) {
+    if (dataAll[i].productName.toUpperCase().search(textSearch.toUpperCase()) != -1) {
+      dataMem.push(dataAll[i]);
     }
   }
-  dataMem = filther;
+  updateFilther(dataMem);
   updatePage(1);
 }
 
@@ -252,7 +251,7 @@ function updatePage(page) {
 function updateFilther(data) {
   let filther = [];
   for (var i = 0; i < data.length; i++) {
-    if ((sizes.length > 0 ? findSizes(data[i]) : true) && (vendors.length > 0 ? findVendors(data[i]) : true) && (textSearch)) {
+    if ((sizes.length > 0 ? findSizes(data[i]) : true) && (vendors.length > 0 ? findVendors(data[i]) : true)) {
       filther.push(data[i]);
     }
   }
