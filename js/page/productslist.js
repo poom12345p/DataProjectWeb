@@ -1,7 +1,9 @@
 var urlParams = new URLSearchParams(location.search);
 let list1 = document.querySelector('.list-pro-color');
 let pagi = document.querySelector('.pagi-bar');
-let Alldata = [];
+let searchForm = document.querySelector('.smart-search-form');
+searchForm.addEventListener('submit', searchText);
+let dataAll = [];
 let dataMem = [];
 var numberRow = 10;
 var numberPage = 10;
@@ -31,8 +33,6 @@ $(document).ready(function () {
     type: 'GET',
     dataType: 'json', // this URL returns data in JSON format
     success: (data) => {
-      console.log(urlParams.get('vendors') + ' vvd ' + vendors);
-      console.log(vendors.length);
       // console.log('You received some data!', data);
       dataAll = data;
       updateFilther(dataAll);
@@ -64,6 +64,12 @@ $(document).ready(function () {
     // });
   });
 });
+
+function searchText(e) {
+  e.preventDefault();
+  let type = document.querySelector('a.category-toggle-link').innerHTML;
+  console.log("ftxt " + type + " dd " + searchForm.querySelector('input[type=text]').value);
+}
 
 function pageclick(page) {
   console.log('pc ' + page.innerHTML);
