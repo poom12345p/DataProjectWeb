@@ -3,6 +3,7 @@ let list1 = document.querySelector('.list-pro-color');
 let pagi = document.querySelector('.pagi-bar');
 let searchForm = document.querySelector('.smart-search-form');
 searchForm.addEventListener('submit', searchText);
+let textSearch = "";
 let dataAll = [];
 let dataMem = [];
 var numberRow = 10;
@@ -66,20 +67,6 @@ $(document).ready(function () {
     // });
   });
 });
-
-function searchText(e) {
-  e.preventDefault();
-  let type = document.querySelector('a.category-toggle-link').innerHTML;
-  let textSearch = searchForm.querySelector('input[type=text]').value;
-  dataMem = [];
-  for (var i = 0; i < dataAll.length; i++) {
-    if (dataAll[i].productName.toUpperCase().search(textSearch.toUpperCase()) != -1) {
-      dataMem.push(dataAll[i]);
-    }
-  }
-  updateFilther(dataMem);
-  updatePage(1);
-}
 
 function pageclick(page) {
   console.log('pc ' + page.innerHTML);
@@ -251,11 +238,20 @@ function updatePage(page) {
 }
 
 function updateFilther(data) {
-  let filther = [];
+  dataMem = [];
   for (var i = 0; i < data.length; i++) {
-    if ((sizes.length > 0 ? findSizes(data[i]) : true) && (vendors.length > 0 ? findVendors(data[i]) : true)) {
-      filther.push(data[i]);
+    if ((sizes.length > 0 ? findSizes(data[i]) : true) && (vendors.length > 0 ? findVendors(data[i]) : true) && (data[i].productName.toUpperCase().search(textSearch.toUpperCase()) != -1)) {
+      dataMem.push(data[i]);
     }
   }
-  dataMem = filther;
 }
+
+function searchText(e) {
+  e.preventDefault();
+  let type = document.querySelector('a.category-toggle-link').innerHTML;
+  textSearch = searchForm.querySelector('input[type=text]').value;
+  if (textSearch == "Search...") textSearch = "";
+  updateFilther(dataAll);
+  updatePage(1);
+}
+
