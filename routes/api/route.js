@@ -278,6 +278,33 @@ router.get('/data/customers/number=:number', (req, res, next) => {
     })
     .catch(err => { console.log(next); });
 });
+
+router.get('/customers',(req,res)=>{
+  res.sendFile(path.join(__dirname,`..`,`..`,`Profile.html`));
+ // res.send(result);
+});
+
+router.get('/customerlist',(req,res)=>{
+  res.sendFile(path.join(__dirname,`..`,`..`,`CustomerList.html`));
+ // res.send(result);
+});
+
+
+router.get('/customerorder',(req,res)=>{
+  res.sendFile(path.join(__dirname,`..`,`..`,`Customer_DetailOrder.html`));
+ // res.send(result);
+});
+
+router.get('/data/customers',(req,res)=>{
+  
+  db.query(`SELECT *
+  FROM customers
+  ORDER by customerNumber,customerName`, { type: db.QueryTypes.SELECT})
+  .then(result => {console.log(result);
+  res.send(result);
+  })
+  .catch(err => {console.log(err);});
+});
 ///////////////////employees//////////////////////////
 
 router.get('/search/employees', (req, res, next) => {
