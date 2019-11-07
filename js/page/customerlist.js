@@ -1,9 +1,7 @@
 var urlParams = new URLSearchParams(location.search);
 let list1 = document.querySelector('.list-pro-color');
 let pagi = document.querySelector('.pagi-bar');
-let searchForm = document.querySelector('.smart-search-form');
-searchForm.addEventListener('submit', searchText);
-let dataAll = [];
+let Alldata = [];
 let dataMem = [];
 var numberRow = 10;
 var numberPage = 10;
@@ -24,7 +22,7 @@ $(document).ready(function () {
   var user = JSON.parse(localStorage.getItem('User'));
   console.log(user);
   console.log(list1);
-  const requestURL = '/search/products';
+  const requestURL = '/data/customers';
   console.log('making ajax request to:', requestURL);
   // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
   // Using the core $.ajax() method since it's the most flexible.
@@ -35,6 +33,8 @@ $(document).ready(function () {
     type: 'GET',
     dataType: 'json', // this URL returns data in JSON format
     success: (data) => {
+      console.log(urlParams.get('vendors') + ' vvd ' + vendors);
+      console.log(vendors.length);
       // console.log('You received some data!', data);
       dataAll = data;
       updateFilther(dataAll);
@@ -66,20 +66,6 @@ $(document).ready(function () {
     // });
   });
 });
-
-function searchText(e) {
-  e.preventDefault();
-  let type = document.querySelector('a.category-toggle-link').innerHTML;
-  let textSearch = searchForm.querySelector('input[type=text]').value;
-  dataMem = [];
-  for (var i = 0; i < dataAll.length; i++) {
-    if (dataAll[i].productName.toUpperCase().search(textSearch.toUpperCase()) != -1) {
-      dataMem.push(dataAll[i]);
-    }
-  }
-  updateFilther(dataMem);
-  updatePage(1);
-}
 
 function pageclick(page) {
   console.log('pc ' + page.innerHTML);
@@ -181,16 +167,6 @@ function updatePage(page) {
                         <a href="http://demo.7uptheme.com/html/kuteshop/quick-view.html"
                           class="quickview-link plus fancybox.iframe"><span>quick
                             view</span></a>
-                      </div>
-                      <div class="list-color">
-                        <a href="http://demo.7uptheme.com/html/kuteshop/list-boxed-banner.html?fbclid=IwAR3bGgzDp0aoxFFwGK01YrX-6IVDNNt_V0Ion1EgNuFPIHEl1LARLv8wsvI#"
-                          data-color="black" style="background:#404040"></a>
-                        <a href="http://demo.7uptheme.com/html/kuteshop/list-boxed-banner.html?fbclid=IwAR3bGgzDp0aoxFFwGK01YrX-6IVDNNt_V0Ion1EgNuFPIHEl1LARLv8wsvI#"
-                          data-color="purple" style="background:#ff8ff8"></a>
-                        <a href="http://demo.7uptheme.com/html/kuteshop/list-boxed-banner.html?fbclid=IwAR3bGgzDp0aoxFFwGK01YrX-6IVDNNt_V0Ion1EgNuFPIHEl1LARLv8wsvI#"
-                          data-color="blue" style="background:#868fff"></a>
-                        <a href="http://demo.7uptheme.com/html/kuteshop/list-boxed-banner.html?fbclid=IwAR3bGgzDp0aoxFFwGK01YrX-6IVDNNt_V0Ion1EgNuFPIHEl1LARLv8wsvI#"
-                          data-color="cyan" style="background:#80e6ff"></a>
                       </div>
                     </div>
                   </div>

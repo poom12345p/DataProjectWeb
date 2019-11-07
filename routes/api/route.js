@@ -4,6 +4,7 @@ const uuid = require('uuid');
 const fs = require('fs');
 const path = require('path');
 // let users =require('../../Users');
+const session = require('express-session');
 const db = require('./data');
 const products = require('./tables/products');
 const productlines = require('./tables/productlines');
@@ -14,55 +15,56 @@ const offices = require('./tables/offices');
 const employees = require('./tables/employees');
 const customers = require('./tables/customers');
 const Sequelize = require('sequelize');
+const bcrypt = require('bcrypt');
 const Op = Sequelize.Op;
 db.authenticate()
   .then(() => {
     console.log('Connection has been established successfully.');
   })
   .catch(err => {
-    console.error('Unable to connect to the database:', err);
+    console.error('Unable to connect to the database:', next);
   });
 
 //get address  
 
-router.get('/', (req, res) => {
+router.get('/', (req, res, next) => {
 
 
-  res.sendFile(path.join(__dirname, `..`, `..`, `EmployeeList.html`));
-  // res.send(result);
-
-});
-
-
-router.get('/productslist', (req, res) => {
   res.sendFile(path.join(__dirname, `..`, `..`, `ProductLotList.html`));
   // res.send(result);
+
 });
 
-router.get('/search/productlines', (req, res) => {
+
+router.get('/productslist', (req, res, next) => {
+  res.sendFile(path.join(__dirname, `..`, `..`, `ProductLotList.html`), { name: req.user });
+  // res.send(result);
+});
+
+router.get('/search/productlines', (req, res, next) => {
 
   productlines.findAll()
     .then(result => {
-      console.log(result);
+      //console.log(result);
       res.send(result);
     })
-    .catch(err => { console.log(err); });
+    .catch(err => { console.log(next); });
 
 });
 
-router.get('/login/:email', (req, res) => {
+router.get('/login/:email', (req, res, next) => {
   employees.findAll({
     where: {
       email: '${req.params.email}',
     }
   }).then(result => {
-    console.log(result);
+    //console.log(result);
     res.send(result);
-  }).catch(err => { console.log(err); });
+  }).catch(err => { console.log(next); });
 
 });
 //////////////////////products search api//////////////////////////
-router.get('/search/products', (req, res) => {
+router.get('/search/products', (req, res, next) => {
   //console.log(`${req.params.size}`);
   /*
   ex. not select size and vendor
@@ -75,13 +77,13 @@ router.get('/search/products', (req, res) => {
     order: [`productName`, `productScale`, `productVendor`]
   })
     .then(result => {
-      console.log(result);
+      //console.log(result);
       res.send(result);
     })
-    .catch(err => { console.log(err); });
+    .catch(err => { console.log(next); });
 });
 
-router.get('/search/products/name=:name', (req, res) => {
+router.get('/search/products/name=:name', (req, res, next) => {
   //console.log(`${req.params.size}`);
   /*
   ex. 
@@ -103,13 +105,13 @@ router.get('/search/products/name=:name', (req, res) => {
     order: [`productName`, `productScale`, `productVendor`]
   })
     .then(result => {
-      console.log(result);
+     // console.log(result);
       res.send(result);
     })
-    .catch(err => { console.log(err); });
+    .catch(err => { console.log(next); });
 });
 
-router.get('/search/products/code=:code', (req, res) => {
+router.get('/search/products/code=:code', (req, res, next) => {
   /*
   ex. 
   http://localhost:9000/search/products/-&-/code=S12_1099
@@ -132,10 +134,10 @@ router.get('/search/products/code=:code', (req, res) => {
       console.log(result);
       res.send(result);
     })
-    .catch(err => { console.log(err); });
+    .catch(err => { console.log(next); });
 });
 
-router.get('/search/products/allSize', (req, res) => {
+router.get('/search/products/allSize', (req, res, next) => {
   //console.log(`${req.params.size}`);
   products.findAll({
     attributes: [Sequelize.literal('DISTINCT `productScale`'), 'productScale'],
@@ -143,32 +145,33 @@ router.get('/search/products/allSize', (req, res) => {
   })
     // db.query(`SELECT productScale FROM products GROUP by productScale`, { type: db.QueryTypes.SELECT})
     .then(result => {
-      console.log(result);
+      //console.log(result);
       res.send(result);
     })
-    .catch(err => { console.log(err); });
+    .catch(err => { console.log(next); });
 
 });
-router.get('/search/products/allVendor', (req, res) => {
+router.get('/search/products/allVendor', (req, res, next) => {
   //console.log(`${req.params.size}`);\
   products.findAll({
     attributes: [Sequelize.literal('DISTINCT `productVendor`'), 'productVendor'],
     order: ['productVendor']
   })
- // db.query(`SELECT productVendor FROM products GROUP by productVendor`, { type: db.QueryTypes.SELECT})
-  .then(result => {console.log(result);
-  res.send(result);
-  })
     // db.query(`SELECT productVendor FROM products GROUP by productVendor`, { type: db.QueryTypes.SELECT})
     .then(result => {
-      console.log(result);
+     // console.log(result);
       res.send(result);
     })
-    .catch(err => { console.log(err); });
+    // db.query(`SELECT productVendor FROM products GROUP by productVendor`, { type: db.QueryTypes.SELECT})
+    .then(result => {
+      //console.log(result);
+      res.send(result);
+    })
+    .catch(err => { console.log(next); });
 
 });
 
-router.get('/data/products/:code', (req, res) => {
+router.get('/data/products/:code', (req, res, next) => {
   /*
   ex. 
   http://localhost:9000/search/products/-&-/code=S12_1099
@@ -181,15 +184,15 @@ router.get('/data/products/:code', (req, res) => {
       productCode: `${code}`
     }
   }).then(result => {
-    console.log(result);
+   // console.log(result);
     res.send(result);
   })
-    .catch(err => { console.log(err); });
+    .catch(err => { console.log(next); });
 });
 
 
 ///////////////////////////custommer////////////////////////////////////////////
-router.get('/search/customers', (req, res) => {
+router.get('/search/customers', (req, res, next) => {
   customers.findAll({
     order: [`customerName`]
   })
@@ -201,13 +204,13 @@ router.get('/search/customers', (req, res) => {
       console.log(result);
       res.send(result);
     })
-    .catch(err => { console.log(err); });
+    .catch(err => { console.log(next); });
 
 });
 
 
 
-router.get('/sreach/customers/name=:name', (req, res) => {
+router.get('/sreach/customers/name=:name', (req, res, next) => {
 
   customers.findAll({
 
@@ -228,10 +231,10 @@ router.get('/sreach/customers/name=:name', (req, res) => {
       console.log(result);
       res.send(result);
     })
-    .catch(err => { console.log(err); });
+    .catch(err => { console.log(next); });
 });
 
-router.get('/search/customers/number=:number', (req, res) => {
+router.get('/search/customers/number=:number', (req, res, next) => {
   customers.findAll({
 
     where:
@@ -251,11 +254,11 @@ router.get('/search/customers/number=:number', (req, res) => {
       console.log(result);
       res.send(result);
     })
-    .catch(err => { console.log(err); });
+    .catch(err => { console.log(next); });
 });
 
 
-router.get('/data/customers/number=:number', (req, res) => {
+router.get('/data/customers/number=:number', (req, res, next) => {
   customers.findAll({
 
     where:
@@ -273,10 +276,50 @@ router.get('/data/customers/number=:number', (req, res) => {
       console.log(result);
       res.send(result[0]);
     })
-    .catch(err => { console.log(err); });
+    .catch(err => { console.log(next); });
+});
+
+router.get('/customers',(req,res)=>{
+  res.sendFile(path.join(__dirname,`..`,`..`,`Profile.html`));
+ // res.send(result);
+});
+
+router.get('/customerlist',(req,res)=>{
+  res.sendFile(path.join(__dirname,`..`,`..`,`CustomerList.html`));
+ // res.send(result);
+});
+
+
+router.get('/customerorder',(req,res)=>{
+  res.sendFile(path.join(__dirname,`..`,`..`,`Customer_DetailOrder.html`));
+ // res.send(result);
+});
+
+router.get('/data/customers',(req,res)=>{
+  
+  db.query(`SELECT *
+  FROM customers
+  ORDER by customerNumber,customerName`, { type: db.QueryTypes.SELECT})
+  .then(result => {console.log(result);
+  res.send(result);
+  })
+  .catch(err => {console.log(err);});
 });
 ///////////////////employees//////////////////////////
-router.get('/search/employees/allTitle', (req, res) => {
+
+router.get('/search/employees', (req, res, next) => {
+  employees.findAll()
+    /* db.query(`SELECT jobTitle
+     FROM employees
+     GROUP BY jobTitle`, { type: db.QueryTypes.SELECT})*/
+    .then(result => {
+      console.log(result);
+      res.send(result);
+    })
+    .catch(err => { console.log(next); });
+});
+
+router.get('/search/employees/allTitle', (req, res, next) => {
   employees.findAll({
     attributes: [Sequelize.literal('DISTINCT `jobTitle`'), 'jobTitle']
   })
@@ -287,10 +330,10 @@ router.get('/search/employees/allTitle', (req, res) => {
       console.log(result);
       res.send(result);
     })
-    .catch(err => { console.log(err); });
+    .catch(err => { console.log(next); });
 });
 
-// router.get('/search/employees/name=:name',(req,res)=>{
+// router.get('/search/employees/name=:name',(req,res,next)=>{
 
 //   let name= req.params.name=='0'?'%':req.params.name;
 //   employees.findAll({
@@ -311,11 +354,11 @@ router.get('/search/employees/allTitle', (req, res) => {
 //   .then(result => {console.log(result);
 //   res.send(result);
 //   })
-//   .catch(err => {console.log(err);});
+//   .catch(err => {console.log(next);});
 // });
 
 
-router.get('/search/employees/number=:number', (req, res) => {
+router.get('/search/employees/number=:number', (req, res, next) => {
 
   let number = req.params.number == '0' ? '%' : req.params.number;
   employees.findAll({
@@ -333,11 +376,11 @@ router.get('/search/employees/number=:number', (req, res) => {
       console.log(result);
       res.send(result);
     })
-    .catch(err => { console.log(err); });
+    .catch(err => { console.log(next); });
 });
 
 
-router.get('/data/employees/:number', (req, res) => {
+router.get('/data/employees/:number', (req, res, next) => {
   employees.findAll({
 
     where:
@@ -346,33 +389,92 @@ router.get('/data/employees/:number', (req, res) => {
     }
   })
     .then(result => {
-      console.log(result);
+      //console.log(result);
       res.send(result[0]);
 
     })
-    .catch(err => { console.log(err); });
+    .catch(err => { console.log(next); });
 });
 //////////////order/////////////////////////////////////
-router.get('/search/orders', (req, res) => {
+router.get('/search/orders', (req, res, next) => {
   orders.findAll()
     .then(result => {
       console.log(result);
       res.send(result);
     })
-    .catch(err => { console.log(err); });
+    .catch(err => { console.log(next); });
 });
 //////////////////////////////////////////////////////////////////////////////////////////
 
-router.get('/i', (req, res) => {
+router.get('/i', (req, res, next) => {
 
   db.query(`INSERT INTO productlines SELECT * FROM productlines`, { type: db.QueryTypes.INSERT })
     .then(result => {
       console.log(result);
       res.sendFile(path.join(__dirname, `..`, `..`, `LOGIN.html`));
     })
-    .catch(err => { console.log(err); });
+    .catch(err => { console.log(next); });
+});
+
+/////////////////////////
+router.get('/login', (req, res, next) => {
+
+
+  res.sendFile(path.join(__dirname, `..`, `..`, `LOGIN.html`));
+  // res.send(result);
+
 });
 
 
+router.post('/login', (req, res, next) => {
+  // console.log(req);
+  // (req, res) => res.sendFile('productslist', req.user)
+
+  console.log(req.body.username);
+  console.log(req.body.password);
+  const username = req.body.username;
+  const password = req.body.password;
+  employees.findAll({
+    where: {
+      employeeNumber: `${username}`
+    }
+  }).then(result => {
+    // console.log(result[0]);
+    const user = result[0];
+    if (user == undefined) {
+      console.log("authirize fail :user not found");
+
+    }
+    else {
+      // let hashPass;
+      // bcrypt.genSalt(10, function (err, salt) {
+      //   bcrypt.hash(password, salt, function (err, hash) {
+      //     hashPass=hash;
+      //     console.log(`hash:${hashPass}|||${user.password}`);
+
+      //   });
+      // });
+
+      bcrypt.compare(password,user.password, function(err, resq) {
+        if(resq)
+        {
+        console.log("authirize succes");
+        res.send(user);
+        }
+        else
+        {
+          console.log("authirize fail worng password");
+
+        }
+    });
+      // if (user.password === hashPass) {
+      //   console.log("authirize succes");
+      //   res.send(user);
+      // }
+       
+    }
+  });
+
+});
 
 module.exports = router;

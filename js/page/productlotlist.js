@@ -1,8 +1,14 @@
 let list = document.querySelector('.widget-content');
-
+let user;;
 $(document).ready(function () {
 
-
+  if (sessionStorage.getItem('USER')) {
+  user = sessionStorage.getItem('USER');
+  }
+  else
+  {
+    location.replace(location.origin + `/login`)
+  }
   console.log(list1);
   const requestURL1 = '/search/products/allSize';
   const requestURL2 = '/search/products/allVendor';
