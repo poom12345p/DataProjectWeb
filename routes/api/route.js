@@ -306,6 +306,21 @@ router.get('/data/customers',(req,res)=>{
   .catch(err => {console.log(err);});
 });
 ///////////////////employees//////////////////////////
+router.get('/employeelist',(req,res)=>{
+  res.sendFile(path.join(__dirname,`..`,`..`,`EmployeeList.html`));
+ // res.send(result);
+});
+
+router.get('/data/employee',(req,res)=>{
+  
+  db.query(`SELECT *
+  FROM employees
+  ORDER by employeeNumber,firstName`, { type: db.QueryTypes.SELECT})
+  .then(result => {console.log(result);
+  res.send(result);
+  })
+  .catch(err => {console.log(err);});
+});
 
 router.get('/search/employees', (req, res, next) => {
   employees.findAll()
