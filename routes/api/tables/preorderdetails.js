@@ -2,7 +2,7 @@
 const Sequelize = require('sequelize');
 const data=require('../data');
 
-const db= data.define('orderdetails',{
+const db= data.define('preorderdetails',{
     orderNumber:{
         type:   Sequelize.TEXT,
         primaryKey: true
