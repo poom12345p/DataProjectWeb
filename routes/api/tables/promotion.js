@@ -2,7 +2,7 @@
 const Sequelize = require('sequelize');
 const data=require('../data');
 
-const db= data.define('offices',{
+const db= data.define('promotions',{
     code:{
         type:   Sequelize.TEXT,
         primaryKey: true
