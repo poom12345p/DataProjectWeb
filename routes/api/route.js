@@ -306,6 +306,10 @@ router.get('/data/customers',(req,res)=>{
   .catch(err => {console.log(err);});
 });
 ///////////////////employees//////////////////////////
+router.get('/employeeInfo',(req,res)=>{
+  res.sendFile(path.join(__dirname,`..`,`..`,`EmployeeInfo.html`), { name: req.user });
+ // res.send(result);
+});
 
 router.get('/search/employees', (req, res, next) => {
   employees.findAll()
