@@ -9,9 +9,9 @@ var numberRow = 1;
 var numberPage = 1;
 if (urlParams.get('number') == null) urlParams.set('number', '103');
 
-let names = [];
-if (urlParams.get('names') != null && urlParams.get('names') != '') urlParams.get('names').split(',').forEach(name => {
-  names.push(name);
+let customers = [];
+if (urlParams.get('customers') != null && urlParams.get('customers') != '') urlParams.get('customers').split(',').forEach(customer => {
+  customers.push(customer);
 });
 
 $(document).ready(function () {
@@ -62,11 +62,11 @@ $(document).ready(function () {
   });
 });
 
-function findNames(data) {
+function findCustomers(data) {
   let find = false;
-  names.forEach(name => {
-    if (data.customerName == name) {
-      console.log(`${data.customerName}|${name}`);
+  customers.forEach(customer => {
+    if (data.customerNumber == customer) {
+      console.log(`${data.customerNumber}|${customer}`);
       find = true;
     }
   });
@@ -76,7 +76,7 @@ function findNames(data) {
 function updatePage(number) {
   try {
     list1.innerHTML = ``;
-    for (var i = numberRow * (number - 1); i < numberRow * number; i++) {
+    for (var i = numberRow*(number-1); i < numberRow*number; i++) {
       //ex. http://localhost:9000/customerInfo?number=1
       // var number =urlParams.get('number');
       // list1.innerHTML+=`${data[i].productNumber} <br>`;
@@ -351,7 +351,7 @@ function updatePage(number) {
 function updateFilther(data) {
   dataMem = [];
   for (var i = 0; i < data.length; i++) {
-    if ((names.length > 0 ? findNames(data[i]) : true) && (data[i].customerName.toUpperCase().search(textSearch.toUpperCase()) != -1)) {
+    if ((customers.length > 0 ? findCustomers(data[i]) : true) && (data[i].customerNumber.toUpperCase().search(textSearch.toUpperCase()) != -1)) {
       dataMem.push(data[i]);
     }
   }
