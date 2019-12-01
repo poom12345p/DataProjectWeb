@@ -280,8 +280,8 @@ router.get('/data/customers/number=:number', (req, res, next) => {
     .catch(err => { console.log(next); });
 });
 
-router.get('/customers',(req,res)=>{
-  res.sendFile(path.join(__dirname,`..`,`..`,`Profile.html`));
+router.get('/customerInfo',(req,res)=>{
+  res.sendFile(path.join(__dirname,`..`,`..`,`Profile.html`), { name: req.user });
  // res.send(result);
 });
 
@@ -307,6 +307,10 @@ router.get('/data/customers',(req,res)=>{
   .catch(err => {console.log(err);});
 });
 ///////////////////employees//////////////////////////
+router.get('/employeeInfo',(req,res)=>{
+  res.sendFile(path.join(__dirname,`..`,`..`,`EmployeeInfo.html`), { name: req.user });
+ // res.send(result);
+});
 
 router.get('/search/employees', (req, res, next) => {
   employees.findAll()
@@ -397,6 +401,22 @@ router.get('/data/employees/:number', (req, res, next) => {
     .catch(err => { console.log(next); });
 });
 //////////////order/////////////////////////////////////
+router.get('/orderlist',(req,res)=>{
+  res.sendFile(path.join(__dirname,`..`,`..`,`Order_list.html`));
+ // res.send(result);
+});
+
+router.get('/data/order',(req,res)=>{
+  
+  db.query(`SELECT *
+  FROM orders
+  ORDER by orderNumber,orderDate`, { type: db.QueryTypes.SELECT})
+  .then(result => {console.log(result);
+  res.send(result);
+  })
+  .catch(err => {console.log(err);});
+});
+
 router.get('/search/orders', (req, res, next) => {
   orders.findAll()
     .then(result => {
