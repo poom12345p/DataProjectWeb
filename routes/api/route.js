@@ -14,6 +14,7 @@ const orderdetails = require('./tables/orderdetails');
 const offices = require('./tables/offices');
 const employees = require('./tables/employees');
 const customers = require('./tables/customers');
+const promotions = require('./tables/promotions');
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt');
 const Op = Sequelize.Op;
@@ -477,4 +478,20 @@ router.post('/login', (req, res, next) => {
 
 });
 
+router.post('/promotion', (req, res, next) => {
+  const promotion = req.body;
+  return promotions.create({
+    code:promotion.code,
+    amount:promotion.amount,
+    discount:promotion.discount,
+    expire:promotion.expire
+}).then(function (promo) {
+    if (promo) {
+        response.send(promo);
+    } else {
+        response.status(400).send('Error in insert new promotion');
+    }
+});
+
+});
 module.exports = router;
