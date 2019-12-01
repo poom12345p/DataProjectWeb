@@ -173,20 +173,20 @@ function updatePage(page) {
                   <div class="col-md-9 col-sm-8 col-xs-12">
                     <div class="product-info">
                       <h5 class="product-title"><a
-                        href="http://demo.7uptheme.com/html/kuteshop/detail.html"><font size="4"><b>${dataMem[i].productName}</b></font></h5><font size="3.5">Product Code : ${dataMem[i].productCode}</font></a>
+                        href="http://demo.7uptheme.com/html/kuteshop/detail.html"><font size="4"><b>${dataMem[i].customerName}</b></font></h5><font size="3.5">Customer Number : ${dataMem[i].customerNumber}</font></a>
                       <div class="product-price">
                         <!--<ins><span>$360.00</span></ins>-->
                       </div>
-                      <div class="col-md-5 col-sm-5 col-xs-12">
-                        <h6>SIZE : ${dataMem[i].productScale}</font>
-                        <h6>VENDER : ${dataMem[i].productVendor}</h6>
+                      <div class="col-md-4 col-sm-4 col-xs-12">
+                        <h6>Contact : ${dataMem[i].contactFirstName} ${dataMem[i].contactLastName}</h6>
+                        <h6>Phone : ${dataMem[i].phone}</h6>
                       </div>
-                      <div class="col-md-5 col-sm-5 col-xs-12">
-                        <h6>Product Line	: ${dataMem[i].productLine}</h6>
-                        <h6>Stock	: ${dataMem[i].quantityInStock}</h6>
+                      <div class="col-md-4 col-sm-4 col-xs-12">
+                        <h6>Postalcode	: ${dataMem[i].postalCode}</h6>
+                        <h6>Country	: ${dataMem[i].country}</h6>
                       </div>
                       <div class="product-price">
-                        <ins><span>$${dataMem[i].MSRP}</span></ins>
+                        <ins><span>Point ${dataMem[i].creditLimit}</span></ins>
                       </div>
                     </div>
                   </div>
