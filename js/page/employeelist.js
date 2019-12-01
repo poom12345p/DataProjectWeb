@@ -154,16 +154,7 @@ function updatePage(page) {
                                     class="quickview-link plus fancybox.iframe"><span>quick
                                         view</span></a>
                             </div>
-                            <div class="list-color">
-                                <a href="http://demo.7uptheme.com/html/kuteshop/list-boxed-banner.html?fbclid=IwAR3bGgzDp0aoxFFwGK01YrX-6IVDNNt_V0Ion1EgNuFPIHEl1LARLv8wsvI#"
-                                    data-color="black" style="background:#404040"></a>
-                                <a href="http://demo.7uptheme.com/html/kuteshop/list-boxed-banner.html?fbclid=IwAR3bGgzDp0aoxFFwGK01YrX-6IVDNNt_V0Ion1EgNuFPIHEl1LARLv8wsvI#"
-                                    data-color="purple" style="background:#ff8ff8"></a>
-                                <a href="http://demo.7uptheme.com/html/kuteshop/list-boxed-banner.html?fbclid=IwAR3bGgzDp0aoxFFwGK01YrX-6IVDNNt_V0Ion1EgNuFPIHEl1LARLv8wsvI#"
-                                    data-color="blue" style="background:#868fff"></a>
-                                <a href="http://demo.7uptheme.com/html/kuteshop/list-boxed-banner.html?fbclid=IwAR3bGgzDp0aoxFFwGK01YrX-6IVDNNt_V0Ion1EgNuFPIHEl1LARLv8wsvI#"
-                                    data-color="cyan" style="background:#80e6ff"></a>
-                            </div>
+                            
                         </div>
                     </div>
                     <div class="col-md-9 col-sm-8 col-xs-12">
