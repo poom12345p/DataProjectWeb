@@ -32,11 +32,11 @@ $(document).ready(function () {
         if (status == true) {
           var checkbox = "<input type='checkbox'name ='scale' value='" + data[i].jobTitle + "'onclick ='titleclick(this)' autocomplete='off' checked='true' />"
 
-          document.querySelector('.widget-content').innerHTML += checkbox + data[i].jobTitle + "<br/>"
+          document.querySelector('.widget-content').innerHTML += checkbox +`   `+ data[i].jobTitle + "<br/>"
         } else {
           var checkbox = "<input type='checkbox'name ='scale' value='" + data[i].jobTitle + "'onclick ='titleclick(this)' autocomplete='off' />"
 
-          document.querySelector('.widget-content').innerHTML += checkbox + data[i].jobTitle + "<br/>"
+          document.querySelector('.widget-content').innerHTML += checkbox +`   `+data[i].jobTitle + "<br/>"
         }
       }
 
