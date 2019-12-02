@@ -279,8 +279,8 @@ router.get('/data/customers/number=:number', (req, res, next) => {
     .catch(err => { console.log(next); });
 });
 
-router.get('/customers',(req,res)=>{
-  res.sendFile(path.join(__dirname,`..`,`..`,`Profile.html`));
+router.get('/customerInfo',(req,res)=>{
+  res.sendFile(path.join(__dirname,`..`,`..`,`Profile.html`), { name: req.user });
  // res.send(result);
 });
 
@@ -306,6 +306,10 @@ router.get('/data/customers',(req,res)=>{
   .catch(err => {console.log(err);});
 });
 ///////////////////employees//////////////////////////
+router.get('/employeeInfo',(req,res)=>{
+  res.sendFile(path.join(__dirname,`..`,`..`,`EmployeeInfo.html`), { name: req.user });
+ // res.send(result);
+});
 
 router.get('/search/employees', (req, res, next) => {
   employees.findAll()

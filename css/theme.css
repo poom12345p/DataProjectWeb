@@ -2504,6 +2504,33 @@ a.shop-button,
   padding: 0 15px;
   width: 100%;
 }
+.newsletter-form input[type="password"] {
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  color: #999;
+  display: block;
+  height: 36px;
+  padding: 0 15px;
+  width: 100%;
+}
+.newsletter-form input[type="date"] {
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  color: #999;
+  display: block;
+  height: 36px;
+  padding: 0 15px;
+  width: 100%;
+}
+.newsletter-form input[type="number"] {
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  color: #999;
+  display: block;
+  height: 36px;
+  padding: 0 15px;
+  width: 100%;
+}
 .newsletter-form input[type="submit"] {
   border: medium none;
   border-radius: 4px;
@@ -5341,6 +5368,15 @@ a.protect-icon:hover {
   margin-bottom: 45px;
 }
 .comment-form input[type="text"] {
+  color: #999;
+  display: block;
+  height: 40px;
+  margin-bottom: 10px;
+  padding: 0 15px;
+  width: 100%;
+  max-width: 400px;
+}
+.comment-form input[type="password"] {
   color: #999;
   display: block;
   height: 40px;
@@ -8795,6 +8831,10 @@ a.protect-icon:hover {
   color: #fff;
 }
 .footer-box6.newsletter-form input[type="text"] {
+  background: rgba(255, 255, 255, 0.1) none repeat scroll 0 0;
+  border: none;
+}
+.footer-box6.newsletter-form input[type="password"] {
   background: rgba(255, 255, 255, 0.1) none repeat scroll 0 0;
   border: none;
 }
@@ -15281,6 +15321,21 @@ a.protect-icon:hover {
   width: 47.5%;
 }
 .form-my-account input[type="text"] {
+  border: 1px solid #e5e5e5;
+  color: #999;
+  height: 40px;
+  padding: 0 15px;
+  text-transform: uppercase;
+  width: 100%;
+}
+.form-my-account .box-col2 input[type="password"]:first-child {
+  margin-right: 5%;
+}
+.form-my-account .box-col2 input[type="password"] {
+  float: left;
+  width: 47.5%;
+}
+.form-my-account input[type="password"] {
   border: 1px solid #e5e5e5;
   color: #999;
   height: 40px;
