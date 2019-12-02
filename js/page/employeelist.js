@@ -1,7 +1,10 @@
 var urlParams = new URLSearchParams(location.search);
 let list1 = document.querySelector('.list-pro-color');
 let pagi = document.querySelector('.pagi-bar');
-let Alldata = [];
+let searchForm = document.querySelector('.smart-search-form');
+searchForm.addEventListener('submit', searchText);
+let textSearch = "";
+let dataAll = [];
 let dataMem = [];
 var numberRow = 10;
 var numberPage = 10;
@@ -22,7 +25,8 @@ $(document).ready(function () {
   var user = JSON.parse(localStorage.getItem('User'));
   console.log(user);
   console.log(list1);
-  const requestURL = '/data/order';
+  const requestURL = '/data/employee';
+  
   console.log('making ajax request to:', requestURL);
   // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
   // Using the core $.ajax() method since it's the most flexible.
@@ -35,6 +39,7 @@ $(document).ready(function () {
     success: (data) => {
       console.log(urlParams.get('vendors') + ' vvd ' + vendors);
       console.log(vendors.length);
+      
       // console.log('You received some data!', data);
       dataAll = data;
       updateFilther(dataAll);
@@ -44,6 +49,7 @@ $(document).ready(function () {
       updatePage(page);
     }
   });
+  
 
   $("#submit").click(function () {
     // $.ajax({
@@ -81,11 +87,11 @@ function nextpage() {
   updatePage(current);
 }
 
-function findSizes(data) {
+function findTitle(data) {
   let find = false;
-  sizes.forEach(size => {
-    if (data.status == size) {
-      console.log(`${data.status}|${size}`);
+  sizes.forEach(title => {
+    if (data.jobTitle == title) {
+      console.log(`${data.jobTitle}|${title}`);
       find = true;
 
     }
@@ -94,18 +100,9 @@ function findSizes(data) {
   return find;
 }
 
-function findstatus(data) {
-  let find = false;
-  vendors.forEach(status => {
-    if (data.status == status) {
-      find = true;
 
-    }
-  });
-  return find;
-}
 
-function statusclick(click) {
+function titleclick(click) {
   console.log(click.value + '  ' + click.checked);
   if (click.checked == true) sizes.push(click.value);
   else {
@@ -121,6 +118,7 @@ function statusclick(click) {
   updatePage(1);
 }
 
+
 function updatePage(page) {
   var maxpage = (dataMem.length % numberRow == 0 ? dataMem.length / numberRow : (dataMem.length - (dataMem.length % numberRow)) / numberRow + 1)
   try {
@@ -130,54 +128,51 @@ function updatePage(page) {
       // var page =urlParams.get('page');
       // list1.innerHTML+=`${data[i].productName}|${data[i].productScale} <br>`;
       // Product list
-      list1.innerHTML += `
-                  <div class="item-product-list">
-                  <div class="row">
-                  <div class="col-md-3 col-sm-4 col-xs-12">
-                    <div class="item-pro-color">
-                      <div class="product-thumb">
-                        <a href="http://demo.7uptheme.com/html/kuteshop/detail.html"
-                          class="product-thumb-link">
-                          <img data-color="black" class="active"
-                            src="./image/2(1).png"
-                            alt="">
-                          <img data-color="purple"
-                            src="./image/3(1).jpg"
-                            alt="">
-                          <img data-color="blue"
-                            src="./image/4(1).jpg"
-                            alt="">
-                          <img data-color="cyan"
-                            src="./image/5.jpg"
-                            alt="">
-                        </a>
-                        <a href="http://demo.7uptheme.com/html/kuteshop/quick-view.html"
-                          class="quickview-link plus fancybox.iframe"><span>quick
-                            view</span></a>
-                      </div>
+      
+                                    
+                list1.innerHTML+=`<div class="item-product-list">
+                <div class="row">
+                    <div class="col-md-3 col-sm-4 col-xs-12">
+                        <div class="item-pro-color">
+                            <div class="product-thumb">
+                            <a href="http://demo.7uptheme.com/html/kuteshop/detail.html"
+                            class="product-thumb-link">
+                            <img data-color="black" class="active"
+                              src="./image/2(1).png"
+                              alt="">
+                            <img data-color="purple"
+                              src="./image/3(1).jpg"
+                              alt="">
+                            <img data-color="blue"
+                              src="./image/4(1).jpg"
+                              alt="">
+                            <img data-color="cyan"
+                              src="./image/5.jpg"
+                              alt="">
+                          </a>
+                                <a href="http://demo.7uptheme.com/html/kuteshop/quick-view.html"
+                                    class="quickview-link plus fancybox.iframe"><span>quick
+                                        view</span></a>
+                            </div>
+                            
+                        </div>
                     </div>
-                  </div>
-                  <div class="col-md-9 col-sm-8 col-xs-12">
-                    <div class="product-info">
-                      <h5 class="product-title"><a
-                        href="http://demo.7uptheme.com/html/kuteshop/detail.html"><font size="4"><b>Order : ${dataMem[i].orderNumber}</b></font></h5></a>
-                      <div class="product-price">
-                        <h5>Status : <ins><span>${dataMem[i].status}</span></ins></h5>
-                      </div>
-                      <div class="col-md-4 col-sm-4 col-xs-12">
-                        <h6>Order Date : ${dataMem[i].orderDate}</h6>
-                      </div>
-                      <div class="col-md-4 col-sm-4 col-xs-12">
-                        <h6>Shipped Date : ${dataMem[i].shippedDate}</h6>
-                      </div>
-                      <div class="col-md-4 col-sm-4 col-xs-12">
-                        <h6>Required Date	: ${dataMem[i].requiredDate}</h6>
-                      </div>
+                    <div class="col-md-9 col-sm-8 col-xs-12">
+                        <div class="product-info">
+                            <h3 class="product-title"><a
+                                    href="">${dataMem[i].firstName} ${dataMem[i].lastName}</a></h3>
+                            <div class="product-price">
+                                <ins><span>${dataMem[i].jobTitle}</span></ins>
+                            </div>
+                            <p class="desc">Employee Number : ${dataMem[i].employeeNumber}</p>
+                <div class="product-rate">
+                    <div class="product-rating" style="width:90%"></div>
+                </div>
+                
+                        </div>
                     </div>
-                  </div>
                 </div>
-                </div>
-									<!-- End Item -->`;
+            </div>`
 
     }
   }
@@ -214,9 +209,17 @@ function updatePage(page) {
 function updateFilther(data) {
   let filther = [];
   for (var i = 0; i < data.length; i++) {
-    if ((sizes.length > 0 ? findSizes(data[i]) : true) && (vendors.length > 0 ? findstatus(data[i]) : true)) {
+    if (sizes.length > 0 ? findTitle(data[i]) : true) {
       filther.push(data[i]);
     }
   }
   dataMem = filther;
 }
+function searchText(e) {
+    e.preventDefault();
+    let type = document.querySelector('a.category-toggle-link').innerHTML;
+    textSearch = searchForm.querySelector('input[type=text]').value;
+    if (textSearch == "Search...") textSearch = "";
+    updateFilther(dataAll);
+    updatePage(1);
+  }
