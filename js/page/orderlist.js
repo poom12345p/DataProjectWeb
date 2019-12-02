@@ -84,8 +84,8 @@ function nextpage() {
 function findSizes(data) {
   let find = false;
   sizes.forEach(size => {
-    if (data.productScale == size) {
-      console.log(`${data.productScale}|${size}`);
+    if (data.status == size) {
+      console.log(`${data.status}|${size}`);
       find = true;
 
     }
@@ -94,10 +94,10 @@ function findSizes(data) {
   return find;
 }
 
-function findVendors(data) {
+function findstatus(data) {
   let find = false;
-  vendors.forEach(vendor => {
-    if (data.productVendor == vendor) {
+  vendors.forEach(status => {
+    if (data.status == status) {
       find = true;
 
     }
@@ -105,7 +105,7 @@ function findVendors(data) {
   return find;
 }
 
-function scaleclick(click) {
+function statusclick(click) {
   console.log(click.value + '  ' + click.checked);
   if (click.checked == true) sizes.push(click.value);
   else {
@@ -116,19 +116,6 @@ function scaleclick(click) {
     sizes = temp;
   }
   console.log('sizes ' + sizes);
-  //location.href = `/Productslist?page=1&sizes=${sizes}&vendors=${vendors}`;
-  updateFilther(dataAll);
-  updatePage(1);
-}
-function vendorclick(click) {
-  if (click.checked == true) vendors.push(click.value);
-  else {
-    let temp = [];
-    vendors.forEach(value => {
-      if (click.value != value) temp.push(value);
-    });
-    vendors = temp;
-  }
   //location.href = `/Productslist?page=1&sizes=${sizes}&vendors=${vendors}`;
   updateFilther(dataAll);
   updatePage(1);
@@ -227,7 +214,7 @@ function updatePage(page) {
 function updateFilther(data) {
   let filther = [];
   for (var i = 0; i < data.length; i++) {
-    if ((sizes.length > 0 ? findSizes(data[i]) : true) && (vendors.length > 0 ? findVendors(data[i]) : true)) {
+    if ((sizes.length > 0 ? findSizes(data[i]) : true) && (vendors.length > 0 ? findstatus(data[i]) : true)) {
       filther.push(data[i]);
     }
   }

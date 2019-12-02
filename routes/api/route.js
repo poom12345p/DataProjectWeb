@@ -439,6 +439,20 @@ router.get('/search/orders', (req, res, next) => {
     })
     .catch(err => { console.log(next); });
 });
+
+router.get('/search/orders/allTitle', (req, res, next) => {
+  orders.findAll({
+    attributes: [Sequelize.literal('DISTINCT `status`'), 'status']
+  })
+    /* db.query(`SELECT status
+     FROM orders
+     GROUP BY orders`, { type: db.QueryTypes.SELECT})*/
+    .then(result => {
+      console.log(result);
+      res.send(result);
+    })
+    .catch(err => { console.log(next); });
+});
 //////////////////////////////////////////////////////////////////////////////////////////
 
 router.get('/i', (req, res, next) => {
