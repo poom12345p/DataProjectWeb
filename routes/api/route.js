@@ -307,10 +307,25 @@ router.get('/data/customers',(req,res)=>{
   .catch(err => {console.log(err);});
 });
 ///////////////////employees//////////////////////////
+router.get('/employeelist',(req,res)=>{
+  res.sendFile(path.join(__dirname,`..`,`..`,`EmployeeList.html`));
+ // res.send(result);
+});
+router.get('/data/employee',(req,res)=>{
+  
+  db.query(`SELECT *
+  FROM employees
+  ORDER by employeeNumber,firstName`, { type: db.QueryTypes.SELECT})
+  .then(result => {console.log(result);
+  res.send(result);
+  })
+  .catch(err => {console.log(err);});
+});
 router.get('/employeeInfo',(req,res)=>{
   res.sendFile(path.join(__dirname,`..`,`..`,`EmployeeInfo.html`), { name: req.user });
  // res.send(result);
 });
+
 
 router.get('/search/employees', (req, res, next) => {
   employees.findAll()
@@ -419,6 +434,20 @@ router.get('/data/order',(req,res)=>{
 
 router.get('/search/orders', (req, res, next) => {
   orders.findAll()
+    .then(result => {
+      console.log(result);
+      res.send(result);
+    })
+    .catch(err => { console.log(next); });
+});
+
+router.get('/search/orders/allTitle', (req, res, next) => {
+  orders.findAll({
+    attributes: [Sequelize.literal('DISTINCT `status`'), 'status']
+  })
+    /* db.query(`SELECT status
+     FROM orders
+     GROUP BY orders`, { type: db.QueryTypes.SELECT})*/
     .then(result => {
       console.log(result);
       res.send(result);
