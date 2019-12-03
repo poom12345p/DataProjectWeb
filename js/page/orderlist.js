@@ -100,19 +100,7 @@ function updatePage(page) {
                           <img data-color="black" class="active"
                             src="./image/2(1).png"
                             alt="">
-                          <img data-color="purple"
-                            src="./image/3(1).jpg"
-                            alt="">
-                          <img data-color="blue"
-                            src="./image/4(1).jpg"
-                            alt="">
-                          <img data-color="cyan"
-                            src="./image/5.jpg"
-                            alt="">
                         </a>
-                        <a href="http://demo.7uptheme.com/html/kuteshop/quick-view.html"
-                          class="quickview-link plus fancybox.iframe"><span>quick
-                            view</span></a>
                       </div>
                     </div>
                   </div>
