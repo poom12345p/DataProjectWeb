@@ -25,11 +25,11 @@ $(document).ready(function () {
     success: (data) => {
       console.log('You received some data!', data);
       for (var i = 0; i < data.length; i++) {
-        let status = false;
-        sizes.forEach(size => {
-          if (data[i].status== size) status = true;
+        let flag = false;
+        statuses.forEach(status => {
+          if (data[i].status== status) flag = true;
         });
-        if (status == true) {
+        if (flag == true) {
           var checkbox = "<input type='checkbox'name ='scale' value='" + data[i].status + "'onclick ='statusclick(this)' autocomplete='off' checked='true' />"
 
           document.querySelector('.widget-content').innerHTML += checkbox +`   `+ data[i].status + "<br/>"
