@@ -1,20 +1,14 @@
 var urlParams = new URLSearchParams(location.search);
 let list1 = document.querySelector('.list-pro-color');
 let pagi = document.querySelector('.pagi-bar');
-let Alldata = [];
+let searchForm = document.querySelector('.smart-search-form');
+searchForm.addEventListener('submit', searchText);
+let textSearch = "";
+let dataAll = [];
 let dataMem = [];
 var numberRow = 10;
 var numberPage = 10;
 if (urlParams.get('page') == null) urlParams.set('page', '1');
-let vendors = [];
-let sizes = [];
-if (urlParams.get('vendors') != null && urlParams.get('vendors') != '') urlParams.get('vendors').split(',').forEach(vendor => {
-  vendors.push(vendor);
-  console.log('ve ' + vendor);
-});
-if (urlParams.get('sizes') != null && urlParams.get('sizes') != '') urlParams.get('sizes').split(',').forEach(size => {
-  sizes.push(size);
-});
 
 $(document).ready(function () {
 
@@ -33,8 +27,6 @@ $(document).ready(function () {
     type: 'GET',
     dataType: 'json', // this URL returns data in JSON format
     success: (data) => {
-      console.log(urlParams.get('vendors') + ' vvd ' + vendors);
-      console.log(vendors.length);
       // console.log('You received some data!', data);
       dataAll = data;
       updateFilther(dataAll);
@@ -43,27 +35,6 @@ $(document).ready(function () {
       console.log('page ' + page);
       updatePage(page);
     }
-  });
-
-  $("#submit").click(function () {
-    // $.ajax({
-    //   // all URLs are relative to http://localhost:3000/
-    //   url: requestURL,
-    //   type: 'GET',
-    //   dataType : 'json', // this URL returns data in JSON format
-    //   success: (data) => {
-    //    console.log(vendors.length);
-    //    // console.log('You received some data!', data);
-    //     for(var i=0;i<data.length;i++)
-    //     {   
-    //        if( (sizes.length>0?findSizes(data[i]):true) && (vendors.length>0?findVendors(data[i]):true))
-    //        {
-
-    //           list.innerHTML+=`${data[i].productName}|${data[i].productScale} <br>`;
-    //        }
-    //     }
-    //   }
-    // });
   });
 });
 
@@ -75,63 +46,10 @@ function pageclick(page) {
 }
 
 function nextpage() {
-  var current = parseInt(document.querySelector('.current-page').innerHTML) + 1;
-  console.log('np ' + current);
-  //location.href = `/Productslist?page=${current}&sizes=${sizes}&vendors=${vendors}`;
-  updatePage(current);
-}
-
-function findSizes(data) {
-  let find = false;
-  sizes.forEach(size => {
-    if (data.productScale == size) {
-      console.log(`${data.productScale}|${size}`);
-      find = true;
-
-    }
-
-  });
-  return find;
-}
-
-function findVendors(data) {
-  let find = false;
-  vendors.forEach(vendor => {
-    if (data.productVendor == vendor) {
-      find = true;
-
-    }
-  });
-  return find;
-}
-
-function scaleclick(click) {
-  console.log(click.value + '  ' + click.checked);
-  if (click.checked == true) sizes.push(click.value);
-  else {
-    let temp = [];
-    sizes.forEach(value => {
-      if (click.value != value) temp.push(value);
-    });
-    sizes = temp;
-  }
-  console.log('sizes ' + sizes);
-  //location.href = `/Productslist?page=1&sizes=${sizes}&vendors=${vendors}`;
-  updateFilther(dataAll);
-  updatePage(1);
-}
-function vendorclick(click) {
-  if (click.checked == true) vendors.push(click.value);
-  else {
-    let temp = [];
-    vendors.forEach(value => {
-      if (click.value != value) temp.push(value);
-    });
-    vendors = temp;
-  }
-  //location.href = `/Productslist?page=1&sizes=${sizes}&vendors=${vendors}`;
-  updateFilther(dataAll);
-  updatePage(1);
+  var next = parseInt(document.querySelector('.current-page').innerHTML) + 1;
+  console.log('np ' + next);
+  //location.href = `/Productslist?page=${next}&sizes=${sizes}&vendors=${vendors}`;
+  updatePage(next);
 }
 
 function updatePage(page) {
@@ -193,16 +111,14 @@ function updatePage(page) {
                 </div>
                 </div>
 									<!-- End Item -->`;
-
     }
   }
   catch (err) { }
   var bar = document.createElement('div');
   bar.className = 'pagi-bar';
-  console.log('mp ' + maxpage);
   var add = 0;
   if (page < 6 || maxpage < 11) add = 0;
-  else if (page + 5 < maxpage) add = page - 5;
+  else if (page - 0 + 5 < maxpage) add = page - 5;
   else if (maxpage > 10) add = maxpage - 10;
   for (var i = 1 + add; i <= 10 + add; i++) {
     if (i > maxpage) break;
@@ -227,11 +143,19 @@ function updatePage(page) {
 }
 
 function updateFilther(data) {
-  let filther = [];
+  dataMem = [];
   for (var i = 0; i < data.length; i++) {
-    if ((sizes.length > 0 ? findSizes(data[i]) : true) && (vendors.length > 0 ? findVendors(data[i]) : true)) {
-      filther.push(data[i]);
+    if (data[i].customerName.toUpperCase().search(textSearch.toUpperCase()) != -1) {
+      dataMem.push(data[i]);
     }
-  }
-  dataMem = filther;
+  };
+}
+
+function searchText(e) {
+  e.preventDefault();
+  let type = document.querySelector('a.category-toggle-link').innerHTML;
+  textSearch = searchForm.querySelector('input[type=text]').value;
+  if (textSearch == "Search...") textSearch = "";
+  updateFilther(dataAll);
+  updatePage(1);
 }

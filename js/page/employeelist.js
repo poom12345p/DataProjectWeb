@@ -9,14 +9,10 @@ let dataMem = [];
 var numberRow = 10;
 var numberPage = 10;
 if (urlParams.get('page') == null) urlParams.set('page', '1');
-let vendors = [];
-let sizes = [];
-if (urlParams.get('vendors') != null && urlParams.get('vendors') != '') urlParams.get('vendors').split(',').forEach(vendor => {
-  vendors.push(vendor);
-  console.log('ve ' + vendor);
-});
-if (urlParams.get('sizes') != null && urlParams.get('sizes') != '') urlParams.get('sizes').split(',').forEach(size => {
-  sizes.push(size);
+let titles = [];
+if (urlParams.get('titles') != null && urlParams.get('titles') != '') urlParams.get('titles').split(',').forEach(title => {
+  titles.push(title);
+  console.log('ti ' + title);
 });
 
 $(document).ready(function () {
@@ -26,7 +22,7 @@ $(document).ready(function () {
   console.log(user);
   console.log(list1);
   const requestURL = '/data/employee';
-  
+
   console.log('making ajax request to:', requestURL);
   // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
   // Using the core $.ajax() method since it's the most flexible.
@@ -37,9 +33,6 @@ $(document).ready(function () {
     type: 'GET',
     dataType: 'json', // this URL returns data in JSON format
     success: (data) => {
-      console.log(urlParams.get('vendors') + ' vvd ' + vendors);
-      console.log(vendors.length);
-      
       // console.log('You received some data!', data);
       dataAll = data;
       updateFilther(dataAll);
@@ -48,28 +41,6 @@ $(document).ready(function () {
       console.log('page ' + page);
       updatePage(page);
     }
-  });
-  
-
-  $("#submit").click(function () {
-    // $.ajax({
-    //   // all URLs are relative to http://localhost:3000/
-    //   url: requestURL,
-    //   type: 'GET',
-    //   dataType : 'json', // this URL returns data in JSON format
-    //   success: (data) => {
-    //    console.log(vendors.length);
-    //    // console.log('You received some data!', data);
-    //     for(var i=0;i<data.length;i++)
-    //     {   
-    //        if( (sizes.length>0?findSizes(data[i]):true) && (vendors.length>0?findVendors(data[i]):true))
-    //        {
-
-    //           list.innerHTML+=`${data[i].productName}|${data[i].productScale} <br>`;
-    //        }
-    //     }
-    //   }
-    // });
   });
 });
 
@@ -81,21 +52,19 @@ function pageclick(page) {
 }
 
 function nextpage() {
-  var current = parseInt(document.querySelector('.current-page').innerHTML) + 1;
-  console.log('np ' + current);
-  //location.href = `/Productslist?page=${current}&sizes=${sizes}&vendors=${vendors}`;
-  updatePage(current);
+  var next = parseInt(document.querySelector('.current-page').innerHTML) + 1;
+  console.log('np ' + next);
+  //location.href = `/Productslist?page=${next}&sizes=${sizes}&vendors=${vendors}`;
+  updatePage(next);
 }
 
-function findTitle(data) {
+function findTitles(data) {
   let find = false;
-  sizes.forEach(title => {
+  titles.forEach(title => {
     if (data.jobTitle == title) {
       console.log(`${data.jobTitle}|${title}`);
       find = true;
-
     }
-
   });
   return find;
 }
@@ -104,15 +73,15 @@ function findTitle(data) {
 
 function titleclick(click) {
   console.log(click.value + '  ' + click.checked);
-  if (click.checked == true) sizes.push(click.value);
+  if (click.checked == true) titles.push(click.value);
   else {
     let temp = [];
-    sizes.forEach(value => {
+    titles.forEach(value => {
       if (click.value != value) temp.push(value);
     });
-    sizes = temp;
+    titles = temp;
   }
-  console.log('sizes ' + sizes);
+  console.log('titles ' + titles);
   //location.href = `/Productslist?page=1&sizes=${sizes}&vendors=${vendors}`;
   updateFilther(dataAll);
   updatePage(1);
@@ -127,10 +96,8 @@ function updatePage(page) {
       //ex. http://localhost:9000/productslist?page=1
       // var page =urlParams.get('page');
       // list1.innerHTML+=`${data[i].productName}|${data[i].productScale} <br>`;
-      // Product list
-      
-                                    
-                list1.innerHTML+=`<div class="item-product-list">
+      // Product list            
+      list1.innerHTML += `<div class="item-product-list">
                 <div class="row">
                     <div class="col-md-3 col-sm-4 col-xs-12">
                         <div class="item-pro-color">
@@ -179,10 +146,9 @@ function updatePage(page) {
   catch (err) { }
   var bar = document.createElement('div');
   bar.className = 'pagi-bar';
-  console.log('mp ' + maxpage);
   var add = 0;
   if (page < 6 || maxpage < 11) add = 0;
-  else if (page + 5 < maxpage) add = page - 5;
+  else if (page - 0 + 5 < maxpage) add = page - 5;
   else if (maxpage > 10) add = maxpage - 10;
   for (var i = 1 + add; i <= 10 + add; i++) {
     if (i > maxpage) break;
@@ -207,19 +173,20 @@ function updatePage(page) {
 }
 
 function updateFilther(data) {
-  let filther = [];
+  dataMem = [];
   for (var i = 0; i < data.length; i++) {
-    if (sizes.length > 0 ? findTitle(data[i]) : true) {
-      filther.push(data[i]);
+    let fullName = `${data[i].firstName} ${data[i].lastName}`
+    if ((titles.length > 0 ? findTitles(data[i]) : true) && (fullName.toUpperCase().search(textSearch.toUpperCase()) != -1)) {
+      dataMem.push(data[i]);
     }
   }
-  dataMem = filther;
 }
+
 function searchText(e) {
-    e.preventDefault();
-    let type = document.querySelector('a.category-toggle-link').innerHTML;
-    textSearch = searchForm.querySelector('input[type=text]').value;
-    if (textSearch == "Search...") textSearch = "";
-    updateFilther(dataAll);
-    updatePage(1);
-  }
+  e.preventDefault();
+  let type = document.querySelector('a.category-toggle-link').innerHTML;
+  textSearch = searchForm.querySelector('input[type=text]').value;
+  if (textSearch == "Search...") textSearch = "";
+  updateFilther(dataAll);
+  updatePage(1);
+}
