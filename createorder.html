@@ -359,10 +359,13 @@
 						</div>
 						<!-- End Bread Crumb -->
 						<div class="cart-content-page">
-							<h2 class="title-shop-page">ORDER by <a href="#">John Doe</a></h2>
+							<h2 class="title-shop-page">ORDER by <a href="#" class="customerName">John Doe</a></h2>
 
 							<div class="footer-list-box">
-
+									<div class="newsletter-form footer-box">
+											<h2 class="title14">Enter Order infomation </h2>
+										</div>
+								
 								<div class="row">
 										<div class="col-md-2 col-sm-2 col-xs-12">
 												<div class="newsletter-form footer-box">
@@ -372,9 +375,9 @@
 		
 												<div class="select-category " >
 													<div class="newsletter-form footer-box">
-														<input type="text" value="">
+														<input type="text" value="" class=" CodeInput" oninput="inputCode()">
 													</div>
-													<ul class="list-category-toggle list-category-toggle2 list-unstyled">
+													<ul class="list-category-toggle list-category-toggle2 list-unstyled productCodeList">
 														<li><a href="">Computer
 																&amp; Office</a></li>
 														<li><a href="">Elextronics</a>
@@ -392,7 +395,9 @@
 		
 		
 											</div>
+											<div class="col-md-1 col-sm-1 col-xs-12">
 
+											</div>
 									<div class="col-md-4 col-sm-4 col-xs-12">
 										<div class="newsletter-form footer-box">
 											<h2 class="title14">Name</h2>
@@ -401,9 +406,9 @@
 
 										<div class="select-category " >
 											<div class="newsletter-form footer-box">
-												<input type="text" value="">
+												<input type="text" value="" class="NameInput" oninput="inputName()">
 											</div>
-											<ul class="list-category-toggle list-category-toggle2 list-unstyled">
+											<ul class="list-category-toggle list-category-toggle2 list-unstyled productNameList">
 												<li><a href="">Computer
 														&amp; Office</a></li>
 												<li><a href="">Elextronics</a>
@@ -427,37 +432,50 @@
 											<div class="detail-qty border radius">
 												<a href="#" class="qty-down"><i class="fa fa-caret-down"
 														aria-hidden="true"></i></a>
-												<span class="qty-val">1</span>
+												<span class="qty-val" >0</span>
 												<a href="#" class="qty-up"><i class="fa fa-caret-up"
 														aria-hidden="true"></i></a>
 											</div>
 										</div>
 									</div>
-									<div class="col-md-1 col-sm-1col-xs-6">
+									<div class="col-md-2 col-sm-2 col-xs-6">
 											<div class="newsletter-form footer-box">
-												<h2 class="title14">in Stock</h2>
+												<h2 class="title14" >total Price</h2>
 											
-												<input type="text" name="country" value="0" readonly>
+												<input type="text" name="country" value="0"  class="TotalPrice"readonly>
 	
 	
 											</div>
 										</div>
-									<div class="col-md-2 col-sm-2 col-xs-6">
-										<div class="newsletter-form footer-box">
-											<h2 class="title14">Price</h2>
-										
-											<input type="text" name="country" value="0" readonly>
 
-
-										</div>
-									</div>
 
 								</div>
-
+								<div class="row">
+										<div class="col-md-7 col-sm-7 col-xs-6">
+										</div>
+										<div class="col-md-2 col-sm-2 col-xs-6">
+												<div class="newsletter-form footer-box">
+													<h2 class="title14">in Stock</h2>
+												
+													<input type="text" name="country" value="0"  class="InStock" readonly>
+		
+		
+												</div>
+											</div>
+										<div class="col-md-2 col-sm-2 col-xs-6">
+											<div class="newsletter-form footer-box">
+												<h2 class="title14">Price</h2>
+											
+												<input type="text" name="country" value="0"  class="Price"readonly>
+	
+	
+											</div>
+										</div>
+								</div>
 								<div class="cart-collaterals">
 
 									<div class="wc-proceed-to-checkout">
-										<a class="checkout-button button alt wc-forward" href="">Add Order</a>
+										<a class="checkout-button button alt wc-forward addorder"  href="">Add Order</a>
 									</div>
 								</div>
 							</div>
@@ -469,13 +487,13 @@
 												<th class="product-remove">&nbsp;</th>
 												<th class="product-code">code</th>
 												<th class="product-name">Product</th>
-												<th class="product-price">Price</th>
+												<th class="product-p">Price</th>
 												<th class="product-quantity">Quantity</th>
 												<th class="product-subtotal">Total</th>
 											</tr>
 										</thead>
 
-										<tbody>
+										<tbody class="OrdersTable">
 											<tr class="cart_item">
 												<td class="product-remove">
 													<a class="remove" href="#"><i class="fa fa-times"></i></a>
@@ -486,7 +504,7 @@
 												<td class="product-name">
 													<a href="#">Luphen Caunoiteng kug </a>
 												</td>
-												<td class="product-price">
+												<td class="product-p">
 													<span class="amount">$68.00</span>
 												</td>
 												<td class="product-quantity">
@@ -529,22 +547,22 @@
 									<h2>Order Info</h2>
 									<div class="table-responsive">
 										<table class="table shop_table" cellspacing="0">
-											<tbody>
+											<tbody class="productList"> 
 												<!-- add-->
 												<tr>
 													<th>Order ID</th>
-													<td><strong class="amount">xxxxxxxxxxxxxxx</strong></td>
+													<td><strong class="amount orderID">xxxxxxxxxxxxxxx</strong></td>
 												</tr>
 												<tr>
 													<th>Order Date</th>
 													<td>
-														<input type="date" value="Place enter your email">
+														<input type="date" value="" class="OrderDate">
 													</td>
 												</tr>
 												<!-- end -->
 												<tr class="cart-subtotal">
 													<th>Subtotal</th>
-													<td><strong class="amount">$106.00</strong></td>
+													<td><strong class="amount SubTotal">$106.00</strong></td>
 												</tr>
 												<!-- add -->
 												<tr>
@@ -559,9 +577,15 @@
 													</td>
 												</tr>
 												<tr>
+														<th>Require Date</th>
+														<td>
+															<input type="date" value="" class="RequireDate">
+														</td>
+													</tr>
+												<tr>
 													<th>Shipping Date</th>
 													<td>
-														<input type="date" value="Place enter your email">
+														<input type="date" value=""  class="ShipDate">
 													</td>
 												</tr>
 												<!--<tr class="shipping">
@@ -600,14 +624,18 @@
 												<!-- end -->
 												<tr class="order-total">
 													<th>Total</th>
-													<td><strong><span class="amount">$106.00</span></strong> </td>
+													<td><strong><span class="amount orderTotal">$106.00</span></strong> </td>
 												</tr>
+												<tr class="">
+														<th>Comment</th>
+														<td>	<textarea rows="4" cols="50" class="Comment"></textarea></td>
+													</tr>
 											</tbody>
 										</table>
 									</div>
 									<div class="wc-proceed-to-checkout">
-										<a class="checkout-button button alt wc-forward"
-											href="http://demo.7uptheme.com/html/kuteshop/checkout.html">Submit</a>
+										<a class="checkout-button button alt wc-forward submit-btn"
+											href="" >Submit</a>
 									</div>
 								</div>
 							</div>
@@ -623,6 +651,7 @@
 		<a href="http://demo.7uptheme.com/html/kuteshop/list-boxed-banner.html?fbclid=IwAR3bGgzDp0aoxFFwGK01YrX-6IVDNNt_V0Ion1EgNuFPIHEl1LARLv8wsvI#"
 			class="radius scroll-top"><i class="fa fa-angle-up" aria-hidden="true"></i></a>
 		<script src="js/jquery-3.3.1.min.js"></script>
+		<script src="js/page/createorder.js"></script>
 		<script type="text/javascript" src="./js/jquery.js.download"></script>
 		<script type="text/javascript" src="./js/bootstrap.min.js.download"></script>
 		<script type="text/javascript" src="./js/jquery.fancybox.js.download"></script>
@@ -632,8 +661,6 @@
 		<script src="./js/jquery.mousewheel.min.js.download"></script>
 		<script type="text/javascript" src="./js/wow.js.download"></script>
 		<script type="text/javascript" src="./js/theme.js.download"></script>
-		<script src="./js/page/customerlist.js"></script>
-		<script scr="./js/page/customerchecklist.js"></script>
 
 </body>
 

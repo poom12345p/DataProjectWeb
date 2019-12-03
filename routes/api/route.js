@@ -31,12 +31,18 @@ db.authenticate()
 router.get('/', (req, res, next) => {
 
 
-  res.sendFile(path.join(__dirname, `..`, `..`, `ProductLotList.html`));
+  res.sendFile(path.join(__dirname, `..`, `..`, `createorder.html`));
   // res.send(result);
 
 });
 
+router.get('/createorder/', (req, res, next) => {
 
+
+  res.sendFile(path.join(__dirname, `..`, `..`, `createorder.html`));
+  // res.send(result);
+
+});
 router.get('/productslist', (req, res, next) => {
   res.sendFile(path.join(__dirname, `..`, `..`, `ProductLotList.html`), { name: req.user });
   // res.send(result);
@@ -421,7 +427,7 @@ router.get('/orderlist',(req,res)=>{
  // res.send(result);
 });
 
-router.get('/data/order',(req,res)=>{
+router.get('/data/order/:orderNumber',(req,res)=>{
   
   db.query(`SELECT *
   FROM orders
@@ -451,6 +457,14 @@ router.get('/search/orders/allTitle', (req, res, next) => {
     .then(result => {
       console.log(result);
       res.send(result);
+    })
+    .catch(err => { console.log(next); });
+});
+
+router.get('/maxOrdersNumber', (req, res, next) => {
+orders.max('orderNumber').then(max => {
+      console.log(max);
+      res.send(max);
     })
     .catch(err => { console.log(next); });
 });
@@ -552,9 +566,9 @@ router.post('/order', (req, res, next) => {
     orderDate:order.orderDate,
     requiredDate:order.requiredDate,
     shippedDate:order.shippedDate,
-    status:"in progress",
+    status:"in process",
     comments:order.comments,
-    customerNumber:order.  customerNumber
+    customerNumber:order.customerNumber
   }).then(function (order) {
     if (order) {
         response.send(order);
@@ -569,9 +583,10 @@ router.post('/orderdetail', (req, res, next) => {
   return orderdetails.create({
     orderNumber:orderdetail.orderNumber,
     productCode:orderdetail.productCode,
-    quantityOrdered:orderdetail. quantityOrdered,
+    quantityOrdered:orderdetail.quantityOrdered,
     priceEach:orderdetail.priceEach,
-    orderLineNumber:orderdetail.orderLineNumber
+    orderLineNumber:null,
+    status:null
   }).then(function (order) {
     if (order) {
         response.send(order);
@@ -586,7 +601,7 @@ router.post('/orderdetail', (req, res, next) => {
 router.post('/preorder', (req, res, next) => {
   const order = req.body;
   return preOrders.create({
-    orderNumber:order.orderNumber,
+   orderNumber:order.orderNumber,
     orderDate:order.orderDate,
     comments:order.comments,
     customerNumber:order.customerNumber
