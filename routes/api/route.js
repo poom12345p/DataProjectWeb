@@ -124,7 +124,7 @@ router.get('/search/products/code=:code', (req, res, next) => {
   products.findAll({
     where:
     {
-      productName: {
+      productCode: {
         [Op.like]: `%${code}%`
       }
     },
@@ -513,5 +513,78 @@ router.post('/promotion', (req, res, next) => {
     }
 });
 
+
 });
+
+router.post('/order', (req, res, next) => {
+  const order = req.body;
+  return orders.create({
+    orderNumber:order.orderNumber,
+    orderDate:order.orderDate,
+    requiredDate:order.requiredDate,
+    shippedDate:order.shippedDate,
+    status:"in progress",
+    comments:order.comments,
+    customerNumber:order.  customerNumber
+  }).then(function (order) {
+    if (order) {
+        response.send(order);
+    } else {
+        response.status(400).send('Error in insert new order');
+    }
+});
+});
+
+router.post('/orderdetail', (req, res, next) => {
+  const orderdetail = req.body;
+  return orderdetails.create({
+    orderNumber:orderdetail.orderNumber,
+    productCode:orderdetail.productCode,
+    quantityOrdered:orderdetail. quantityOrdered,
+    priceEach:orderdetail.priceEach,
+    orderLineNumber:orderdetail.orderLineNumber
+  }).then(function (order) {
+    if (order) {
+        response.send(order);
+    } else {
+        response.status(400).send('Error in insert new order');
+    }
+});
+
+
+});
+
+router.post('/preorder', (req, res, next) => {
+  const order = req.body;
+  return preOrders.create({
+    orderNumber:order.orderNumber,
+    orderDate:order.orderDate,
+    comments:order.comments,
+    customerNumber:order.customerNumber
+  }).then(function (order) {
+    if (order) {
+        response.send(order);
+    } else {
+        response.status(400).send('Error in insert new order');
+    }
+});
+});
+
+router.post('/preorderdetail', (req, res, next) => {
+  const orderdetail = req.body;
+  return preorderdetails.create({
+    preOrderNumber:orderdetail.orderNumber,
+    productCode:orderdetail.productCode,
+    quantityOrdered:orderdetail. quantityOrdered,
+    priceEach:orderdetail.priceEach,
+    orderLineNumber:orderdetail.orderLineNumber
+  }).then(function (order) {
+    if (order) {
+        response.send(order);
+    } else {
+        response.status(400).send('Error in insert new order');
+    }
+});
+});
+
 module.exports = router;

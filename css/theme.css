@@ -749,7 +749,7 @@ li.menu-item-has-children:hover > .sub-menu {
   top: 100%;
   background: #fff;
   padding: 10px;
-  width: 130px;
+  width: 100%;
   margin-top: 30px;
   visibility: hidden;
   opacity: 0;
@@ -837,9 +837,9 @@ li.menu-item-has-children:hover > .sub-menu {
   margin: 0;
 }
 .select-category {
-  left: 0;
+  left: 5px;
   position: absolute;
-  width: 180px;
+  width: 100%; 
   z-index: 999;
 }
 .smart-search-form {
@@ -908,6 +908,12 @@ li.menu-item-has-children:hover > .sub-menu {
   margin-top: 35px;
   width: 200px;
   left: 0;
+  right: auto;
+}
+.list-category-toggle2 {
+  margin-top: 35px;
+  width: 100%;
+  left: 5px;
   right: auto;
 }
 .list-category-toggle li {
