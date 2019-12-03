@@ -64,6 +64,7 @@ router.get('/login/:email', (req, res, next) => {
   }).catch(err => { console.log(next); });
 
 });
+
 //////////////////////products search api//////////////////////////
 router.get('/search/products', (req, res, next) => {
   //console.log(`${req.params.size}`);
@@ -191,6 +192,10 @@ router.get('/data/products/:code', (req, res, next) => {
     .catch(err => { console.log(next); });
 });
 
+router.get('/productdetails=:code', (req, res, next) => {
+  res.sendFile(path.join(__dirname, `..`, `..`, `productdetails.html`), { name: req.user });
+  // res.send(result);
+});
 
 ///////////////////////////custommer////////////////////////////////////////////
 router.get('/search/customers', (req, res, next) => {
@@ -280,7 +285,7 @@ router.get('/data/customers/number=:number', (req, res, next) => {
     .catch(err => { console.log(next); });
 });
 
-router.get('/customerInfo',(req,res)=>{
+router.get('/customerInfo=:code',(req,res)=>{
   res.sendFile(path.join(__dirname,`..`,`..`,`Profile.html`), { name: req.user });
  // res.send(result);
 });
@@ -291,7 +296,7 @@ router.get('/customerlist',(req,res)=>{
 });
 
 
-router.get('/customerorder',(req,res)=>{
+router.get('/customerorder=:code',(req,res)=>{
   res.sendFile(path.join(__dirname,`..`,`..`,`Customer_DetailOrder.html`));
  // res.send(result);
 });
@@ -448,6 +453,29 @@ router.get('/search/orders/allTitle', (req, res, next) => {
     /* db.query(`SELECT status
      FROM orders
      GROUP BY orders`, { type: db.QueryTypes.SELECT})*/
+    .then(result => {
+      console.log(result);
+      res.send(result);
+    })
+    .catch(err => { console.log(next); });
+});
+
+router.get('/search/customerorders/number=:number', (req, res, next) => {
+  orders.findAll({
+
+    where:
+    {
+      customerNumber: {
+        [Op.like]: `${req.params.number}%`
+      }
+    }
+    ,
+    order: [`orderNumber`]
+  })
+    /*db.query(`SELECT *
+    FROM orders
+    WHERE customerNumber LIKE '${req.params.number}%';
+    ORDER by orderNumber  `, { type: db.QueryTypes.SELECT})*/
     .then(result => {
       console.log(result);
       res.send(result);
