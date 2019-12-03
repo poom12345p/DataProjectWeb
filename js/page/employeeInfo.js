@@ -7,7 +7,7 @@ let dataAll = [];
 let dataMem = [];
 var numberRow = 1;
 var numberPage = 1;
-if (urlParams.get('number') == null) urlParams.set('number', '12');
+if (urlParams.get('number') == null) urlParams.set('number', '1');
 
 let names = [];
 if (urlParams.get('names') != null && urlParams.get('names') != '') urlParams.get('names').split(',').forEach(name => {

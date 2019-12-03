@@ -14,7 +14,7 @@ let dataAll = [];
 let dataMem = [];
 var numberRow = 1;
 var numberPage = 1;
-if (urlParams.get('number') == null) urlParams.set('number', '103');
+if (urlParams.get('number') == null) urlParams.set('number', '1');
 
 let customers = [];
 if (urlParams.get('customers') != null && urlParams.get('customers') != '') urlParams.get('customers').split(',').forEach(customer => {

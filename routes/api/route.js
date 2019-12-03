@@ -200,7 +200,7 @@ router.get('/productdetails=:code', (req, res, next) => {
 ///////////////////////////custommer////////////////////////////////////////////
 router.get('/search/customers', (req, res, next) => {
   customers.findAll({
-    order: [`customerName`]
+    order: [`customerNumber`]
   })
     /* db.query(`SELECT *
      FROM customers
