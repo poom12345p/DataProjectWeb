@@ -14,6 +14,7 @@ const orderdetails = require('./tables/orderdetails');
 const offices = require('./tables/offices');
 const employees = require('./tables/employees');
 const customers = require('./tables/customers');
+const promotions = require('./tables/promotions');
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt');
 const Op = Sequelize.Op;
@@ -123,7 +124,7 @@ router.get('/search/products/code=:code', (req, res, next) => {
   products.findAll({
     where:
     {
-      productName: {
+      productCode: {
         [Op.like]: `%${code}%`
       }
     },
@@ -524,6 +525,95 @@ router.post('/login', (req, res, next) => {
     }
   });
 
+});
+
+router.post('/promotion', (req, res, next) => {
+  const promotion = req.body;
+  return promotions.create({
+    code:promotion.code,
+    amount:promotion.amount,
+    discount:promotion.discount,
+    expire:promotion.expire
+}).then(function (promo) {
+    if (promo) {
+        response.send(promo);
+    } else {
+        response.status(400).send('Error in insert new promotion');
+    }
+});
+
+
+});
+
+router.post('/order', (req, res, next) => {
+  const order = req.body;
+  return orders.create({
+    orderNumber:order.orderNumber,
+    orderDate:order.orderDate,
+    requiredDate:order.requiredDate,
+    shippedDate:order.shippedDate,
+    status:"in progress",
+    comments:order.comments,
+    customerNumber:order.  customerNumber
+  }).then(function (order) {
+    if (order) {
+        response.send(order);
+    } else {
+        response.status(400).send('Error in insert new order');
+    }
+});
+});
+
+router.post('/orderdetail', (req, res, next) => {
+  const orderdetail = req.body;
+  return orderdetails.create({
+    orderNumber:orderdetail.orderNumber,
+    productCode:orderdetail.productCode,
+    quantityOrdered:orderdetail. quantityOrdered,
+    priceEach:orderdetail.priceEach,
+    orderLineNumber:orderdetail.orderLineNumber
+  }).then(function (order) {
+    if (order) {
+        response.send(order);
+    } else {
+        response.status(400).send('Error in insert new order');
+    }
+});
+
+
+});
+
+router.post('/preorder', (req, res, next) => {
+  const order = req.body;
+  return preOrders.create({
+    orderNumber:order.orderNumber,
+    orderDate:order.orderDate,
+    comments:order.comments,
+    customerNumber:order.customerNumber
+  }).then(function (order) {
+    if (order) {
+        response.send(order);
+    } else {
+        response.status(400).send('Error in insert new order');
+    }
+});
+});
+
+router.post('/preorderdetail', (req, res, next) => {
+  const orderdetail = req.body;
+  return preorderdetails.create({
+    preOrderNumber:orderdetail.orderNumber,
+    productCode:orderdetail.productCode,
+    quantityOrdered:orderdetail. quantityOrdered,
+    priceEach:orderdetail.priceEach,
+    orderLineNumber:orderdetail.orderLineNumber
+  }).then(function (order) {
+    if (order) {
+        response.send(order);
+    } else {
+        response.status(400).send('Error in insert new order');
+    }
+});
 });
 
 module.exports = router;
