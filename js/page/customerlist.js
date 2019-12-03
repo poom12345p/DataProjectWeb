@@ -67,31 +67,19 @@ function updatePage(page) {
                   <div class="col-md-3 col-sm-4 col-xs-12">
                     <div class="item-pro-color">
                       <div class="product-thumb">
-                        <a href="http://demo.7uptheme.com/html/kuteshop/detail.html"
+                        <a href="/customerorder=${dataMem[i].customerNumber}"
                           class="product-thumb-link">
                           <img data-color="black" class="active"
                             src="./image/2(1).png"
                             alt="">
-                          <img data-color="purple"
-                            src="./image/3(1).jpg"
-                            alt="">
-                          <img data-color="blue"
-                            src="./image/4(1).jpg"
-                            alt="">
-                          <img data-color="cyan"
-                            src="./image/5.jpg"
-                            alt="">
                         </a>
-                        <a href="http://demo.7uptheme.com/html/kuteshop/quick-view.html"
-                          class="quickview-link plus fancybox.iframe"><span>quick
-                            view</span></a>
                       </div>
                     </div>
                   </div>
                   <div class="col-md-9 col-sm-8 col-xs-12">
                     <div class="product-info">
                       <h5 class="product-title"><a
-                        href="http://demo.7uptheme.com/html/kuteshop/detail.html"><font size="4"><b>${dataMem[i].customerName}</b></font></h5><font size="3.5">Customer Number : ${dataMem[i].customerNumber}</font></a>
+                        href="/customerorder=${dataMem[i].customerNumber}"><font size="4"><b>${dataMem[i].customerName}</b></font></h5><font size="3.5">Customer Number : ${dataMem[i].customerNumber}</font></a>
                       <div class="product-price">
                         <!--<ins><span>$360.00</span></ins>-->
                       </div>
