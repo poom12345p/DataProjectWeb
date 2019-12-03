@@ -26,8 +26,8 @@ $(document).ready(function () {
       console.log('You received some data!', data);
       for (var i = 0; i < data.length; i++) {
         let status = false;
-        sizes.forEach(size => {
-          if (data[i].jobTitle== size) status = true;
+        titles.forEach(title => {
+          if (data[i].jobTitle== title) status = true;
         });
         if (status == true) {
           var checkbox = "<input type='checkbox'name ='scale' value='" + data[i].jobTitle + "'onclick ='titleclick(this)' autocomplete='off' checked='true' />"
