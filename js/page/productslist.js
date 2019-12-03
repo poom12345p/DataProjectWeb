@@ -45,27 +45,6 @@ $(document).ready(function () {
       updatePage(page);
     }
   });
-
-  $("#submit").click(function () {
-    // $.ajax({
-    //   // all URLs are relative to http://localhost:3000/
-    //   url: requestURL,
-    //   type: 'GET',
-    //   dataType : 'json', // this URL returns data in JSON format
-    //   success: (data) => {
-    //    console.log(vendors.length);
-    //    // console.log('You received some data!', data);
-    //     for(var i=0;i<data.length;i++)
-    //     {   
-    //        if( (sizes.length>0?findSizes(data[i]):true) && (vendors.length>0?findVendors(data[i]):true))
-    //        {
-
-    //           list.innerHTML+=`${data[i].productName}|${data[i].productScale} <br>`;
-    //        }
-    //     }
-    //   }
-    // });
-  });
 });
 
 function pageclick(page) {
@@ -76,10 +55,10 @@ function pageclick(page) {
 }
 
 function nextpage() {
-  var current = parseInt(document.querySelector('.current-page').innerHTML) + 1;
-  console.log('np ' + current);
-  //location.href = `/Productslist?page=${current}&sizes=${sizes}&vendors=${vendors}`;
-  updatePage(current);
+  var next = parseInt(document.querySelector('.current-page').innerHTML) + 1;
+  console.log('np ' + next);
+  //location.href = `/Productslist?page=${next}&sizes=${sizes}&vendors=${vendors}`;
+  updatePage(next);
 }
 
 function findSizes(data) {
@@ -88,9 +67,7 @@ function findSizes(data) {
     if (data.productScale == size) {
       console.log(`${data.productScale}|${size}`);
       find = true;
-
     }
-
   });
   return find;
 }
@@ -100,7 +77,6 @@ function findVendors(data) {
   vendors.forEach(vendor => {
     if (data.productVendor == vendor) {
       find = true;
-
     }
   });
   return find;
@@ -204,16 +180,15 @@ function updatePage(page) {
                 </div>
                 </div>
 									<!-- End Item -->`;
-
     }
   }
   catch (err) { }
   var bar = document.createElement('div');
   bar.className = 'pagi-bar';
-  console.log('mp ' + maxpage);
   var add = 0;
+  console.log((page + 5 < maxpage));
   if (page < 6 || maxpage < 11) add = 0;
-  else if (page + 5 < maxpage) add = page - 5;
+  else if (page - 0 + 5 < maxpage) add = page - 5;
   else if (maxpage > 10) add = maxpage - 10;
   for (var i = 1 + add; i <= 10 + add; i++) {
     if (i > maxpage) break;
