@@ -346,10 +346,6 @@ router.get('/data/customers',(req,res)=>{
   })
   .catch(err => {console.log(err);});
 });
-<<<<<<< HEAD
-
-
-=======
 router.post('/customer/update/', (req, res, next) =>{
   db.query(`update customers set contactFirstName = "${req.body.contactFirstName}",contactLastName = "${req.body.contactLastName}",
             customerName= "${req.body.customerName}",addressLine1= "${req.body.addressLine1}",addressLine2= "${req.body.addressLine2}"
@@ -371,7 +367,6 @@ router.post('/customer/update/', (req, res, next) =>{
     .catch(err => { console.log(next); });
 
  });
->>>>>>> becab641b93826df2a2c26bf7f1957d3959eb5a3
 ///////////////////employees//////////////////////////
 router.get('/employeelist',(req,res)=>{
   res.sendFile(path.join(__dirname,`..`,`..`,`EmployeeList.html`));
@@ -654,7 +649,6 @@ router.get('/login', (req, res, next) => {
 router.post('/login', (req, res, next) => {
   // console.log(req);
   // (req, res) => res.sendFile('productslist', req.user)
-
   console.log(req.body.username);
   console.log(req.body.password);
   const username = req.body.username;
@@ -704,6 +698,7 @@ router.post('/login', (req, res, next) => {
 
 router.post('/promotion', (req, res, next) => {
   const promotion = req.body;
+  console.log(promotion);
   return promotions.create({
     code:promotion.code,
     amount:promotion.amount,
