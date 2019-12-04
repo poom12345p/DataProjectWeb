@@ -425,6 +425,15 @@ router.post('/employee/update/', (req, res, next) =>{
     })
     .catch(err => { console.log(next); });
  })
+ 
+ router.delete('/employee/delete/', (req, res, next) =>{
+  db.query(`delete from employees where employeeNumber = "${req.body.employeeNumber}"`, { type: db.QueryTypes.delete})
+            
+    .then(result => {
+      console.log(result);
+    })
+    .catch(err => { console.log(next); });
+ })
 //////////////order/////////////////////////////////////
 router.get('/orderlist',(req,res)=>{
   res.sendFile(path.join(__dirname,`..`,`..`,`Order_list.html`));

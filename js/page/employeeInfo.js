@@ -99,6 +99,8 @@ function updatePage(number) {
 																		<div class="col-md-6 col-sm-6 col-xs-12">
 																			<div class="newsletter-form footer-box">
 																				<h2 class="title14">User's Name</h2>
+																				<input type="hidden" id="enumber"
+																					value="${dataMem[0].employeeNumber}">
 																				<h3 class="title14">${dataMem[0].employeeNumber}</h3>
 																			
 																			</div>
@@ -131,7 +133,7 @@ function updatePage(number) {
 																</td>
 																
 																<td >
-																<button type="button" class="btn btn-danger btn-lg" id = "delete" style="visibility:hidden;" onclick="deleteclick()">Remove</button>	
+																<button type="button" class="btn btn-danger btn-lg deletevalue" id = "delete" style="visibility:hidden;" onclick="deleteclick()">Remove</button>	
 																						
 																</td>
 															</tr>
@@ -222,7 +224,7 @@ function updatePage(number) {
 													<td align="right">
 													<br></br>
 														<button type="button"
-															class="btn btn-secondary btn-lg btn-block" id = "cancle" style="visibility:hidden; onclick="cancleclick()">Cancal</button>
+															class="btn btn-secondary btn-lg btn-block cancle" id = "cancle" style="visibility:hidden; onclick="cancleclick()">Cancal</button>
 															
 														</td>
 													
@@ -276,10 +278,4 @@ function editclick(){
 	document.getElementById('save').style.visibility = 'visible';
 }
 
-function deleteclick(){
-
-}
-function cancleclick(){
-	location.reload(true);
-}
 

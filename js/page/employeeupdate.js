@@ -21,5 +21,26 @@ $(document).ready(function () {
 	dataType: 'json', // this URL returns data in JSON format
 	});
     console.log(memvalue);
+    location.reload(true);
   });
+$(document).on("click", ".deletevalue", function(){
+    console.log("Am in");
+const requestURL2 = '/employee/delete/';
+console.log('making ajax request to:', requestURL2);
+
+var memvalue = {
+    employeeNumber :$('#enumber').val()};
+$.ajax({
+url: requestURL2,
+type: 'DELETE',
+data: memvalue,
+dataType: 'json', // this URL returns data in JSON format
+});
+location.reload(true);
+console.log(memvalue);
+});
+$(document).on("click", ".cancle", function(){
+    location.reload(true);
+});
+
 });
