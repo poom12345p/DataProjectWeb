@@ -342,6 +342,27 @@ router.get('/data/customers',(req,res)=>{
   })
   .catch(err => {console.log(err);});
 });
+router.post('/customer/update/', (req, res, next) =>{
+  db.query(`update customers set contactFirstName = "${req.body.contactFirstName}",contactLastName = "${req.body.contactLastName}",
+            customerName= "${req.body.customerName}",addressLine1= "${req.body.addressLine1}",addressLine2= "${req.body.addressLine2}"
+            ,city= "${req.body.city}",state= "${req.body.state}",postalCode= "${req.body.postalCode}"
+            ,country= "${req.body.country}",creditLimit= "${req.body.creditLimit}",phone= "${req.body.phone}",customerNumber = "${req.body.customerNumbers}"
+            where customerNumber = "${req.body.customerNumber}"`, { type: db.QueryTypes.update })
+    .then(result => {
+      console.log(result);
+    })
+    .catch(err => { console.log(next); });
+ })
+ 
+ router.delete('/customer/delete/', (req, res, next) =>{
+  db.query(`delete from customers where customerNumber = "${req.body.customerNumber}"`, { type: db.QueryTypes.delete})
+            
+    .then(result => {
+      console.log(result);
+    })
+    .catch(err => { console.log(next); });
+
+ });
 ///////////////////employees//////////////////////////
 router.get('/employeelist',(req,res)=>{
   res.sendFile(path.join(__dirname,`..`,`..`,`EmployeeList.html`));
@@ -452,8 +473,6 @@ router.get('/data/employees/:number', (req, res, next) => {
     .catch(err => { console.log(next); });
 });
 router.post('/employee/update/', (req, res, next) =>{
-
-  
   db.query(`update employees set firstname = "${req.body.firstName}",lastName = "${req.body.lastName}",
             jobTitle= "${req.body.jobTitle}",email= "${req.body.email}",extension= "${req.body.extension}"
             where employeeNumber = "${req.body.employeeNumber}"`, { type: db.QueryTypes.update })
