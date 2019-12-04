@@ -346,8 +346,32 @@ router.get('/data/customers',(req,res)=>{
   })
   .catch(err => {console.log(err);});
 });
+<<<<<<< HEAD
 
 
+=======
+router.post('/customer/update/', (req, res, next) =>{
+  db.query(`update customers set contactFirstName = "${req.body.contactFirstName}",contactLastName = "${req.body.contactLastName}",
+            customerName= "${req.body.customerName}",addressLine1= "${req.body.addressLine1}",addressLine2= "${req.body.addressLine2}"
+            ,city= "${req.body.city}",state= "${req.body.state}",postalCode= "${req.body.postalCode}"
+            ,country= "${req.body.country}",creditLimit= "${req.body.creditLimit}",phone= "${req.body.phone}",customerNumber = "${req.body.customerNumbers}"
+            where customerNumber = "${req.body.customerNumber}"`, { type: db.QueryTypes.update })
+    .then(result => {
+      console.log(result);
+    })
+    .catch(err => { console.log(next); });
+ })
+ 
+ router.delete('/customer/delete/', (req, res, next) =>{
+  db.query(`delete from customers where customerNumber = "${req.body.customerNumber}"`, { type: db.QueryTypes.delete})
+            
+    .then(result => {
+      console.log(result);
+    })
+    .catch(err => { console.log(next); });
+
+ });
+>>>>>>> becab641b93826df2a2c26bf7f1957d3959eb5a3
 ///////////////////employees//////////////////////////
 router.get('/employeelist',(req,res)=>{
   res.sendFile(path.join(__dirname,`..`,`..`,`EmployeeList.html`));
@@ -458,21 +482,24 @@ router.get('/data/employees/:number', (req, res, next) => {
     .catch(err => { console.log(next); });
 });
 router.post('/employee/update/', (req, res, next) =>{
-  employees.update(
-    {employeeNumber: req.body.employeeNumber,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    jobTitle: req.body.jobTitle,
-    email: req.body.email,
-    extension: req.body.extension},
-    {where: req.body.employeeNumbers}
-    
-  )
-  .then(function(rowsUpdated) {
-    res.json(rowsUpdated)
-  })
-  .catch(next)
+  db.query(`update employees set firstname = "${req.body.firstName}",lastName = "${req.body.lastName}",
+            jobTitle= "${req.body.jobTitle}",email= "${req.body.email}",extension= "${req.body.extension}"
+            where employeeNumber = "${req.body.employeeNumber}"`, { type: db.QueryTypes.update })
+    .then(result => {
+      console.log(result);
+    })
+    .catch(err => { console.log(next); });
  })
+ 
+ router.delete('/employee/delete/', (req, res, next) =>{
+  db.query(`delete from employees where employeeNumber = "${req.body.employeeNumber}"`, { type: db.QueryTypes.delete})
+            
+    .then(result => {
+      console.log(result);
+    })
+    .catch(err => { console.log(next); });
+
+ });
 //////////////order/////////////////////////////////////
 router.get('/orderlist',(req,res)=>{
   res.sendFile(path.join(__dirname,`..`,`..`,`Order_list.html`));

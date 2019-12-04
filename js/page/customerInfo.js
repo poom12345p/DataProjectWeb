@@ -114,10 +114,12 @@ function updatePage(number) {
            <tr>
             <td align="left" width="40%">
              <h2 class="title-shop-page">Customer ID : ${parsURL}</h2>
+             <input type="hidden" id="cnumber"
+																					value="${dataMem[0].customerNumber}">
             </td>
             <td align="right" width="40%">
-            <button type="button" class="btn btn-danger btn-lg">Remove</button>
-            <button type="button" class="btn btn-info btn-lg">Edit</button>
+            <button type="button" class="btn btn-danger btn-lg deletevalue" id = "delete" style="visibility:hidden; onclick="">Remove</button>
+            <button type="button" class="btn btn-info btn-lg" onclick ="editclick()">Edit</button>
             </td>
            </tr>
           </table>
@@ -149,7 +151,7 @@ function updatePage(number) {
                 <div class="row">
                    <div class="newsletter-form footer-box">
                        <h2 class="title14">First Name</h2>
-                           <input type="text" value="${dataMem[0].contactFirstName}">
+                           <input type="text" id = "cfname" value="${dataMem[0].contactFirstName}">
                    </div>
                 </div>
                </div>
@@ -157,7 +159,7 @@ function updatePage(number) {
                 <div class="row">
                  <div class="newsletter-form footer-box">
                    <h2 class="title14">Last Name</h2>
-                       <input type="text" value="${dataMem[0].contactLastName}">
+                       <input type="text" id = "clname" value="${dataMem[0].contactLastName}">
                  </div>
                 </div>
                </div>
@@ -165,7 +167,7 @@ function updatePage(number) {
                 <div class="row">
                  <div class="newsletter-form footer-box">
                    <h2 class="title14">Username</h2>
-                       <input type="text" value="${dataMem[0].customerName}">
+                       <input type="text" id ="cname" value="${dataMem[0].customerName}">
                  </div>
                 </div>
                </div>
@@ -173,7 +175,7 @@ function updatePage(number) {
                 <div class="row">
                  <div class="newsletter-form footer-box">
                    <h2 class="title14">Usernumber</h2>
-                       <input type="text" value="${dataMem[0].customerNumber}">
+                       <input type="text" id = "cnumbers" value="${dataMem[0].customerNumber}">
                  </div>
                 </div>
                </div>
@@ -243,7 +245,7 @@ function updatePage(number) {
               <div class="row">
                <div class="newsletter-form footer-box">
                  <h2 class="title14">Credit Limit</h2>
-                     <input type="text" value="${dataMem[0].creditLimit}">
+                     <input type="text" id = "ccredit" value="${dataMem[0].creditLimit}">
                </div>
               </div>
              </div>
@@ -271,7 +273,7 @@ function updatePage(number) {
              <div class="row">
               <div class="newsletter-form footer-box">
                 <h2 class="title14">AddressLine1</h2>
-                    <input type="text" value="${dataMem[0].addressLine1}">
+                    <input type="text" id = "caddr1" value="${dataMem[0].addressLine1}">
               </div>
              </div>
             </div>
@@ -279,7 +281,7 @@ function updatePage(number) {
              <div class="row">
               <div class="newsletter-form footer-box">
                 <h2 class="title14">AddressLine2</h2>
-                    <input type="text" value="${dataMem[0].addressLine2}">
+                    <input type="text" id = "caddr2" value="${dataMem[0].addressLine2}">
               </div>
              </div>
             </div>
@@ -287,7 +289,7 @@ function updatePage(number) {
             <div class="row">
             <div class="newsletter-form footer-box">
                 <h2 class="title14">Country</h2>
-                    <input type="text" value="${dataMem[0].country}">
+                    <input type="text" id = "country" value="${dataMem[0].country}">
             </div>
          </div>
                  </div>
@@ -295,7 +297,7 @@ function updatePage(number) {
                <div class="row">
                <div class="newsletter-form footer-box">
                    <h2 class="title14">City</h2>
-                       <input type="text" value="${dataMem[0].city}">
+                       <input type="text" id = "city" value="${dataMem[0].city}">
                </div>
             </div>
                  </div>
@@ -303,7 +305,7 @@ function updatePage(number) {
                <div class="row">
                <div class="newsletter-form footer-box">
                    <h2 class="title14">State</h2>
-                       <input type="text" value="${dataMem[0].state}">
+                       <input type="text" id = "state" value="${dataMem[0].state}">
                </div>
             </div>
                  </div>
@@ -311,7 +313,7 @@ function updatePage(number) {
                <div class="row">
                <div class="newsletter-form footer-box">
                    <h2 class="title14">PostalCode</h2>
-                       <input type="text" value="${dataMem[0].postalCode}">
+                       <input type="text" id = "postal" value="${dataMem[0].postalCode}">
                </div>
             </div>
             </div>
@@ -329,7 +331,7 @@ function updatePage(number) {
              <div class="row">
              <div class="newsletter-form footer-box">
                  <h2 class="title14">Number Phone</h2>
-                     <input type="text" value="${dataMem[0].phone}">
+                     <input type="text" id = "phone" value="${dataMem[0].phone}">
              </div>
           </div>
              </div>
@@ -344,14 +346,14 @@ function updatePage(number) {
       <table align="center" width='40%'>
       <tr>
       <td align="center">
-      <button type="button" class="btn btn-secondary btn-lg btn-block">Cancal</button>
+      <button type="button" class="btn btn-secondary btn-lg btn-block cancle" id = "cancle" style="visibility:hidden; onclick ="">Cancal</button>
       </td>
       </tr>
   </table>
   <table align="center" width='40%'>
       <tr>
       <td align="left">
-      <button type="button" class="btn btn-warning btn-lg btn-block">Save</button>
+      <button type="button" class="btn btn-warning btn-lg btn-block updatevalue" id = "save" style="visibility:hidden; onclick = "">Save</button>
       </td>
       </tr>
       <br>
@@ -384,4 +386,9 @@ function searchText(e) {
   if (textSearch == "Search...") textSearch = "";
   updateFilther(dataAll);
   updatePage(1);
+}
+function editclick(){
+	document.getElementById('delete').style.visibility = 'visible';
+	document.getElementById('cancle').style.visibility = 'visible';
+	document.getElementById('save').style.visibility = 'visible';
 }
