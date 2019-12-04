@@ -80,7 +80,7 @@ router.get('/login/:email', (req, res, next) => {
 });
 
 //////////////////////products search api//////////////////////////
-router.get('/search/products', (req, res, next) => {
+router.get('/search/productsAll', (req, res, next) => {
   //console.log(`${req.params.size}`);
   /*
   ex. not select size and vendor
@@ -144,76 +144,9 @@ router.get('/search/products/name=:name', (req, res, next) => {
     .catch(err => { console.log(next); });
 });
 
-router.get('/search/products/:code', (req, res, next) => {
 
-  products.findAll({
-    where:
-    {
-      productCode: code
-      
-    }
-   
-  })
-    // db.query(`SELECT * FROM products WHERE productCode LIKE '%${code}%' ORDER BY productCode,productName,productScale,productVendor`, { type: db.QueryTypes.SELECT})
-    .then(result => {
-      console.log(result);
-      res.send(result);
-    })
-    .catch(err => { console.log(next); });
-});
 
-router.get('/search/products/name/:code', (req, res, next) => {
 
-  products.findAll({
-    attributes: ['productName'],
-    where:
-    {
-      productCode: code
-      
-    }
-   
-  })
-    // db.query(`SELECT * FROM products WHERE productCode LIKE '%${code}%' ORDER BY productCode,productName,productScale,productVendor`, { type: db.QueryTypes.SELECT})
-    .then(result => {
-      console.log(result);
-      res.send(result);
-    })
-    .catch(err => { console.log(next); });
-});
-
-router.get('/search/products/allSize', (req, res, next) => {
-  //console.log(`${req.params.size}`);
-  products.findAll({
-    attributes: [Sequelize.literal('DISTINCT `productScale`'), 'productScale'],
-    order: ['productScale']
-  })
-    // db.query(`SELECT productScale FROM products GROUP by productScale`, { type: db.QueryTypes.SELECT})
-    .then(result => {
-      //console.log(result);
-      res.send(result);
-    })
-    .catch(err => { console.log(next); });
-
-});
-router.get('/search/products/allVendor', (req, res, next) => {
-  //console.log(`${req.params.size}`);\
-  products.findAll({
-    attributes: [Sequelize.literal('DISTINCT `productVendor`'), 'productVendor'],
-    order: ['productVendor']
-  })
-    // db.query(`SELECT productVendor FROM products GROUP by productVendor`, { type: db.QueryTypes.SELECT})
-    .then(result => {
-     // console.log(result);
-      res.send(result);
-    })
-    // db.query(`SELECT productVendor FROM products GROUP by productVendor`, { type: db.QueryTypes.SELECT})
-    .then(result => {
-      //console.log(result);
-      res.send(result);
-    })
-    .catch(err => { console.log(next); });
-
-});
 
 router.get('/data/products/:code', (req, res, next) => {
   /*
@@ -346,10 +279,7 @@ router.get('/data/customers',(req,res)=>{
   })
   .catch(err => {console.log(err);});
 });
-<<<<<<< HEAD
 
-
-=======
 router.post('/customer/update/', (req, res, next) =>{
   db.query(`update customers set contactFirstName = "${req.body.contactFirstName}",contactLastName = "${req.body.contactLastName}",
             customerName= "${req.body.customerName}",addressLine1= "${req.body.addressLine1}",addressLine2= "${req.body.addressLine2}"
@@ -360,7 +290,7 @@ router.post('/customer/update/', (req, res, next) =>{
       console.log(result);
     })
     .catch(err => { console.log(next); });
- })
+ });
  
  router.delete('/customer/delete/', (req, res, next) =>{
   db.query(`delete from customers where customerNumber = "${req.body.customerNumber}"`, { type: db.QueryTypes.delete})
@@ -371,7 +301,6 @@ router.post('/customer/update/', (req, res, next) =>{
     .catch(err => { console.log(next); });
 
  });
->>>>>>> becab641b93826df2a2c26bf7f1957d3959eb5a3
 ///////////////////employees//////////////////////////
 router.get('/employeelist',(req,res)=>{
   res.sendFile(path.join(__dirname,`..`,`..`,`EmployeeList.html`));
@@ -489,7 +418,7 @@ router.post('/employee/update/', (req, res, next) =>{
       console.log(result);
     })
     .catch(err => { console.log(next); });
- })
+ });
  
  router.delete('/employee/delete/', (req, res, next) =>{
   db.query(`delete from employees where employeeNumber = "${req.body.employeeNumber}"`, { type: db.QueryTypes.delete})
@@ -811,5 +740,31 @@ router.post('/preorderdetail', (req, res, next) => {
     }
   });
 });
+router.get('/search/products/allSize', (req, res, next) => {
+  products.findAll({
+    attributes: [Sequelize.literal('DISTINCT `productScale`'), 'productScale'],
+    order: ['productScale']
+  })
+    .then(result => {
+      console.log(result);
+      res.send(result);
+      next();
+    })
 
+
+});
+router.get('/search/products/allVendor', (req, res, next) => {
+  //console.log(`${req.params.size}`);\
+  products.findAll({
+    attributes: [Sequelize.literal('DISTINCT `productVendor`'), 'productVendor'],
+    order: ['productVendor']
+  })
+    // db.query(`SELECT productVendor FROM products GROUP by productVendor`, { type: db.QueryTypes.SELECT})
+    .then(result => {
+     // console.log(result);
+      res.send(result);
+    })
+   .catch(next);
+
+});
 module.exports = router;
