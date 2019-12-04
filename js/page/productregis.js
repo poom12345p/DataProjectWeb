@@ -1,7 +1,7 @@
 let list = document.querySelector('.list-pro-color')
 
 $(document).ready(function () {
-  $("#addPromo-btn").click(function (event) {
+  $("#addProduct-btn").click(function (event) {
     event.preventDefault();
     console.log("submit promotion");
     let data = {
