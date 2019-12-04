@@ -80,7 +80,7 @@ router.get('/login/:email', (req, res, next) => {
 });
 
 //////////////////////products search api//////////////////////////
-router.get('/search/productsAll', (req, res, next) => {
+router.get('/search/products', (req, res, next) => {
   //console.log(`${req.params.size}`);
   /*
   ex. not select size and vendor
@@ -279,10 +279,6 @@ router.get('/data/customers',(req,res)=>{
   })
   .catch(err => {console.log(err);});
 });
-<<<<<<< HEAD
-=======
-
->>>>>>> 95a54cf1b8f8dee58fd2dd1eb706975b2721145d
 router.post('/customer/update/', (req, res, next) =>{
   db.query(`update customers set contactFirstName = "${req.body.contactFirstName}",contactLastName = "${req.body.contactLastName}",
             customerName= "${req.body.customerName}",addressLine1= "${req.body.addressLine1}",addressLine2= "${req.body.addressLine2}"
