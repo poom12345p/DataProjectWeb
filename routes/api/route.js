@@ -426,6 +426,22 @@ router.get('/data/employees/:number', (req, res, next) => {
     })
     .catch(err => { console.log(next); });
 });
+router.put('/employee/update/', (req, res, next) =>{
+  employees.update(
+    {employeeNumber: req.body.employeeNumber,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    jobTitle: req.body.jobTitle,
+    email: req.body.email,
+    extension: req.body.extension},
+    {where: req.body.employeeNumbers}
+    
+  )
+  .then(function(rowsUpdated) {
+    res.json(rowsUpdated)
+  })
+  .catch(next)
+ })
 //////////////order/////////////////////////////////////
 router.get('/orderlist',(req,res)=>{
   res.sendFile(path.join(__dirname,`..`,`..`,`Order_list.html`));
