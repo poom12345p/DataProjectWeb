@@ -15,6 +15,7 @@ const offices = require('./tables/offices');
 const employees = require('./tables/employees');
 const customers = require('./tables/customers');
 const promotions = require('./tables/promotions');
+const orderspromotions = require('./tables/orderspromotions');
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt');
 const Op = Sequelize.Op;
@@ -31,12 +32,25 @@ db.authenticate()
 router.get('/', (req, res, next) => {
 
 
-  res.sendFile(path.join(__dirname, `..`, `..`, `ProductLotList.html`));
+  res.sendFile(path.join(__dirname, `..`, `..`, `createorder.html`));
   // res.send(result);
 
 });
 
+router.get('/createorder', (req, res, next) => {
 
+
+  res.sendFile(path.join(__dirname, `..`, `..`, `createorder.html`));
+  // res.send(result);
+
+});
+router.get('/orderdetails', (req, res, next) => {
+
+
+  res.sendFile(path.join(__dirname, `..`, `..`, `orderdetail.html`));
+  // res.send(result);
+
+});
 router.get('/productslist', (req, res, next) => {
   res.sendFile(path.join(__dirname, `..`, `..`, `ProductLotList.html`), { name: req.user });
   // res.send(result);
@@ -64,6 +78,7 @@ router.get('/login/:email', (req, res, next) => {
   }).catch(err => { console.log(next); });
 
 });
+
 //////////////////////products search api//////////////////////////
 router.get('/search/products', (req, res, next) => {
   //console.log(`${req.params.size}`);
@@ -76,6 +91,23 @@ router.get('/search/products', (req, res, next) => {
   // db.query(`SELECT * FROM products ORDER BY productName,productScale,productVendor `, { type: db.QueryTypes.SELECT})
   products.findAll({
     order: [`productName`, `productScale`, `productVendor`]
+  })
+    .then(result => {
+      //console.log(result);
+      res.send(result);
+    })
+    .catch(err => { console.log(next); });
+});
+
+router.get('/search/preproducts', (req, res, next) => {
+
+  products.findAll({
+    where:
+    {
+      quantityInStock: {
+        [Op.eq]:0
+      }
+    }
   })
     .then(result => {
       //console.log(result);
@@ -191,11 +223,15 @@ router.get('/data/products/:code', (req, res, next) => {
     .catch(err => { console.log(next); });
 });
 
+router.get('/productdetails=:code', (req, res, next) => {
+  res.sendFile(path.join(__dirname, `..`, `..`, `productdetails.html`), { name: req.user });
+  // res.send(result);
+});
 
 ///////////////////////////custommer////////////////////////////////////////////
 router.get('/search/customers', (req, res, next) => {
   customers.findAll({
-    order: [`customerName`]
+    order: [`customerNumber`]
   })
     /* db.query(`SELECT *
      FROM customers
@@ -280,7 +316,7 @@ router.get('/data/customers/number=:number', (req, res, next) => {
     .catch(err => { console.log(next); });
 });
 
-router.get('/customerInfo',(req,res)=>{
+router.get('/customerInfo=:code',(req,res)=>{
   res.sendFile(path.join(__dirname,`..`,`..`,`Profile.html`), { name: req.user });
  // res.send(result);
 });
@@ -291,7 +327,7 @@ router.get('/customerlist',(req,res)=>{
 });
 
 
-router.get('/customerorder',(req,res)=>{
+router.get('/customerorder=:code',(req,res)=>{
   res.sendFile(path.join(__dirname,`..`,`..`,`Customer_DetailOrder.html`));
  // res.send(result);
 });
@@ -416,6 +452,7 @@ router.get('/data/employees/:number', (req, res, next) => {
     .catch(err => { console.log(next); });
 });
 router.post('/employee/update/', (req, res, next) =>{
+
   
   db.query(`update employees set firstname = "${req.body.firstName}",lastName = "${req.body.lastName}",
             jobTitle= "${req.body.jobTitle}",email= "${req.body.email}",extension= "${req.body.extension}"
@@ -433,22 +470,26 @@ router.post('/employee/update/', (req, res, next) =>{
       console.log(result);
     })
     .catch(err => { console.log(next); });
- })
+
+ });
 //////////////order/////////////////////////////////////
 router.get('/orderlist',(req,res)=>{
   res.sendFile(path.join(__dirname,`..`,`..`,`Order_list.html`));
  // res.send(result);
 });
 
-router.get('/data/order',(req,res)=>{
+router.get('/data/order/:orderNumber',(req,res,next)=>{
   
-  db.query(`SELECT *
-  FROM orders
-  ORDER by orderNumber,orderDate`, { type: db.QueryTypes.SELECT})
+  orders.findAll({
+    where:
+    {
+      orderNumber:req.params.orderNumber
+    }
+  })
   .then(result => {console.log(result);
   res.send(result);
   })
-  .catch(err => {console.log(err);});
+  .catch(err => {console.log(next);});
 });
 
 router.get('/search/orders', (req, res, next) => {
@@ -467,6 +508,67 @@ router.get('/search/orders/allTitle', (req, res, next) => {
     /* db.query(`SELECT status
      FROM orders
      GROUP BY orders`, { type: db.QueryTypes.SELECT})*/
+    .then(result => {
+      console.log(result);
+      res.send(result);
+    })
+    .catch(err => { console.log(next); });
+});
+
+router.get('/maxOrdersNumber', (req, res, next) => {
+orders.max('orderNumber').then(max => {
+      console.log(max);
+      res.send(max);
+});
+});
+router.get('/search/customerorders/number=:number', (req, res, next) => {
+  orders.findAll({
+
+    where:
+    {
+      customerNumber: {
+        [Op.like]: `${req.params.number}%`
+      }
+    }
+    ,
+    order: [`orderNumber`]
+  })
+    /*db.query(`SELECT *
+    FROM orders
+    WHERE customerNumber LIKE '${req.params.number}%';
+    ORDER by orderNumber  `, { type: db.QueryTypes.SELECT})*/
+    .then(result => {
+      console.log(result);
+      res.send(result);
+    })
+    .catch(err => { console.log(next); });
+});
+//////////////////////////////////////////////////////////////////////////////////
+router.get('/search/promotions', (req, res, next) => {
+  promotions.findAll()
+    .then(result => {
+      console.log(result);
+      res.send(result);
+    })
+    .catch(err => { console.log(next); });
+});
+router.get('/search/promotions/:code', (req, res, next) => {
+  promotions.findAll(
+    {where:
+      {
+        code: req.params.code,
+        amount: {
+          [Op.gt]: 0
+        },
+        expire: {
+          [Op.gte]: moment().toDate()
+        }
+      
+      }
+      
+    }
+      
+  )
     .then(result => {
       console.log(result);
       res.send(result);
@@ -571,9 +673,9 @@ router.post('/order', (req, res, next) => {
     orderDate:order.orderDate,
     requiredDate:order.requiredDate,
     shippedDate:order.shippedDate,
-    status:"in progress",
+    status:"in process",
     comments:order.comments,
-    customerNumber:order.  customerNumber
+    customerNumber:order.customerNumber
   }).then(function (order) {
     if (order) {
         response.send(order);
@@ -588,9 +690,10 @@ router.post('/orderdetail', (req, res, next) => {
   return orderdetails.create({
     orderNumber:orderdetail.orderNumber,
     productCode:orderdetail.productCode,
-    quantityOrdered:orderdetail. quantityOrdered,
+    quantityOrdered:orderdetail.quantityOrdered,
     priceEach:orderdetail.priceEach,
-    orderLineNumber:orderdetail.orderLineNumber
+    orderLineNumber:null,
+    status:null
   }).then(function (order) {
     if (order) {
         response.send(order);
@@ -605,7 +708,7 @@ router.post('/orderdetail', (req, res, next) => {
 router.post('/preorder', (req, res, next) => {
   const order = req.body;
   return preOrders.create({
-    orderNumber:order.orderNumber,
+   orderNumber:order.orderNumber,
     orderDate:order.orderDate,
     comments:order.comments,
     customerNumber:order.customerNumber
@@ -632,7 +735,7 @@ router.post('/preorderdetail', (req, res, next) => {
     } else {
         response.status(400).send('Error in insert new order');
     }
-});
+  });
 });
 
 module.exports = router;

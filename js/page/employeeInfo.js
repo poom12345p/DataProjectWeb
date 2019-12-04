@@ -7,7 +7,7 @@ let dataAll = [];
 let dataMem = [];
 var numberRow = 1;
 var numberPage = 1;
-if (urlParams.get('number') == null) urlParams.set('number', '12');
+if (urlParams.get('number') == null) urlParams.set('number', '1');
 
 let names = [];
 if (urlParams.get('names') != null && urlParams.get('names') != '') urlParams.get('names').split(',').forEach(name => {
@@ -39,26 +39,7 @@ $(document).ready(function () {
 	
   });
 
-  $("#submit").click(function () {
-    // const requestURL = '/data/employees';
-    // console.log('making ajax request to:', requestURL);
-    // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
-    // Using the core $.ajax() method since it's the most flexible.
-    // ($.get() and $.getJSON() are nicer convenience functions)
-    // $.ajax({
-    // all URLs are relative to http://localhost:3000/
-    // url: requestURL,
-    // type: 'GET',
-    // dataType : 'json', // this URL returns data in JSON format
-    // success: (data) => {
-    // console.log('You received some data!', data);
-    // for(var i=0;i<data.length;i++)
-    //        {      
-    //            list.innerHTML+=`${data[i].customerName} <br>`
-    //        }
-    //        console.log(list);
-  });
- 
+
   
 });
 

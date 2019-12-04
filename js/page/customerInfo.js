@@ -1,5 +1,12 @@
 var urlParams = new URLSearchParams(location.search);
 let list1 = document.querySelector('.list-pro-color');
+let widget = document.querySelector('.widget-content');
+let bread = document.querySelector('.bread-crumb');
+let URL = window.location.href;
+console.log(URL);
+var parsURL = URL.replace('http://localhost:9000/customerInfo=','');
+console.log(parsURL);
+
 let searchForm = document.querySelector('.smart-search-form');
 searchForm.addEventListener('submit', searchText);
 let textSearch = "";
@@ -7,12 +14,25 @@ let dataAll = [];
 let dataMem = [];
 var numberRow = 1;
 var numberPage = 1;
-if (urlParams.get('number') == null) urlParams.set('number', '103');
+if (urlParams.get('number') == null) urlParams.set('number', '1');
 
 let customers = [];
 if (urlParams.get('customers') != null && urlParams.get('customers') != '') urlParams.get('customers').split(',').forEach(customer => {
   customers.push(customer);
 });
+
+widget.innerHTML = `
+<ul>
+<li class="">
+  <a href="/customerInfo=${parsURL}">Customer Profile</a>
+</li>
+<br>
+<li class="">
+  <a href="/customerorder=${parsURL}">Order</a>
+</li>
+</ul>`;
+
+bread.innerHTML = `<a href="CustomerList.html">Customer</a> <span>Profile ID ${parsURL}</span>`;
 
 $(document).ready(function () {
 
@@ -20,7 +40,7 @@ $(document).ready(function () {
   var user = JSON.parse(localStorage.getItem('User'));
   console.log(user);
   console.log(list1);
-  const requestURL = '/search/customers';
+  const requestURL = '/search/customers/number='+parsURL;
   console.log('making ajax request to:', requestURL);
   // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
   // Using the core $.ajax() method since it's the most flexible.
@@ -76,7 +96,7 @@ function findCustomers(data) {
 function updatePage(number) {
   try {
     list1.innerHTML = ``;
-    for (var i = numberRow*(number-1); i < numberRow*number; i++) {
+    
       //ex. http://localhost:9000/customerInfo?number=1
       // var number =urlParams.get('number');
       // list1.innerHTML+=`${data[i].productNumber} <br>`;
@@ -93,7 +113,7 @@ function updatePage(number) {
           <table width="90%">
            <tr>
             <td align="left" width="40%">
-             <h1 class="title-shop-page">My Profile</h1>
+             <h2 class="title-shop-page">Customer ID : ${parsURL}</h2>
             </td>
             <td align="right" width="40%">
             <button type="button" class="btn btn-danger btn-lg">Remove</button>
@@ -105,7 +125,7 @@ function updatePage(number) {
         </tr>
        </table>
        <div class="col-md-12 col-sm-12 col-xs-12">
-        <h4 align="center">Sale Employee Number : ${dataMem[i].salesRepEmployeeNumber}</h4>
+        <h4 align="center">Sale Employee Number : ${dataMem[0].salesRepEmployeeNumber}</h4>
        </div>
       </div>
      </div>
@@ -129,7 +149,7 @@ function updatePage(number) {
                 <div class="row">
                    <div class="newsletter-form footer-box">
                        <h2 class="title14">First Name</h2>
-                           <input type="text" value="${dataMem[i].contactFirstName}">
+                           <input type="text" value="${dataMem[0].contactFirstName}">
                    </div>
                 </div>
                </div>
@@ -137,7 +157,7 @@ function updatePage(number) {
                 <div class="row">
                  <div class="newsletter-form footer-box">
                    <h2 class="title14">Last Name</h2>
-                       <input type="text" value="${dataMem[i].contactLastName}">
+                       <input type="text" value="${dataMem[0].contactLastName}">
                  </div>
                 </div>
                </div>
@@ -145,7 +165,7 @@ function updatePage(number) {
                 <div class="row">
                  <div class="newsletter-form footer-box">
                    <h2 class="title14">Username</h2>
-                       <input type="text" value="${dataMem[i].customerName}">
+                       <input type="text" value="${dataMem[0].customerName}">
                  </div>
                 </div>
                </div>
@@ -153,7 +173,7 @@ function updatePage(number) {
                 <div class="row">
                  <div class="newsletter-form footer-box">
                    <h2 class="title14">Usernumber</h2>
-                       <input type="text" value="${dataMem[i].customerNumber}">
+                       <input type="text" value="${dataMem[0].customerNumber}">
                  </div>
                 </div>
                </div>
@@ -223,7 +243,7 @@ function updatePage(number) {
               <div class="row">
                <div class="newsletter-form footer-box">
                  <h2 class="title14">Credit Limit</h2>
-                     <input type="text" value="${dataMem[i].creditLimit}">
+                     <input type="text" value="${dataMem[0].creditLimit}">
                </div>
               </div>
              </div>
@@ -251,7 +271,7 @@ function updatePage(number) {
              <div class="row">
               <div class="newsletter-form footer-box">
                 <h2 class="title14">AddressLine1</h2>
-                    <input type="text" value="${dataMem[i].addressLine1}">
+                    <input type="text" value="${dataMem[0].addressLine1}">
               </div>
              </div>
             </div>
@@ -259,7 +279,7 @@ function updatePage(number) {
              <div class="row">
               <div class="newsletter-form footer-box">
                 <h2 class="title14">AddressLine2</h2>
-                    <input type="text" value="${dataMem[i].addressLine2}">
+                    <input type="text" value="${dataMem[0].addressLine2}">
               </div>
              </div>
             </div>
@@ -267,7 +287,7 @@ function updatePage(number) {
             <div class="row">
             <div class="newsletter-form footer-box">
                 <h2 class="title14">Country</h2>
-                    <input type="text" value="${dataMem[i].country}">
+                    <input type="text" value="${dataMem[0].country}">
             </div>
          </div>
                  </div>
@@ -275,7 +295,7 @@ function updatePage(number) {
                <div class="row">
                <div class="newsletter-form footer-box">
                    <h2 class="title14">City</h2>
-                       <input type="text" value="${dataMem[i].city}">
+                       <input type="text" value="${dataMem[0].city}">
                </div>
             </div>
                  </div>
@@ -283,7 +303,7 @@ function updatePage(number) {
                <div class="row">
                <div class="newsletter-form footer-box">
                    <h2 class="title14">State</h2>
-                       <input type="text" value="${dataMem[i].state}">
+                       <input type="text" value="${dataMem[0].state}">
                </div>
             </div>
                  </div>
@@ -291,7 +311,7 @@ function updatePage(number) {
                <div class="row">
                <div class="newsletter-form footer-box">
                    <h2 class="title14">PostalCode</h2>
-                       <input type="text" value="${dataMem[i].postalCode}">
+                       <input type="text" value="${dataMem[0].postalCode}">
                </div>
             </div>
             </div>
@@ -309,7 +329,7 @@ function updatePage(number) {
              <div class="row">
              <div class="newsletter-form footer-box">
                  <h2 class="title14">Number Phone</h2>
-                     <input type="text" value="${dataMem[i].phone}">
+                     <input type="text" value="${dataMem[0].phone}">
              </div>
           </div>
              </div>
@@ -343,7 +363,7 @@ function updatePage(number) {
   </div>
 									<!-- End Item -->`;
 
-    }
+    
   }
   catch (err) { }
 }

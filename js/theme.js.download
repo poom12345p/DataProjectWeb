@@ -277,24 +277,28 @@ jQuery(document).ready(function(){
 		});
 	});
 	//Qty Up-Down
-	$('.detail-qty').each(function(){
-		var qtyval = parseInt($(this).find('.qty-val').text(),10);
+	/*$('.detail-qty').each(function(){
+		var qtyval = parseInt($(this).find('.qty-val').innerHTML);
 		$('.qty-up').on('click',function(event){
 			event.preventDefault();
+			if(parseInt($(this).find('.qty-val').innerHTML)==0)
+			{
+				qty=0;
+			}
 			qtyval=qtyval+1;
 			$(this).prev().text(qtyval);
 		});
 		$('.qty-down').on('click',function(event){
 			event.preventDefault();
 			qtyval=qtyval-1;
-			if(qtyval>1){
+			if(qtyval>0){
 				$(this).next().text(qtyval);
 			}else{
-				qtyval=1;
+				qtyval=0;
 				$(this).next().text(qtyval);
 			}
 		});
-	});
+	});*/
 	//Deal Count Down
 	if($('.detail-countdown').length>0){
 		$(".detail-countdown").TimeCircles({
