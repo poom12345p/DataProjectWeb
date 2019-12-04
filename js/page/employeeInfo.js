@@ -80,8 +80,10 @@ function updatePage(number) {
 																		<div class="col-md-6 col-sm-6 col-xs-12">
 																			<div class="newsletter-form footer-box">
 																				<h2 class="title14">User's Name</h2>
-																				<input id="enumber" type="text"
+																				<input type="hidden" id="enumber"
 																					value="${dataMem[0].employeeNumber}">
+																				<h3 class="title14">${dataMem[0].employeeNumber}</h3>
+																			
 																			</div>
 																		</div>
 																	</div>
@@ -108,8 +110,12 @@ function updatePage(number) {
 																
 																<td class ="buttonclick" align="right" width="40%">
 																	
-																<button type="button" class="btn btn-info btn-lg" onclick="editclick()">Edit</button>
-																		
+																<button type="button" class="btn btn-info btn-lg edit" onclick="editclick()">Edit</button>
+																</td>
+																
+																<td >
+																<button type="button" class="btn btn-danger btn-lg deletevalue" id = "delete" style="visibility:hidden;" onclick="deleteclick()">Remove</button>	
+																						
 																</td>
 															</tr>
 														
@@ -190,7 +196,39 @@ function updatePage(number) {
 												</div>
 											</div>
 										</div>
+										
+										
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<table align="center" width='50%'>
+												<tr>
+												
+													<td align="right">
+													<br></br>
+														<button type="button"
+															class="btn btn-secondary btn-lg btn-block cancle" id = "cancle" style="visibility:hidden; onclick="cancleclick()">Cancal</button>
+															
+														</td>
+													
+												</tr>
+											</table>
+										</div>
+										<div class="col-md-6 col-sm-6 col-xs-12 ">
+											<table align="center" width='50%'>
+												<tr>
+												
+													<td class= "buttonsave" align="right" >
+													<br></br>
+														<button type="button"
+															class="btn btn-warning btn-lg btn-block updatevalue" id = "save" style="visibility:hidden; onclick="">Save</button>
+															
+													</td>
+													
+												</tr>
+											</table>
+										</div>
+										
 									</div>
+									<br></br>
 									<!-- End Item -->`;
     }
   
@@ -216,68 +254,9 @@ function searchText(e) {
 }
 
 function editclick(){
-	
-		document.querySelector('.buttonclick').innerHTML =`<button type="button"
-	class="btn btn-danger btn-lg" onclick="deleteclick()">Remove</button>`
-	
-	document.querySelector('.aaas').innerHTML +=`<div class="item-product-list">
-		<div class="col-md-6 col-sm-6 col-xs-12">
-			<table align="center" width='50%'>
-				<tr>
-					<td align="right">
-						<button type="button"
-							class="btn btn-secondary btn-lg btn-block" onclick="cancleclick()">Cancal</button>
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div class="col-md-6 col-sm-6 col-xs-12">
-			<table align="center" width='50%'>
-				<tr>
-					<td align="right">
-						<button type="button"
-							class="btn btn-warning btn-lg btn-block updatevalue" onclick="saveclick()">Save</button>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>`;
+	document.getElementById('delete').style.visibility = 'visible';
+	document.getElementById('cancle').style.visibility = 'visible';
+	document.getElementById('save').style.visibility = 'visible';
+}
 
-}
-function deleteclick(){
 
-}
-function cancleclick(){
-	location.reload(true);
-}
-function saveclick(){
-	
-    // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
-    // Using the core $.ajax() method since it's the most flexible.
-    // ($.get() and $.getJSON() are nicer convenience functions)
-    console.log("Am in");
-	const requestURL1 = '/employee/update/';
-	console.log('making ajax request to:', requestURL1);
-	
-	var memvalue = {
-		employeeNumber :$('#enumber').val(), 
-		firstName : $('#efname').val(), 
-		lastName : $('#elname').val(),
-		jobTitle : $('#etitle').val(),
-		email : $('#eemail').val(),
-		extension : $('#eexten').val(),
-		employeeNumbers : $('#enumber').val()
-	};
-	console.log($('#enumber').val());
-	$.ajax({
-	// all URLs are relative to http://localhost:3000/
-	url: requestURL1,
-	type: 'PUT',
-	data: memvalue,
-	dataType: 'json', // this URL returns data in JSON format
-	success: (memvalue) => {
-		alert(memvalue);
-	}
-	});
-	console.log(memvalue);
-}

@@ -452,21 +452,26 @@ router.get('/data/employees/:number', (req, res, next) => {
     .catch(err => { console.log(next); });
 });
 router.post('/employee/update/', (req, res, next) =>{
-  employees.update(
-    {employeeNumber: req.body.employeeNumber,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    jobTitle: req.body.jobTitle,
-    email: req.body.email,
-    extension: req.body.extension},
-    {where: req.body.employeeNumbers}
-    
-  )
-  .then(function(rowsUpdated) {
-    res.json(rowsUpdated)
-  })
-  .catch(next)
+
+  
+  db.query(`update employees set firstname = "${req.body.firstName}",lastName = "${req.body.lastName}",
+            jobTitle= "${req.body.jobTitle}",email= "${req.body.email}",extension= "${req.body.extension}"
+            where employeeNumber = "${req.body.employeeNumber}"`, { type: db.QueryTypes.update })
+    .then(result => {
+      console.log(result);
+    })
+    .catch(err => { console.log(next); });
  })
+ 
+ router.delete('/employee/delete/', (req, res, next) =>{
+  db.query(`delete from employees where employeeNumber = "${req.body.employeeNumber}"`, { type: db.QueryTypes.delete})
+            
+    .then(result => {
+      console.log(result);
+    })
+    .catch(err => { console.log(next); });
+
+ });
 //////////////order/////////////////////////////////////
 router.get('/orderlist',(req,res)=>{
   res.sendFile(path.join(__dirname,`..`,`..`,`Order_list.html`));
