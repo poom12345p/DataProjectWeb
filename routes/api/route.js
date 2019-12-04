@@ -466,12 +466,12 @@ router.get('/search/orders/allTitle', (req, res, next) => {
     .catch(err => { console.log(next); });
 });
 
-<<<<<<< HEAD
 router.get('/maxOrdersNumber', (req, res, next) => {
 orders.max('orderNumber').then(max => {
       console.log(max);
       res.send(max);
-=======
+});
+});
 router.get('/search/customerorders/number=:number', (req, res, next) => {
   orders.findAll({
 
@@ -491,7 +491,6 @@ router.get('/search/customerorders/number=:number', (req, res, next) => {
     .then(result => {
       console.log(result);
       res.send(result);
->>>>>>> 6fd2478a1da9863b0e14b013cbdc48fbf3c6e4c1
     })
     .catch(err => { console.log(next); });
 });
@@ -655,7 +654,7 @@ router.post('/preorderdetail', (req, res, next) => {
     } else {
         response.status(400).send('Error in insert new order');
     }
-});
+  });
 });
 
 module.exports = router;
