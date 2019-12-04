@@ -175,7 +175,7 @@ $(document).ready(function () {
         
           $.ajax({
             type: "POST",
-            url: "/orderdetail",
+            url: "/creorderdetail",
             data:ordersAll[i],
             dataType: "json",
             success: (user)=>{
