@@ -15,6 +15,7 @@ const offices = require('./tables/offices');
 const employees = require('./tables/employees');
 const customers = require('./tables/customers');
 const promotions = require('./tables/promotions');
+const orderspromotions = require('./tables/orderspromotions');
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt');
 const Op = Sequelize.Op;
@@ -36,10 +37,17 @@ router.get('/', (req, res, next) => {
 
 });
 
-router.get('/createorder/', (req, res, next) => {
+router.get('/createorder', (req, res, next) => {
 
 
   res.sendFile(path.join(__dirname, `..`, `..`, `createorder.html`));
+  // res.send(result);
+
+});
+router.get('/orderdetails', (req, res, next) => {
+
+
+  res.sendFile(path.join(__dirname, `..`, `..`, `orderdetail.html`));
   // res.send(result);
 
 });
@@ -83,6 +91,23 @@ router.get('/search/products', (req, res, next) => {
   // db.query(`SELECT * FROM products ORDER BY productName,productScale,productVendor `, { type: db.QueryTypes.SELECT})
   products.findAll({
     order: [`productName`, `productScale`, `productVendor`]
+  })
+    .then(result => {
+      //console.log(result);
+      res.send(result);
+    })
+    .catch(err => { console.log(next); });
+});
+
+router.get('/search/preproducts', (req, res, next) => {
+
+  products.findAll({
+    where:
+    {
+      quantityInStock: {
+        [Op.eq]:0
+      }
+    }
   })
     .then(result => {
       //console.log(result);
@@ -426,7 +451,7 @@ router.get('/data/employees/:number', (req, res, next) => {
     })
     .catch(err => { console.log(next); });
 });
-router.put('/employee/update/', (req, res, next) =>{
+router.post('/employee/update/', (req, res, next) =>{
   employees.update(
     {employeeNumber: req.body.employeeNumber,
     firstName: req.body.firstName,
@@ -448,15 +473,18 @@ router.get('/orderlist',(req,res)=>{
  // res.send(result);
 });
 
-router.get('/data/order/:orderNumber',(req,res)=>{
+router.get('/data/order/:orderNumber',(req,res,next)=>{
   
-  db.query(`SELECT *
-  FROM orders
-  ORDER by orderNumber,orderDate`, { type: db.QueryTypes.SELECT})
+  orders.findAll({
+    where:
+    {
+      orderNumber:req.params.orderNumber
+    }
+  })
   .then(result => {console.log(result);
   res.send(result);
   })
-  .catch(err => {console.log(err);});
+  .catch(err => {console.log(next);});
 });
 
 router.get('/search/orders', (req, res, next) => {
@@ -504,6 +532,38 @@ router.get('/search/customerorders/number=:number', (req, res, next) => {
     FROM orders
     WHERE customerNumber LIKE '${req.params.number}%';
     ORDER by orderNumber  `, { type: db.QueryTypes.SELECT})*/
+    .then(result => {
+      console.log(result);
+      res.send(result);
+    })
+    .catch(err => { console.log(next); });
+});
+//////////////////////////////////////////////////////////////////////////////////
+router.get('/search/promotions', (req, res, next) => {
+  promotions.findAll()
+    .then(result => {
+      console.log(result);
+      res.send(result);
+    })
+    .catch(err => { console.log(next); });
+});
+router.get('/search/promotions/:code', (req, res, next) => {
+  promotions.findAll(
+    {where:
+      {
+        code: req.params.code,
+        amount: {
+          [Op.gt]: 0
+        },
+        expire: {
+          [Op.gte]: moment().toDate()
+        }
+      
+      }
+      
+    }
+      
+  )
     .then(result => {
       console.log(result);
       res.send(result);

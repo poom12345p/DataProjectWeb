@@ -10,14 +10,16 @@ let pricetext= document.querySelector('.Price');
 let totalpricetext= document.querySelector('.TotalPrice');
 let instocktext= document.querySelector('.InStock');
 let ordertable= document.querySelector('.OrdersTable');
+let promotionstable= document.querySelector('.PromosTable');
 let cusnametext=document.querySelector('.customerName');
-
+let promotioninput=document.querySelector('#promotion_code');
 //
 
 let orderID= document.querySelector('.orderID');
 let subtotaltext=document.querySelector('.SubTotal');
 let ordertotaltext=document.querySelector('.orderTotal');
 let commenttext =document.querySelector('.Comment');
+let discounttext;
 //
 let orderdatetext=document.querySelector('.OrderDate');
 let requiredatetext=document.querySelector('.RequireDate');
@@ -25,6 +27,7 @@ let shipdatetext=document.querySelector('.ShipDate');
 //
 let productAll = [];
 let ordersAll = [];
+let promotionsAll = [];
 let orderNumber=0;
 let discount=0;
 let qty =0;
@@ -35,6 +38,9 @@ console.log(namelist);
 codelist.innerHTML ="";
 namelist.innerHTML ="";
 
+var date = new Date();
+var currentDate = date.toISOString().slice(0,10);
+orderdatetext.value=currentDate;
 writeOrders();
 $(document).ready(function () {
     var user = JSON.parse(localStorage.getItem('User'));
@@ -127,7 +133,21 @@ $(document).ready(function () {
         writeOrders();
       }
     });
-    
+    $('.addpromotion"').on('click',function(event){
+      event.preventDefault();
+      $.ajax({
+        // all URLs are relative to http://localhost:3000/
+        url: `search/promotions/`,
+        type: 'GET',
+        dataType: 'json', // this URL returns data in JSON format
+        success: (data) => {
+          // console.log('You received some data!', data);
+         promotionsAll.push(data);
+         writePromotions();
+        }
+         
+    });
+  });
     $('.submit-btn').on('click',function(event){
       event.preventDefault();
       let header={
@@ -257,6 +277,13 @@ function DeleteOrder(i)
   writeOrders();
 }
 
+function DeletePromotions(i)
+{
+  event.preventDefault();
+  promotionsAll.splice(i, 1);
+  writePromotions();
+}
+
   function writeOrders()
   {
     var subt=0.00;
@@ -291,5 +318,30 @@ function DeleteOrder(i)
       `
     }
     subtotaltext.innerHTML='$'+subt;
+    ordertotaltext.innerHTML='$'+parseFloat((subt-discount)).toFixed(2);
+  }
+  function writePromotions()
+  {
+    var disc=0.00;
+    promotionstable.innerHTML="";
+    for (var i = 0; i <promotionsAll.length; i++) {
+      disc=parseFloat( disc+promotionsAll[i].discount).toFixed(2);
+      promotionstable.innerHTML+=
+      `
+      <tr class="cart_item">
+												<td class="product-remove">
+													<a class="remove" href="#"  onclick="DeletePromotions(${i})"><i class="fa fa-times"></i></a>
+												</td>
+												<td class="product-code">
+											${promotionsAll[i].code}
+										</td>
+										<td class="product-discount">
+											<span class="amount">${promotionsAll[i].discount}</span>
+										</td>
+											</tr>
+      `
+    }
+    disconnect=disc;
+   discounttext.innerHTML='$'+disc;
     ordertotaltext.innerHTML='$'+parseFloat((subt-discount)).toFixed(2);
   }
