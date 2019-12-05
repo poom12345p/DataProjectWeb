@@ -16,7 +16,7 @@ const db= data.define('orderdetails',{
     priceEach:{
         type:   Sequelize.TEXT
     },
-    orderLineNumbe:{
+    orderLineNumber:{
         type:   Sequelize.TEXT
     },
     status:{

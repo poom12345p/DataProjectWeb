@@ -35,28 +35,12 @@ $(document).ready(function () {
       //var maxpage = (data.length % numberRow == 0 ? data.length / numberRow : (data.length - (data.length % numberRow)) / numberRow + 1);
       console.log('number ' + number);
       updatePage(number);
-    }
+	}
+	
   });
 
-  $("#submit").click(function () {
-    // const requestURL = '/data/employees';
-    // console.log('making ajax request to:', requestURL);
-    // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
-    // Using the core $.ajax() method since it's the most flexible.
-    // ($.get() and $.getJSON() are nicer convenience functions)
-    // $.ajax({
-    // all URLs are relative to http://localhost:3000/
-    // url: requestURL,
-    // type: 'GET',
-    // dataType : 'json', // this URL returns data in JSON format
-    // success: (data) => {
-    // console.log('You received some data!', data);
-    // for(var i=0;i<data.length;i++)
-    //        {      
-    //            list.innerHTML+=`${data[i].customerName} <br>`
-    //        }
-    //        console.log(list);
-  });
+
+  
 });
 
 function findNames(data) {
@@ -72,13 +56,15 @@ function findNames(data) {
 
 function updatePage(number) {
   try {
-    list1.innerHTML = ``;
-    for (var i = numberRow * (number - 1); i < numberRow * number; i++) {
+    
+    
       //ex. http://localhost:9000/employeeInfo?number=12
       // var number =urlParams.get('number');
-      // list1.innerHTML+=`${data[i].productNumber} <br>`;
-      // Product list
-      list1.innerHTML += `
+	  // list1.innerHTML+=`${data[i].productNumber} <br>`;
+	  
+	  // Product list
+	 
+      list1.innerHTML = `
       <div class="item-product-list">
 										<div class="row">
 											<table width='90%' align="center">
@@ -94,58 +80,56 @@ function updatePage(number) {
 																		<div class="col-md-6 col-sm-6 col-xs-12">
 																			<div class="newsletter-form footer-box">
 																				<h2 class="title14">User's Name</h2>
-																				<input type="text"
-																					value="${dataMem[i].employeeNumber}">
+																				<input type="hidden" id="enumber"
+																					value="${dataMem[0].employeeNumber}">
+																				<h3 class="title14">${dataMem[0].employeeNumber}</h3>
+																			
 																			</div>
 																		</div>
 																	</div>
 																</td>
-
-																<td align="right" width="40%">
-																	<button type="button"
-																		class="btn btn-danger btn-lg">Remove</button>
-																	<button type="button"
-																		class="btn btn-info btn-lg">Edit</button>
-																</td>
-															</tr>
-															<tr>
 																<td width="50%">
 																	<div class="row">
 																		<div class="col-md-6 col-sm-6 col-xs-12">
-																			<div class="newsletter-form footer-box">
-																				<h2 class="title14">Department</h2>
-																				<input type="text"
-																					value="xxxxxxxxxxxxx">
-																			</div>
+																		<div class="newsletter-form footer-box">
+																		<h2 class="title14">Position</h2>
+																		<select id="etitle">
+																			<option value="${dataMem[0].jobTitle}">${dataMem[0].jobTitle}</option>
+																			<option value="President">President</option>
+																			<option value="Sale Manager (EMEA)">Sale Manager (EMEA)</option>
+																			<option value="Sales Manager (APAC)">Sales Manager (APAC)</option>
+																			<option value="Sales Manager (NA)">Sales Manager (NA)</option>
+																			<option value="Sales Rep">Sales Rep</option>
+																			<option value="VP Marketing">VP Marketing</option>
+																			<option value="VP Sales">VP Sales</option>
+																		</select>
 																		</div>
-																		<div class="col-md-6 col-sm-6 col-xs-12">
-																			<div class="newsletter-form footer-box">
-																				<h2 class="title14">Working Hours</h2>
-																				<input type="text" value="xxx">
-																			</div>
-																		</div>
+																</div>
 																	</div>
+																</td>
+																
+																<td class ="buttonclick" align="right" width="40%">
+																	
+																<button type="button" class="btn btn-info btn-lg edit" onclick="editclick()">Edit</button>
+																</td>
+																
+																<td >
+																<button type="button" class="btn btn-danger btn-lg deletevalue" id = "delete" style="visibility:hidden;" onclick="deleteclick()">Remove</button>	
+																						
 																</td>
 															</tr>
-															<tr>
-																<td width="20%">
-																	<div class="row">
-																		<div class="col-md-6 col-sm-6 col-xs-12">
-																			<div class="newsletter-form footer-box">
-																				<h2 class="title14">Position</h2>
-																				<input type="text" value="${dataMem[i].jobTitle}">
-
-																			</div>
-
-																		</div>
-																		<div class="col-md-6 col-sm-6 col-xs-12">
-																			<div class="newsletter-form footer-box">
-																				<h2 class="title14">Status</h2>
-																				<input type="text" value="xxxxxxxxxxx">
-																			</div>
-																		</div>
+														
+															<td width="50%">
+															<div class="row">
+																<div class="col-md-6 col-sm-6 col-xs-12">
+																	<div class="newsletter-form footer-box">
+																		<h2 class="title14">Extension</h2>
+																		<input type="text" id="eexten"
+																			value="${dataMem[0].extension}">
 																	</div>
-																</td>
+																</div>
+															</div>
+														</td>
 															</tr>
 													</td>
 												</tr>
@@ -156,7 +140,7 @@ function updatePage(number) {
 										</div>
 									</div>
 
-									<div class="item-product-list">
+									<div class="item-product-list aaas">
 										<div id="footer">
 											<div class="row">
 												<div class="col-md-6 col-sm-6 col-xs-12">
@@ -168,17 +152,20 @@ function updatePage(number) {
 																<tr>
 																	<td align="center" width='55%'>
 																		<div class="newsletter-form footer-box">
-																			<h2 class="title14">Name</h2>
-																			<input type="text" value="${dataMem[i].firstName}  ${dataMem[i].lastName}">
+																			<h2 class="title14">FirstName</h2>
+																			<input type="text" id="efname" value="${dataMem[0].firstName}">
+																			
 																		</div>
 																	</td>
+																
 																</tr>
 																<tr>
 																	<td align="center" width='55%'>
-																		<div class="newsletter-form footer-box">
-																			<h2 class="title14">Address</h2>
-																			<input type="text" value="xxxxxxxxxxxxx">
-																		</div>
+																	<div class="newsletter-form footer-box">
+																	<h2 class="title14">LastName</h2>
+																	
+																	<input type="text" id ="elname" value="${dataMem[0].lastName}">
+																</div>
 																	</td>
 																</tr>
 															</table>
@@ -194,16 +181,13 @@ function updatePage(number) {
 																	<td align="center" width='55%'>
 																		<div class="newsletter-form footer-box">
 																			<h2 class="title14">Email</h2>
-																			<input type="text" value="${dataMem[i].email}">
+																			<input type="text" id="eemail" value="${dataMem[0].email}">
 																		</div>
 																	</td>
 																</tr>
 																<tr>
 																	<td align="center" width='55%'>
-																		<div class="newsletter-form footer-box">
-																			<h2 class="title14">Number Phone</h2>
-																			<input type="text" value="xxxxxxxxxxxxx">
-																		</div>
+																		
 																	</td>
 																</tr>
 															</table>
@@ -212,34 +196,42 @@ function updatePage(number) {
 												</div>
 											</div>
 										</div>
-									</div>
-
-									<div class="item-product-list">
-											<div class="col-md-6 col-sm-6 col-xs-12">
-												<table align="center" width='50%'>
-													<tr>
-														<td align="right">
-															<button type="button"
-																class="btn btn-secondary btn-lg btn-block">Cancal</button>
+										
+										
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<table align="center" width='50%'>
+												<tr>
+												
+													<td align="right">
+													<br></br>
+														<button type="button"
+															class="btn btn-secondary btn-lg btn-block cancle" id = "cancle" style="visibility:hidden; onclick="cancleclick()">Cancal</button>
+															
 														</td>
-													</tr>
-												</table>
-											</div>
-											<div class="col-md-6 col-sm-6 col-xs-12">
-												<table align="center" width='50%'>
-													<tr>
-														<td align="right">
-															<button type="button"
-																class="btn btn-warning btn-lg btn-block">Save</button>
-														</td>
-													</tr>
-												</table>
-											</div>
+													
+												</tr>
+											</table>
+										</div>
+										<div class="col-md-6 col-sm-6 col-xs-12 ">
+											<table align="center" width='50%'>
+												<tr>
+												
+													<td class= "buttonsave" align="right" >
+													<br></br>
+														<button type="button"
+															class="btn btn-warning btn-lg btn-block updatevalue" id = "save" style="visibility:hidden; onclick="">Save</button>
+															
+													</td>
+													
+												</tr>
+											</table>
+										</div>
+										
 									</div>
+									<br></br>
 									<!-- End Item -->`;
-
     }
-  }
+  
   catch (err) { }
 }
 
@@ -261,42 +253,10 @@ function searchText(e) {
   updatePage(1);
 }
 
+function editclick(){
+	document.getElementById('delete').style.visibility = 'visible';
+	document.getElementById('cancle').style.visibility = 'visible';
+	document.getElementById('save').style.visibility = 'visible';
+}
 
-//let list =document.querySelector('.list-pro-color')
-//$(document).ready(function() {
-//    const requestURL = '/search/employees';
-//    console.log('making ajax request to:', requestURL);
-    // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
-    // Using the core $.ajax() method since it's the most flexible.
-    // ($.get() and $.getJSON() are nicer convenience functions)
-//    $.ajax({
-      // all URLs are relative to http://localhost:3000/
-//      url: requestURL,
-//      type: 'GET',
-//      dataType : 'json', // this URL returns data in JSON format
-//      success: (data) => {
-//        console.log('You received some data!', data);
-//        for(var i=0;i<data.length;i++)
-//                {      
-//                   list.innerHTML+=`${data[i].employeeNumber},${data[i].firstName} <br>`
-//                }
-//                console.log(list);
-//      }
-//    });
-//});
 
-// const path = require('path');
-// const db=require('../../routes/api/data');
-// function createlist()
-// {
-//     db.query("SELECT * FROM  employees", { type: db.QueryTypes.SELECT})
-//   .then(result => {
-//       console.log(result);
-//         for(var i=0;i<result.length;i++)
-//         {      
-//             list.innerHTML+=`${result[i]} <br>`
-//         }
-//     }
-//     )
-//   .catch(err => {console.log(err);});
-// }
