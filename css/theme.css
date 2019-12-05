@@ -839,8 +839,12 @@ li.menu-item-has-children:hover > .sub-menu {
 .select-category {
   left: 5px;
   position: absolute;
-  width: 100%; 
+  width: 180px; 
   z-index: 999;
+}
+.long {
+  width: 100%; 
+
 }
 .smart-search-form {
   border-left: 1px solid #e5e5e5;
