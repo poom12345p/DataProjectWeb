@@ -16,6 +16,7 @@ $(document).ready(function () {
       data: data,
       dataType: "json",
       success: (promo) => {
+        console.log("promotion success");
         //   if (localStorage.getItem('contacts') === null) {
         //     var contacts = [];
         //     contacts.push(myContact);
