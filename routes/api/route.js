@@ -331,6 +331,10 @@ router.get('/customerorder=:code',(req,res)=>{
   res.sendFile(path.join(__dirname,`..`,`..`,`Customer_DetailOrder.html`));
  // res.send(result);
 });
+router.get('/addcustomer',(req,res)=>{
+  res.sendFile(path.join(__dirname,`..`,`..`,`addcustomer.html`));
+ // res.send(result);
+});
 
 router.get('/data/customers',(req,res)=>{
   
@@ -363,6 +367,16 @@ router.post('/customer/update/', (req, res, next) =>{
     .catch(err => { console.log(next); });
 
  });
+ router.post('/customer/insert/', (req, res, next) =>{
+  db.query(`INSERT INTO customers(contactFirstName,contactLastName,customerName,addressLine1,addressLine2,city,state,postalCode,salesRepEmployeeNumber,country,creditLimit,phone,customerNumber) VALUES("${req.body.contactFirstName}",   
+            "${req.body.contactLastName}","${req.body.customerName}","${req.body.addressLine1}","${req.body.addressLine2}"
+            ,"${req.body.city}","${req.body.state}","${req.body.postalCode}","${req.body.salesRepEmployeeNumber}"
+            ,"${req.body.country}","${req.body.creditLimit}","${req.body.phone}","${req.body.customerNumbers}")`, { type: db.QueryTypes.INSERT })
+    .then(result => {
+      console.log(result);
+    })
+    .catch(err => { console.log(err); });
+ })
 ///////////////////employees//////////////////////////
 router.get('/employeelist',(req,res)=>{
   res.sendFile(path.join(__dirname,`..`,`..`,`EmployeeList.html`));
@@ -491,6 +505,15 @@ router.post('/employee/update/', (req, res, next) =>{
     .catch(err => { console.log(next); });
 
  });
+ router.post('/employee/insert/', (req, res, next) =>{
+  db.query(`INSERT INTO employees(firstname,lastName,jobTitle,email,extension,OfficeCode,reportsTo,password,employeeNumber) VALUES("${req.body.firstName}",   
+            "${req.body.lastName}","${req.body.jobTitle}","${req.body.email}","${req.body.extension}"
+            ,"${req.body.OfficeCode}","${req.body.reportsTo}","${req.body.password}","${req.body.employeeNumber}")`, { type: db.QueryTypes.INSERT })
+    .then(result => {
+      console.log(result);
+    })
+    .catch(err => { console.log(err); });
+ })
 //////////////order/////////////////////////////////////
 router.get('/orderlist',(req,res)=>{
   res.sendFile(path.join(__dirname,`..`,`..`,`Order_list.html`));
