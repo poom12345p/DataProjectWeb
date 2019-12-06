@@ -429,7 +429,7 @@ router.get('/data/employees/:number', (req, res, next) => {
 });
 router.post('/employee/update/', (req, res, next) => {
   db.query(`update employees set firstname = "${req.body.firstName}",lastName = "${req.body.lastName}",
-            jobTitle= "${req.body.jobTitle}",email= "${req.body.email}",extension= "${req.body.extension}"
+            jobTitle= "${req.body.jobTitle}",email= "${req.body.email}",extension= "${req.body.extension}",reportsTo= "${req.body.reportsTo}",officeCode ="${req.body.officeCode}"
             where employeeNumber = "${req.body.employeeNumber}"`, { type: db.QueryTypes.update })
     .then(result => {
       console.log(result);

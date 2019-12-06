@@ -79,11 +79,13 @@ function updatePage(number) {
 																	<div class="row">
 																		<div class="col-md-6 col-sm-6 col-xs-12">
 																			<div class="newsletter-form footer-box">
+																			<br></br>
 																				<h2 class="title14">User's Name</h2>
 																				<input type="hidden" id="enumber"
 																					value="${dataMem[0].employeeNumber}">
-																				<h3 class="title14">${dataMem[0].employeeNumber}</h3>
-																			
+																				<h3 class="title14" id = "number">${dataMem[0].employeeNumber}</h3>
+																				<input type="text" id="enumbers" style="visibility:hidden;
+																			value="${dataMem[0].employeeNumber}">
 																			</div>
 																		</div>
 																	</div>
@@ -92,9 +94,12 @@ function updatePage(number) {
 																	<div class="row">
 																		<div class="col-md-6 col-sm-6 col-xs-12">
 																		<div class="newsletter-form footer-box">
+																		<br></br>
 																		<h2 class="title14">Position</h2>
-																		<select id="etitle">
-																			<option value="${dataMem[0].jobTitle}">${dataMem[0].jobTitle}</option>
+																		<h3 class="title14" id = "title">${dataMem[0].jobTitle}</h3>
+														
+																		<select id="etitle" style="visibility:hidden;>
+																		<option value=""></option>
 																			<option value="President">President</option>
 																			<option value="Sale Manager (EMEA)">Sale Manager (EMEA)</option>
 																			<option value="Sales Manager (APAC)">Sales Manager (APAC)</option>
@@ -126,6 +131,17 @@ function updatePage(number) {
 																		<h2 class="title14">Extension</h2>
 																		<input type="text" id="eexten"
 																			value="${dataMem[0].extension}">
+																	</div>
+																</div>
+															</div>
+														</td>
+														<td width="50%">
+															<div class="row">
+																<div class="col-md-6 col-sm-6 col-xs-12">
+																	<div class="newsletter-form footer-box">
+																		<h2 class="title14">Report To</h2>
+																		<input type="text" id="report"
+																			value="${dataMem[0].reportsTo}">
 																	</div>
 																</div>
 															</div>
@@ -187,7 +203,10 @@ function updatePage(number) {
 																</tr>
 																<tr>
 																	<td align="center" width='55%'>
-																		
+																		<div class="newsletter-form footer-box">
+																			<h2 class="title14">Office Code</h2>
+																			<input type="text" id="ofc" value="${dataMem[0].officeCode}">
+																		</div>
 																	</td>
 																</tr>
 															</table>
@@ -257,6 +276,11 @@ function editclick(){
 	document.getElementById('delete').style.visibility = 'visible';
 	document.getElementById('cancle').style.visibility = 'visible';
 	document.getElementById('save').style.visibility = 'visible';
+	document.getElementById('etitle').style.visibility = 'visible';
+	document.getElementById('title').style.visibility = 'hidden';
+	document.getElementById('number').style.visibility = 'hidden';
+	document.getElementById('enumbers').style.visibility = 'visible';
+
 }
 
 
