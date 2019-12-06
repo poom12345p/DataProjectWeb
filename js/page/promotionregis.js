@@ -12,7 +12,7 @@ $(document).ready(function () {
     }
     $.ajax({
       type: "POST",
-      url: "/promotion",
+      url: "/createpromotion",
       data: data,
       dataType: "json",
       success: (promo) => {

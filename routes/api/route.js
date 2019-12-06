@@ -28,11 +28,18 @@ db.authenticate()
   });
 
 //get address  
-
 router.get('/', (req, res, next) => {
 
 
   res.sendFile(path.join(__dirname, `..`, `..`, `createorder.html`));
+  // res.send(result);
+
+});
+
+router.get('/promotionRegister', (req, res, next) => {
+
+
+  res.sendFile(path.join(__dirname, `..`, `..`, `promotionRegister.html`));
   // res.send(result);
 
 });
@@ -566,7 +573,7 @@ router.get('/search/promotions', (req, res, next) => {
     })
     .catch(err => { console.log(next); });
 });
-router.get('/search/promotions/:code', (req, res, next) => {
+router.get('/search/promotions/code=:code', (req, res, next) => {
   promotions.findAll(
     {
       where:
@@ -574,10 +581,8 @@ router.get('/search/promotions/:code', (req, res, next) => {
         code: req.params.code,
         amount: {
           [Op.gt]: 0
-        },
-        expire: {
-          [Op.gte]: moment().toDate()
         }
+      
 
       }
 
@@ -660,7 +665,7 @@ router.post('/login', (req, res, next) => {
 
 });
 
-router.post('/promotion', (req, res, next) => {
+router.post('/createpromotion', (req, res, next) => {
   const promotion = req.body;
   console.log(promotion);
   return promotions.create({
@@ -722,6 +727,20 @@ router.post('/order', (req, res, next) => {
   });
 });
 
+router.post('/createorderspromotions', (req, res, next) => {
+  const promoorder = req.body;
+  return orderspromotions.create({
+    orderNumber:promoorder.orderNumber,
+    code: promoorder.code
+  }).then(function (order) {
+    if (order) {
+      response.send(order);
+    } else {
+      response.status(400).send('Error in insert new order');
+    }
+  });
+});
+
 router.post('/update/order', (req, res, next) => {
   const order = req.body;
   console.log(order);
@@ -759,9 +778,39 @@ router.post('/creorderdetail', (req, res, next) => {
     }
   });
 
-
 });
 
+router.post('/removeproduct', (req, res, next) => {
+  const orderdetail = req.body;
+  return products.update({
+   quantityInStock: Sequelize.literal(`quantityInStock-${orderdetail.quantityOrdered}`)
+
+  }, {
+    where: {  productCode: orderdetail.productCode,}
+  }).then(function (order) {
+    if (order) {
+      response.send(order);
+    } else {
+      response.status(400).send('Error in insert new order');
+    }
+  });
+});
+
+router.post('/removepromotion', (req, res, next) => {
+  const promo = req.body;
+  return promotions.update({
+   amount: Sequelize.literal(`amount-1`)
+
+  }, {
+    where: {  code:  promo.code}
+  }).then(function (order) {
+    if (order) {
+      response.send(order);
+    } else {
+      response.status(400).send('Error in insert new order');
+    }
+  });
+});
 router.post('/preorder', (req, res, next) => {
   const order = req.body;
   return preOrders.create({
