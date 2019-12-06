@@ -358,7 +358,6 @@
 								<table class="shop_table cart table" cellspacing="0">
 									<thead>
 										<tr>
-											<th class="product-remove">&nbsp;</th>
 											<th class="product-code">code</th>
 											<th class="product-name">Product</th>
 											<th class="product-p">Price</th>
@@ -369,9 +368,7 @@
 
 									<tbody class="OrdersTable">
 										<tr class="cart_item">
-											<td class="product-remove">
-												<a class="remove" href="#"><i class="fa fa-times"></i></a>
-											</td>
+										
 											<td class="product-code">
 												code
 											</td>
@@ -464,9 +461,25 @@
 										<td><strong class="amount orderID">xxxxxxxxxxxxxxx</strong></td>
 									</tr>
 									<tr>
+											<th>status</th>
+											<td>
+												<strong class="amount orderstatustext">xxxxxxxxxxxxxxx</strong>
+												<strong class="amount orderstatus" >
+													<select class="orderStatus">
+													<option value="in process">in process</option>
+													<option value="on hold">on hold</option>
+													<option value="Resolved">Resolved </option>
+													<option value="Shipped">Shipped</option>
+													<option value="Disputed">Disputed</option>
+													<option value="Cancelled">Cancelled</option>
+												  </select></strong>
+											</td>
+										</tr>
+									<tr>
 										<th>Order Date</th>
 										<td>
-											<input type="date" value="" class="OrderDate" readonly>
+												<strong class="OrderDate">xxxxxxxxxxxxxxx</strong>
+
 										</td>
 									</tr>
 									<!-- end -->
@@ -482,13 +495,13 @@
 									<tr>
 										<th>Require Date</th>
 										<td>
-											<input type="date" value="" class="RequireDate">
+											<input type="date" value="" class="RequireDate" readonly>
 										</td>
 									</tr>
 									<tr>
 										<th>Shipping Date</th>
 										<td>
-											<input type="date" value="" class="ShipDate">
+											<input type="date" value="" class="ShipDate"  readonly>
 										</td>
 									</tr>
 									<tr class="order-total">
@@ -497,13 +510,13 @@
 									</tr>
 									<tr class="">
 										<th>Comment</th>
-										<td> <textarea rows="4" cols="50" class="Comment"></textarea></td>
+										<td> <textarea rows="4" cols="50" class="Comment" readonly></textarea></td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 						<div class="wc-proceed-to-checkout">
-							<a class="checkout-button button alt wc-forward submit-btn" href="">Submit</a>
+							<a class="checkout-button button alt wc-forward submit-btn" href="">Edit</a>
 						</div>
 					</div>
 				</div>
@@ -519,7 +532,7 @@
 	<a href="http://demo.7uptheme.com/html/kuteshop/list-boxed-banner.html?fbclid=IwAR3bGgzDp0aoxFFwGK01YrX-6IVDNNt_V0Ion1EgNuFPIHEl1LARLv8wsvI#"
 		class="radius scroll-top"><i class="fa fa-angle-up" aria-hidden="true"></i></a>
 	<script src="js/jquery-3.3.1.min.js"></script>
-	<script src="js/page/createorder.js"></script>
+	<script src="js/page/orderdetail.js"></script>
 	<script type="text/javascript" src="./js/jquery.js.download"></script>
 	<script type="text/javascript" src="./js/bootstrap.min.js.download"></script>
 	<script type="text/javascript" src="./js/jquery.fancybox.js.download"></script>
