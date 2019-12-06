@@ -1,22 +1,27 @@
 let list = document.querySelector('.list-pro-color')
 
 $(document).ready(function () {
-  $("#addPromo-btn").click(function (event) {
+  $("#addProduct-btn").click(function (event) {
     event.preventDefault();
-    console.log("submit promotion");
+    console.log("submit product");
     let data = {
-      code: $("#code").val(),
-      amount: $("#amount").val(),
-      discount: $("#discount").val(),
-      expire: $("#expire").val()
+      productCode: $("#code").val(),
+      productName: $("#name").val(),
+      productLine: $("#line").val(),
+      productScale: $("#size").val(),
+      productVendor: $("#vendor").val(),
+      productDescription: $("#description").val(),
+      quantityInStock: $("#stock").val(),
+      buyPrice: $("#price").val(),
+      MSRP: $("#msrp").val()
     }
     $.ajax({
       type: "POST",
-      url: "/promotion",
+      url: "/product",
       data: data,
       dataType: "json",
-      success: (promo) => {
-        console.log("promotion success");
+      success: (item) => {
+        console.log("product success");
         //   if (localStorage.getItem('contacts') === null) {
         //     var contacts = [];
         //     contacts.push(myContact);
@@ -26,7 +31,7 @@ $(document).ready(function () {
         //     contacts.push(myContact);
         //     localStorage.setItem('contacts', JSON.stringify(contacts));
         //   }
-        // sessionStorage.setItem('PROMOTION', JSON.stringify(promo));
+        // sessionStorage.setItem('PROMOTION', JSON.stringify(item));
         // location.replace(location.origin + `/productslist`);
       },
 
