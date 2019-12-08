@@ -568,6 +568,17 @@ router.get('/search/customerorders/number=:number', (req, res, next) => {
     .catch(err => { console.log(next); });
 });
 //////////////////////////////////////////////////////////////////////////////////
+router.get('/data/promotions', (req, res) => {
+
+  db.query(`SELECT *
+  FROM promotions`, { type: db.QueryTypes.SELECT })
+    .then(result => {
+      console.log(result);
+      res.send(result);
+    })
+    .catch(err => { console.log(err); });
+});
+
 router.get('/search/promotions', (req, res, next) => {
   promotions.findAll()
     .then(result => {
