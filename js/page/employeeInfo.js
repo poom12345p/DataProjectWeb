@@ -8,6 +8,7 @@ let dataAll = [];
 let dataMem = [];
 var numberRow = 1;
 var numberPage = 1;
+var username = JSON.parse(sessionStorage.getItem('USER'));
 if (urlParams.get('number') == null) urlParams.set('number', '1');
 
 let names = [];
@@ -98,25 +99,17 @@ function updatePage(number) {
 																		<br></br>
 																		<h2 class="title14">Position</h2>
 																		<h3 class="title14" id = "title">${dataMem[0].jobTitle}</h3>
-														
-																		<select id="etitle" style="visibility:hidden;>
-																		<option value=""></option>
-																			<option value="President">President</option>
-																			<option value="Sale Manager (EMEA)">Sale Manager (EMEA)</option>
-																			<option value="Sales Manager (APAC)">Sales Manager (APAC)</option>
-																			<option value="Sales Manager (NA)">Sales Manager (NA)</option>
-																			<option value="Sales Rep">Sales Rep</option>
-																			<option value="VP Marketing">VP Marketing</option>
-																			<option value="VP Sales">VP Sales</option>
-																		</select>
+																		<div class = "rank">
+																		
+																		</div>
 																		</div>
 																</div>
 																	</div>
 																</td>
 																
 																<td class ="buttonclick" align="right" width="40%">
-																	
-																<button type="button" class="btn btn-info btn-lg edit" onclick="editclick()">Edit</button>
+																
+																
 																</td>
 																
 																<td >
@@ -250,9 +243,34 @@ function updatePage(number) {
 									</div>
 									<br></br>
 									<!-- End Item -->`;
-    }
-  
+									if(username.jobTitle == 'President'){
+										rank=4;
+									}else if(username.jobTitle == 'VP Sales' || username.jobTitle == 'VP Marketing'){
+										rank=3;
+									}else if(username.jobTitle == 'Sales Manager (APAC)' || username.jobTitle == 'Sale Manager (EMEA)'|| username.jobTitle == 'Sales Manager (NA)'){
+									  rank=2;
+								  }else if(username.jobTitle == 'Sales Rep'){
+									  rank=1;
+								  }
+									if(dataMem[0].jobTitle == 'President'){
+										rankinfo=4;
+									}else if(dataMem[0].jobTitle == 'VP Sales' || dataMem[0].jobTitle == 'VP Marketing'){
+										rankinfo=3;
+									}else if(dataMem[0].jobTitle == 'Sales Manager (APAC)' || dataMem[0].jobTitle == 'Sale Manager (EMEA)'|| dataMem[0].jobTitle == 'Sales Manager (NA)'){
+									  rankinfo=2;
+								  }else if(dataMem[0].jobTitle == 'Sales Rep'){
+									  rankinfo=1;
+								  }
+								  if(rank>rankinfo){
+										document.querySelector('.buttonclick').innerHTML = `<button type="button" class="btn btn-info btn-lg edit" onclick="editclick()">Edit</button>`;
+								  }
+	}
+	
   catch (err) { }
+  
+  
+
+
 }
 
 function updateFilther(data) {
@@ -277,11 +295,50 @@ function editclick(){
 	document.getElementById('delete').style.visibility = 'visible';
 	document.getElementById('cancle').style.visibility = 'visible';
 	document.getElementById('save').style.visibility = 'visible';
-	document.getElementById('etitle').style.visibility = 'visible';
+	
 	document.getElementById('title').style.visibility = 'hidden';
 	document.getElementById('number').style.visibility = 'hidden';
 	document.getElementById('enumbers').style.visibility = 'visible';
+	var rank=2;
+
+	if(username.jobTitle == 'President'){
+		document.querySelector('.rank').innerHTML = `<select id="etitle" >
+			<option value=""></option>
+			<option value="President">President</option>
+			<option value="Sale Manager (EMEA)">Sale Manager (EMEA)</option>
+			<option value="Sales Manager (APAC)">Sales Manager (APAC)</option>
+			<option value="Sales Manager (NA)">Sales Manager (NA)</option>
+			<option value="Sales Rep">Sales Rep</option>
+			<option value="VP Marketing">VP Marketing</option>
+			<option value="VP Sales">VP Sales</option>
+			</select>`
+		
+	
+	}else if (username.jobTitle == 'VP Sales'){
+		document.querySelector('.rank').innerHTML = `<select id="etitle" >
+		<option value=""></option>
+		    <option value="VP Sales">VP Sales</option>
+			<option value="Sale Manager (EMEA)">Sale Manager (EMEA)</option>
+			<option value="Sales Manager (APAC)">Sales Manager (APAC)</option>
+			<option value="Sales Manager (NA)">Sales Manager (NA)</option>
+			<option value="Sales Rep">Sales Rep</option>
+		</select>`
+		
+	
+	}else if (username.jobTitle == 'Sales Manager (APAC)' || username.jobTitle == 'Sale Manager (EMEA)'|| username.jobTitle == 'Sales Manager (NA)'){
+		document.querySelector('.rank').innerHTML = `<select id="etitle" >
+		<option value=""></option>
+			<option value="Sale Manager (EMEA)">Sale Manager (EMEA)</option>
+			<option value="Sales Manager (APAC)">Sales Manager (APAC)</option>
+			<option value="Sales Manager (NA)">Sales Manager (NA)</option>
+			<option value="Sales Rep">Sales Rep</option>
+		</select>`
+		
+	
+	}
+
 
 }
+
 
 
