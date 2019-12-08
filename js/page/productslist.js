@@ -24,7 +24,6 @@ $(document).ready(function () {
   //let list=$("");
   //var user = JSON.parse(localStorage.getItem('User'));
   var user = JSON.parse(sessionStorage.getItem('USER'));
-  console.log('GGGGGG'+user.email);
   console.log(list1);
   const requestURL = '/search/products';
   console.log('making ajax request to:', requestURL);
