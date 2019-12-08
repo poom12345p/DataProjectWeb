@@ -353,11 +353,13 @@
 
 				
 
+						<h2 class="">Order List</h2>
 						<form method="post">
 							<div class="table-responsive">
 								<table class="shop_table cart table" cellspacing="0">
 									<thead>
 										<tr>
+											<th class="product-remove">&nbsp;</th>
 											<th class="product-code">code</th>
 											<th class="product-name">Product</th>
 											<th class="product-p">Price</th>
@@ -368,7 +370,9 @@
 
 									<tbody class="OrdersTable">
 										<tr class="cart_item">
-										
+											<td class="product-remove">
+												<a class="remove" href="#"><i class="fa fa-times"></i></a>
+											</td>
 											<td class="product-code">
 												code
 											</td>
@@ -388,25 +392,51 @@
 								<span class="amount">$68.00</span>
 							</td>
 							</tr>
-							<tr class="cart_item">
-								<td class="product-remove">
-									<a class="remove" href="#"><i class="fa fa-times"></i></a>
-								</td>
+						
+							</tbody>
+							</table>
+					</div>
+					</form>
+					<h2 class="">Pre-Order List</h2>
+						<form method="post">
+							<div class="table-responsive">
+								<table class="shop_table cart table" cellspacing="0">
+									<thead>
+										<tr>
+											<th class="product-remove">&nbsp;</th>
+											<th class="product-code">code</th>
+											<th class="product-name">Product</th>
+											<th class="product-p">Price</th>
+											<th class="product-quantity">Quantity</th>
+											<th class="product-subtotal">Total</th>
+										</tr>
+									</thead>
 
-								<td class="product-name">
-									<a href="#">Cooc Huyinh Phale </a>
-								</td>
-								<td class="product-price">
-									<span class="amount">$19.00</span>
-								</td>
-								<td class="product-quantity">
-									<span class="qty-val">6</span>
+									<tbody class="PreOrdersTable">
+										<tr class="cart_item">
+											<td class="product-remove">
+												<a class="remove" href="#"><i class="fa fa-times"></i></a>
+											</td>
+											<td class="product-code">
+												code
+											</td>
+											<td class="product-name">
+												<a href="#">Luphen Caunoiteng kug </a>
+											</td>
+											<td class="product-p">
+												<span class="amount">$68.00</span>
+											</td>
+											<td class="product-quantity">
 
-								</td>
-								<td class="product-subtotal">
-									<span class="amount">$38.00</span>
-								</td>
+												<span class="qty-val">6</span>
+
+							</div>
+							</td>
+							<td class="product-subtotal">
+								<span class="amount">$68.00</span>
+							</td>
 							</tr>
+							
 
 							</tbody>
 							</table>
@@ -429,9 +459,7 @@
 
 								<tbody class="PromosTable">
 									<tr class="cart_item">
-										<td class="product-remove">
-											<a class="remove" href="#"><i class="fa fa-times"></i></a>
-										</td>
+									
 										<td class="product-code">
 											code
 										</td>

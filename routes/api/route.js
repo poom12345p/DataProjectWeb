@@ -11,6 +11,8 @@ const productlines = require('./tables/productlines');
 const payments = require('./tables/payments');
 const orders = require('./tables/orders');
 const orderdetails = require('./tables/orderdetails');
+const preorders = require('./tables/preOrders');
+const preorderdetails  = require('./tables/preorderdetails');
 const offices = require('./tables/offices');
 const employees = require('./tables/employees');
 const customers = require('./tables/customers');
@@ -100,6 +102,7 @@ router.get('/search/products', (req, res, next) => {
   //console.log(`${req.params.size}|${req.params.vender}|${req.params.name}`);
   // db.query(`SELECT * FROM products ORDER BY productName,productScale,productVendor `, { type: db.QueryTypes.SELECT})
   products.findAll({
+
     order: [`productName`, `productScale`, `productVendor`]
   })
     .then(result => {
@@ -545,6 +548,9 @@ router.get('/maxOrdersNumber', (req, res, next) => {
     res.send(max);
   });
 });
+
+
+
 router.get('/search/customerorders/number=:number', (req, res, next) => {
   orders.findAll({
 
@@ -844,14 +850,15 @@ router.post('/preorder', (req, res, next) => {
   });
 });
 
-router.post('/preorderdetail', (req, res, next) => {
+router.post('/create/preorderdetail', (req, res, next) => {
   const orderdetail = req.body;
   return preorderdetails.create({
     preOrderNumber: orderdetail.orderNumber,
     productCode: orderdetail.productCode,
     quantityOrdered: orderdetail.quantityOrdered,
     priceEach: orderdetail.priceEach,
-    orderLineNumber: orderdetail.orderLineNumber
+    orderLineNumber: null,
+    status: null
   }).then(function (order) {
     if (order) {
       response.send(order);
