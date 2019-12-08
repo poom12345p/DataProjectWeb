@@ -17,7 +17,7 @@ $(document).ready(function() {
      dataType : 'json', // this URL returns data in JSON format
      success: (data) => {
        //console.log('You received some data!', data);    
-       try{list1.innerHTML += `<a href="/">Product</a><span>${data[0].productName}</span>`;
+       try{list1.innerHTML += `<a href="ProductLotList.html">Product</a><span>${data[0].productName}</span>`;
            list.innerHTML+=`<div class = "pname"><h2 class="title-detail">${data[0].productName}</h2></div>
            <input type="hidden" id="pcodes" value="${data[0].productCode}">
            <div class = "pcode"><p class="desc">Product Code : ${data[0].productCode}</p></div>

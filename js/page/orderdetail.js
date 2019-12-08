@@ -1,5 +1,6 @@
 var urlParams = new URLSearchParams(location.search);
 let orderNumber=urlParams.get('orderNumber');
+let list1 = document.querySelector('.bread-crumb');
 let ordersAll = [];
 let productsAll = [];
 let promotionsAll = [];
@@ -91,6 +92,7 @@ function getHeader()
         type: 'GET',
         dataType: 'json', // this URL returns data in JSON format
         success: (data) => {
+          list1.innerHTML += `<a href="Order_list.html">Orders</a><span>Order ${orderNumber}</span>`;
           // console.log('You received some data!', data);
           header = data[0];
           console.log(header);
