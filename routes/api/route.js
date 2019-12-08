@@ -177,7 +177,7 @@ router.get('/data/products/:code', (req, res, next) => {
     .catch(err => { console.log(next); });
 });
 
-router.get('/productdetails=:code', (req, res, next) => {
+router.get('/productdetails', (req, res, next) => {
   res.sendFile(path.join(__dirname, `..`, `..`, `productdetails.html`), { name: req.user });
   // res.send(result);
 });

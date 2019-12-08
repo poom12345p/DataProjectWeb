@@ -1,13 +1,11 @@
 let list = document.querySelector('.detail-info');
 let list1 = document.querySelector('.bread-crumb');
-let URL = window.location.href;
-console.log(URL);
-var parsURL = URL.replace('http://localhost:9000/productdetails=','');
-console.log(parsURL);
+var urlParams = new URLSearchParams(location.search);
+let productsCode = urlParams.get('productsCode');
 
 $(document).ready(function() {
    console.log(list);
-   const requestURL = '/search/products/code='+parsURL;
+   const requestURL = `/data/products/${productsCode}`;
    console.log('making ajax request to:', requestURL);
     //From: http://learn.jquery.com/ajax/jquery-ajax-methods/
     //Using the core $.ajax() method since it's the most flexible.

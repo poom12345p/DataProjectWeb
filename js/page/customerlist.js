@@ -67,7 +67,7 @@ function updatePage(page) {
                   <div class="col-md-3 col-sm-4 col-xs-12">
                     <div class="item-pro-color">
                       <div class="product-thumb">
-                        <a href="/customerorder=${dataMem[i].customerNumber}"
+                        <a href="/customerInfo=${dataMem[i].customerNumber}"
                           class="product-thumb-link">
                           <img data-color="black" class="active"
                             src="./image/2(1).png"
@@ -79,7 +79,7 @@ function updatePage(page) {
                   <div class="col-md-9 col-sm-8 col-xs-12">
                     <div class="product-info">
                       <h5 class="product-title"><a
-                        href="/customerorder=${dataMem[i].customerNumber}"><font size="4"><b>${dataMem[i].customerName}</b></font></h5><font size="3.5">Customer Number : ${dataMem[i].customerNumber}</font></a>
+                        href="/customerInfo=${dataMem[i].customerNumber}"><font size="4"><b>${dataMem[i].customerName}</b></font></h5><font size="3.5">Customer Number : ${dataMem[i].customerNumber}</font></a>
                       <div class="product-price">
                         <!--<ins><span>$360.00</span></ins>-->
                       </div>
