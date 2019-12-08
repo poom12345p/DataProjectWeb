@@ -22,8 +22,9 @@ if (urlParams.get('sizes') != null && urlParams.get('sizes') != '') urlParams.ge
 $(document).ready(function () {
 
   //let list=$("");
-  var user = JSON.parse(localStorage.getItem('User'));
-  console.log(user);
+  //var user = JSON.parse(localStorage.getItem('User'));
+  var user = JSON.parse(sessionStorage.getItem('USER'));
+  console.log('GGGGGG'+user.email);
   console.log(list1);
   const requestURL = '/search/products';
   console.log('making ajax request to:', requestURL);
@@ -126,7 +127,7 @@ function updatePage(page) {
                   <div class="col-md-3 col-sm-4 col-xs-12">
                     <div class="item-pro-color">
                       <div class="product-thumb">
-                        <a href="/productdetails=${dataMem[i].productCode}"
+                        <a href="http://localhost:9000/productdetails?productsCode=${dataMem[i].productCode}"
                           class="product-thumb-link">
                           <img data-color="black" class="active"
                             src="./image/2(1).png"
@@ -138,7 +139,7 @@ function updatePage(page) {
                   <div class="col-md-9 col-sm-8 col-xs-12">
                     <div class="product-info">
                       <h5 class="product-title"><a
-                        href="/productdetails=${dataMem[i].productCode}"><font size="4"><b>${dataMem[i].productName}</b></font></h5><font size="3.5">Product Code : ${dataMem[i].productCode}</font></a>
+                        href="http://localhost:9000/productdetails?productsCode=${dataMem[i].productCode}"><font size="4"><b>${dataMem[i].productName}</b></font></h5><font size="3.5">Product Code : ${dataMem[i].productCode}</font></a>
                       <div class="product-price">
                         <!--<ins><span>$360.00</span></ins>-->
                       </div>
