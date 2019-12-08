@@ -102,24 +102,12 @@ function updatePage(page) {
                     <div class="col-md-3 col-sm-4 col-xs-12">
                         <div class="item-pro-color">
                             <div class="product-thumb">
-                            <a href="http://demo.7uptheme.com/html/kuteshop/detail.html"
+                            <a href="http://localhost:9000/employeeInfo?employeeNumber=${dataMem[i].employeeNumber}"
                             class="product-thumb-link">
                             <img data-color="black" class="active"
                               src="./image/2(1).png"
                               alt="">
-                            <img data-color="purple"
-                              src="./image/3(1).jpg"
-                              alt="">
-                            <img data-color="blue"
-                              src="./image/4(1).jpg"
-                              alt="">
-                            <img data-color="cyan"
-                              src="./image/5.jpg"
-                              alt="">
                           </a>
-                                <a href="http://demo.7uptheme.com/html/kuteshop/quick-view.html"
-                                    class="quickview-link plus fancybox.iframe"><span>quick
-                                        view</span></a>
                             </div>
                             
                         </div>
@@ -127,7 +115,7 @@ function updatePage(page) {
                     <div class="col-md-9 col-sm-8 col-xs-12">
                         <div class="product-info">
                             <h3 class="product-title"><a
-                                    href="">${dataMem[i].firstName} ${dataMem[i].lastName}</a></h3>
+                                    href="http://localhost:9000/employeeInfo?employeeNumber=${dataMem[i].employeeNumber}">${dataMem[i].firstName} ${dataMem[i].lastName}</a></h3>
                             <div class="product-price">
                                 <ins><span>${dataMem[i].jobTitle}</span></ins>
                             </div>

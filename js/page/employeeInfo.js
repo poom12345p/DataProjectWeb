@@ -1,4 +1,5 @@
 var urlParams = new URLSearchParams(location.search);
+let employeeNumber = urlParams.get('employeeNumber');
 let list1 = document.querySelector('.list-pro-color');
 let searchForm = document.querySelector('.smart-search-form');
 searchForm.addEventListener('submit', searchText);
@@ -17,7 +18,7 @@ if (urlParams.get('names') != null && urlParams.get('names') != '') urlParams.ge
 $(document).ready(function () {
 
   console.log(list1);
-  const requestURL = '/search/employees';
+  const requestURL = `/search/employees/number=${employeeNumber}`;
   console.log('making ajax request to:', requestURL);
   // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
   // Using the core $.ajax() method since it's the most flexible.
