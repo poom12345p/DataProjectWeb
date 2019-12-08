@@ -16,8 +16,8 @@ const employees = require('./tables/employees');
 const customers = require('./tables/customers');
 const promotions = require('./tables/promotions');
 const orderspromotions = require('./tables/orderspromotions');
-promotions.hasMany(orderspromotions, {foreignKey: 'code'})
-orderspromotions.belongsTo(promotions, {foreignKey: 'code'})
+promotions.hasMany(orderspromotions, { foreignKey: 'code' })
+orderspromotions.belongsTo(promotions, { foreignKey: 'code' })
 
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt');
@@ -294,9 +294,9 @@ router.get('/customerorder=:code', (req, res) => {
   res.sendFile(path.join(__dirname, `..`, `..`, `Customer_DetailOrder.html`));
   // res.send(result);
 });
-router.get('/addcustomer',(req,res)=>{
-  res.sendFile(path.join(__dirname,`..`,`..`,`addcustomer.html`));
- // res.send(result);
+router.get('/addcustomer', (req, res) => {
+  res.sendFile(path.join(__dirname, `..`, `..`, `addcustomer.html`));
+  // res.send(result);
 });
 
 router.get('/data/customers', (req, res) => {
@@ -330,8 +330,8 @@ router.delete('/customer/delete/', (req, res, next) => {
     })
     .catch(err => { console.log(next); });
 
- });
- router.post('/customer/insert/', (req, res, next) =>{
+});
+router.post('/customer/insert/', (req, res, next) => {
   db.query(`INSERT INTO customers(contactFirstName,contactLastName,customerName,addressLine1,addressLine2,city,state,postalCode,salesRepEmployeeNumber,country,creditLimit,phone,customerNumber) VALUES("${req.body.contactFirstName}",   
             "${req.body.contactLastName}","${req.body.customerName}","${req.body.addressLine1}","${req.body.addressLine2}"
             ,"${req.body.city}","${req.body.state}","${req.body.postalCode}","${req.body.salesRepEmployeeNumber}"
@@ -472,8 +472,8 @@ router.delete('/employee/delete/', (req, res, next) => {
     .catch(err => { console.log(next); });
 
 
- });
- router.post('/employee/insert/', (req, res, next) =>{
+});
+router.post('/employee/insert/', (req, res, next) => {
   db.query(`INSERT INTO employees(firstname,lastName,jobTitle,email,extension,OfficeCode,reportsTo,password,employeeNumber) VALUES("${req.body.firstName}",   
             "${req.body.lastName}","${req.body.jobTitle}","${req.body.email}","${req.body.extension}"
             ,"${req.body.OfficeCode}","${req.body.reportsTo}","${req.body.password}","${req.body.employeeNumber}")`, { type: db.QueryTypes.INSERT })
@@ -629,8 +629,8 @@ router.get('/search/orderspromotions/orderNumber=:num', (req, res, next) => {
     {
       include: [{
         model: promotions,
-       }],
-       where: {orderNumber: req.params.num}
+      }],
+      where: { orderNumber: req.params.num }
     }
   )
     .then(result => {
@@ -712,36 +712,38 @@ router.post('/login', (req, res, next) => {
 router.post('/createpromotion', (req, res, next) => {
   const promotion = req.body;
   console.log(promotion);
-  return promotions.create({
-    code: promotion.code,
-    amount: promotion.amount,
-    discount: promotion.discount,
-    expire: promotion.expire
-  }).then(function (promo) {
+  return db.query(
+    `INSERT INTO promotions(code, amount, discount, expire)
+    SELECT * FROM(SELECT '${promotion.code}','${promotion.amount}', '${promotion.discount}', '${promotion.expire}') AS tmp
+    WHERE NOT EXISTS(
+      SELECT code FROM promotions WHERE code = '${promotion.code}'
+    ) LIMIT 1;`, { type: db.QueryTypes.INSERT }
+  ).then(function (promo) {
     if (promo) {
       response.send(promo);
     } else {
       response.status(400).send('Error in insert new promotion');
     }
   });
-
+  // promotions.create({
+  //     code: promotion.code,
+  //     amount: promotion.amount,
+  //     discount: promotion.discount,
+  //     expire: promotion.expire
+  //   })
 
 });
 
 router.post('/product', (req, res, next) => {
   const product = req.body;
   console.log(product);
-  return products.create({
-    productCode: product.productCode,
-    productName: product.productName,
-    productLine: product.productLine,
-    productScale: product.productScale,
-    productVendor: product.productVendor,
-    productDescription: product.productDescription,
-    quantityInStock: product.quantityInStock,
-    buyPrice: product.buyPrice,
-    MSRP: product.MSRP
-  }).then(function (item) {
+  return db.query(
+    `INSERT INTO products(productCode, productName, productLine, productScale, productVendor, productDescription, quantityInStock, buyPrice, MSRP)
+    SELECT * FROM(SELECT '${product.productCode}','${product.productName}', '${product.productLine}', '${product.productScale}', '${product.productVendor}', '${product.productDescription}', '${product.quantityInStock}', '${product.buyPrice}', '${product.MSRP}') AS tmp
+    WHERE NOT EXISTS(
+      SELECT productCode FROM products WHERE productCode = '${product.productCode}'
+    ) LIMIT 1;`, { type: db.QueryTypes.INSERT }
+  ).then(function (item) {
     if (item) {
       response.send(item);
     } else {
@@ -774,7 +776,7 @@ router.post('/order', (req, res, next) => {
 router.post('/createorderspromotions', (req, res, next) => {
   const promoorder = req.body;
   return orderspromotions.create({
-    orderNumber:promoorder.orderNumber,
+    orderNumber: promoorder.orderNumber,
     code: promoorder.code
   }).then(function (order) {
     if (order) {
@@ -827,10 +829,10 @@ router.post('/creorderdetail', (req, res, next) => {
 router.post('/removeproduct', (req, res, next) => {
   const orderdetail = req.body;
   return products.update({
-   quantityInStock: Sequelize.literal(`quantityInStock-${orderdetail.quantityOrdered}`)
+    quantityInStock: Sequelize.literal(`quantityInStock-${orderdetail.quantityOrdered}`)
 
   }, {
-    where: {  productCode: orderdetail.productCode,}
+    where: { productCode: orderdetail.productCode, }
   }).then(function (order) {
     if (order) {
       response.send(order);
@@ -843,10 +845,10 @@ router.post('/removeproduct', (req, res, next) => {
 router.post('/removepromotion', (req, res, next) => {
   const promo = req.body;
   return promotions.update({
-   amount: Sequelize.literal(`amount-1`)
+    amount: Sequelize.literal(`amount-1`)
 
   }, {
-    where: {  code:  promo.code}
+    where: { code: promo.code }
   }).then(function (order) {
     if (order) {
       response.send(order);
