@@ -16,6 +16,9 @@ const employees = require('./tables/employees');
 const customers = require('./tables/customers');
 const promotions = require('./tables/promotions');
 const orderspromotions = require('./tables/orderspromotions');
+promotions.hasMany(orderspromotions, {foreignKey: 'code'})
+orderspromotions.belongsTo(promotions, {foreignKey: 'code'})
+
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt');
 const Op = Sequelize.Op;
@@ -573,6 +576,7 @@ router.get('/search/promotions', (req, res, next) => {
     })
     .catch(err => { console.log(next); });
 });
+
 router.get('/search/promotions/code=:code', (req, res, next) => {
   promotions.findAll(
     {
@@ -582,12 +586,25 @@ router.get('/search/promotions/code=:code', (req, res, next) => {
         amount: {
           [Op.gt]: 0
         }
-      
 
       }
-
     }
+  )
+    .then(result => {
+      console.log(result);
+      res.send(result);
+    })
+    .catch(err => { console.log(next); });
+});
 
+router.get('/search/orderspromotions/orderNumber=:num', (req, res, next) => {
+  orderspromotions.findAll(
+    {
+      include: [{
+        model: promotions,
+       }],
+       where: {orderNumber: req.params.num}
+    }
   )
     .then(result => {
       console.log(result);
