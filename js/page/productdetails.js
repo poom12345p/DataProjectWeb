@@ -17,50 +17,94 @@ $(document).ready(function() {
      dataType : 'json', // this URL returns data in JSON format
      success: (data) => {
        //console.log('You received some data!', data);    
-       try{list1.innerHTML += `<a href="/">Product</a> <span>${data[0].productName}</span>`;
-           list.innerHTML+=`<h2 class="title-detail">${data[0].productName}</h2>
-           <p class="desc">Product Code : ${data[0].productCode}</p>
-           <p class="desc">${data[0].productDescription}</p>
+       try{list1.innerHTML += `<a href="/">Product</a><span>${data[0].productName}</span>`;
+           list.innerHTML+=`<div class = "pname"><h2 class="title-detail">${data[0].productName}</h2></div>
+           <input type="hidden" id="pcodes" value="${data[0].productCode}">
+           <div class = "pcode"><p class="desc">Product Code : ${data[0].productCode}</p></div>
+           <div class = "pdes"><p class="desc">${data[0].productDescription}</p></div>
            <div>
-               <strong>Size : </strong>
-               <span>${data[0].productScale}</span>
+             <div class = "pscale">  <strong>Size : </strong>
+               <span>${data[0].productScale}</span></div>
            </div>
            <div>
-               <strong>Vendor : </strong>
-               <span>${data[0].productVendor}</span>
+            <div class = "pven">   <strong>Vendor : </strong>
+                <span>${data[0].productVendor}</span></div>
            </div>
            <div>
-               <strong>Product Line : </strong>
-               <span>${data[0].productLine}</span>
+              <div class = "pline"> <strong>Product Line : </strong>
+                <span>${data[0].productLine}</span></div>
            </div>
            <div class="available">
-               <strong>Stock : </strong>
-               <span class="in-stock">${data[0].quantityInStock}</span>
+             <div class = "pstock">  <strong>Stock : </strong>
+               <span class="in-stock">${data[0].quantityInStock}</span></div>
            </div>
            <div class="attr-detail attr-color">
                <div class="attr-title">
-                   <strong><sup>*</sup>Buy Price :</strong><span class="current-color">$${data[0].buyPrice}</span>
+               <div class = "pprice"><strong><sup>*</sup>Buy Price :</strong><span class="current-color">$${data[0].buyPrice}</span> </div>
                </div>
                
            </div>	
            <div class="attr-detail attr-size">
                <div class="attr-title">
-                   <strong><sup>*</sup>MSRP :</strong><span class="current-size">$${data[0].MSRP}</span>
+               <div class = "pmsrp"> <strong><sup>*</sup>MSRP :</strong><span class="current-size">$${data[0].MSRP}</span></div>
                </div>
                
            </div>	
            <div class="detail-extralink">
                
                <div class="product-extra-link2">
-                   <a class="addcart-link" href="http://demo.7uptheme.com/html/kuteshop/detail.html?fbclid=IwAR0lMh5eJUqyEFAWzgHqTo_TaAx3umKntyESabM0IK1nP_z4ebpeQeMPLds#">Edit</a>
-                   <a class="addcart-link" href="http://demo.7uptheme.com/html/kuteshop/detail.html?fbclid=IwAR0lMh5eJUqyEFAWzgHqTo_TaAx3umKntyESabM0IK1nP_z4ebpeQeMPLds#">Delete</a>
                    
+                
+                <table align="center" width='40%'>
+                <tr><td><button type="button" class="w3-button w3-blue" id = "edit" onclick="editclick()">Edit</button></td>
+        
+                <td><button type="button" class="w3-button w3-yellow savevalue" id = "save" style="visibility:hidden; onclick = "">Save</button></td>
+                <td><button type="button" class="w3-button w3-red deletevalue" id = "delete" style="visibility:hidden; onclick ="">Delete</button></td>
+                <td><button type="button" class="w3-button w3-sand cancle" id = "cancle" style="visibility:hidden; onclick = "">Cancle</button></td>
+                </tr>
+            </table>   
                </div>
+               
            </div>`;
            
-       }catch(err){console.log(GG);} 
+       }catch(err){console.log();} 
        
         console.log(list);
      }
    });
 });
+function editclick(){ 
+    const requestURL = `/data/products/${productsCode}`;
+   console.log('making ajax request to:', requestURL);
+    //From: http://learn.jquery.com/ajax/jquery-ajax-methods/
+    //Using the core $.ajax() method since it's the most flexible.
+    //($.get() and $.getJSON() are nicer convenience functions)
+   $.ajax({
+      //all URLs are relative to http://localhost:3000/
+     url: requestURL,
+     type: 'GET',
+     dataType : 'json', // this URL returns data in JSON format
+     success: (data) => {
+       //console.log('You received some data!', data);    
+       try{
+        document.querySelector('.pname').innerHTML=`<input type="text" id = "pname" value="${data[0].productName}">`                      
+        document.querySelector('.pcode').innerHTML=`<p class="desc">Product Code : <input type="text" id = "pcode" value="${data[0].productCode}"></p>`
+        document.querySelector('.pdes').innerHTML=`<p class="desc">Description :<input type="text" id = "pdes" value="${data[0].productDescription}"></p>`
+        document.querySelector('.pscale').innerHTML=`<strong>Size : </strong><input type="text" id = "pscale" value="${data[0].productScale}">`
+        document.querySelector('.pven').innerHTML=`<strong>Vendor : </strong><input type="text" id = "pven" value="${data[0].productVendor}">`
+        document.querySelector('.pline').innerHTML=`<strong>Productline : </strong><input type="text" id = "pline" value="${data[0].productLine}">`
+        document.querySelector('.pstock').innerHTML=`<strong>Stock : </strong><input type="text" id = "pstock" value="${data[0].quantityInStock}">`
+        document.querySelector('.pprice').innerHTML=`<strong><sup>*</sup>Buy Price :</strong><span class="current-color">$<input type="text" id = "pprice" value="${data[0].buyPrice}"></span> </div>`
+        document.querySelector('.pmsrp').innerHTML=`<strong><sup>*</sup>MSRP :</strong><span class="current-color">$<input type="text" id = "pmsrp" value="${data[0].MSRP}"></span> </div>`
+        }catch(err){console.log(err);} 
+       
+        console.log(list);
+     }
+   });
+   document.getElementById('edit').style.visibility = 'hidden';
+   document.getElementById('delete').style.visibility = 'visible';
+	document.getElementById('cancle').style.visibility = 'visible';
+	document.getElementById('save').style.visibility = 'visible';
+
+}
+
