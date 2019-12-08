@@ -1,4 +1,3 @@
-
 var urlParams = new URLSearchParams(location.search);
 let prodouctlist = document.querySelector('.productList');
 let codelist = document.querySelector('.productCodeList');
@@ -45,6 +44,7 @@ var currentDate = date.toISOString().slice(0,10);
 orderdatetext.value=currentDate;
 writeOrders();
 writePromotions();
+
 $(document).ready(function () {
     var user = JSON.parse(localStorage.getItem('User'));
     console.log(user);
@@ -87,7 +87,7 @@ $(document).ready(function () {
         customer=data[0];
         
         cusnametext.innerHTML=customer.customerName;
-      }
+      }    
     });
 
     $('.qty-up').on('click',function(event){
