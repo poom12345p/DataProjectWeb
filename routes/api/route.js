@@ -154,8 +154,24 @@ router.get('/search/products/name=:name', (req, res, next) => {
     .catch(err => { console.log(next); });
 });
 
+router.post('/product/update/', (req, res, next) => {
+  db.query(`update products set productDescription = "${req.body.productDescription}",productScale = "${req.body.productScale}",productName = "${req.body.productName}",
+          productVendor= "${req.body.productVendor}",productLine= "${req.body.productLine}",quantityInStock= "${req.body.quantityInStock}",buyPrice= "${req.body.buyPrice}",MSRP ="${req.body.MSRP}",productCode = "${req.body.productCode}"
+            where productCode = "${req.body.productCodes}"`, { type: db.QueryTypes.update })
+    .then(result => {
+      console.log(result);
+    })
+    .catch(err => { console.log(err); });
+});
+router.delete('/product/delete/', (req, res, next) => {
+  db.query(`delete from products where productCode = "${req.body.productCodes}"`, { type: db.QueryTypes.delete })
 
+    .then(result => {
+      console.log(result);
+    })
+    .catch(err => { console.log(err); });
 
+ });
 
 
 router.get('/data/products/:code', (req, res, next) => {
@@ -568,6 +584,17 @@ router.get('/search/customerorders/number=:number', (req, res, next) => {
     .catch(err => { console.log(next); });
 });
 //////////////////////////////////////////////////////////////////////////////////
+router.get('/data/promotions', (req, res) => {
+
+  db.query(`SELECT *
+  FROM promotions`, { type: db.QueryTypes.SELECT })
+    .then(result => {
+      console.log(result);
+      res.send(result);
+    })
+    .catch(err => { console.log(err); });
+});
+
 router.get('/search/promotions', (req, res, next) => {
   promotions.findAll()
     .then(result => {
