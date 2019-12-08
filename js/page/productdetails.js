@@ -54,11 +54,15 @@ $(document).ready(function() {
                
                <div class="product-extra-link2">
                    
-                <a class="addcart-link " id = "edit" onclick="editclick()">Edit</a>
-                   <a class="addcart-link deletevalue" id = "delete" >Delete</a>
-                   <a class="addcart-link savevalue" id = "save" >Save</a>
-                   <a class="addcart-link cancle" id = "cancle" >Cancle</a>
-                   
+                
+                <table align="center" width='40%'>
+                <tr><td><button type="button" class="w3-button w3-blue" id = "edit" onclick="editclick()">Edit</button></td>
+        
+                <td><button type="button" class="w3-button w3-yellow savevalue" id = "save" style="visibility:hidden; onclick = "">Save</button></td>
+                <td><button type="button" class="w3-button w3-red deletevalue" id = "delete" style="visibility:hidden; onclick ="">Delete</button></td>
+                <td><button type="button" class="w3-button w3-sand cancle" id = "cancle" style="visibility:hidden; onclick = "">Cancle</button></td>
+                </tr>
+            </table>   
                </div>
                
            </div>`;
@@ -98,6 +102,9 @@ function editclick(){
      }
    });
    document.getElementById('edit').style.visibility = 'hidden';
+   document.getElementById('delete').style.visibility = 'visible';
+	document.getElementById('cancle').style.visibility = 'visible';
+	document.getElementById('save').style.visibility = 'visible';
 
 }
 
