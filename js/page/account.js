@@ -9,8 +9,9 @@ if (sessionStorage.getItem('USER')) {
     {
       location.replace(location.origin + "/login")
     }
-list03.innerHTML=`<a href="http://localhost:9000/employeeInfo?employeeNumber=${username.employeeNumber}">${username.firstName} ${username.lastName}</a>
-                  <a>${username.jobTitle}</a>`;
+list03.innerHTML=`
+                  <a>${username.jobTitle}</a>
+                  <a href="http://localhost:9000/employeeInfo?employeeNumber=${username.employeeNumber}">${username.firstName} ${username.lastName}</a>`;
 console.log(username.firstName);
 
 list04.innerHTML=`<a class="fa fa-user" href="http://localhost:9000/employeeInfo?employeeNumber=${username.employeeNumber}"> Account Info</a>`;
