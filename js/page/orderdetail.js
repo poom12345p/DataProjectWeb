@@ -6,6 +6,8 @@ let promotionsAll = [];
 let header;
 let customer;
 let discount=0;
+let subt=0.00;
+let tt=0;
 //
 let pricetext= document.querySelector('.Price');
 let totalpricetext= document.querySelector('.TotalPrice');
@@ -23,7 +25,7 @@ let commenttext =document.querySelector('.Comment');
 let statusinput=document.querySelector('.orderStatus');
 let statustext=document.querySelector('.orderstatustext');
 
-let discounttext;
+let discounttext =document.querySelector('.sumDiscount');;
 //
 let orderdatetext=document.querySelector('.OrderDate');
 let requiredatetext=document.querySelector('.RequireDate');
@@ -32,6 +34,7 @@ let summitbtn =document.querySelector('.submit-btn')
 //
 getHeader();
 getorders();
+getPromotion();
 
 $(document).ready(function () {
     $('.submit-btn').on('click',function(event){
@@ -102,6 +105,7 @@ function getHeader()
                 statustext.innerHTML =header.status;
                 statusinput.value = header.status;
                 statusinput.style.display = "none"
+                commenttext.value = header.comments;
 
             }
         }
@@ -141,9 +145,25 @@ function getorders()
     });
 }
 
+function getPromotion()
+{
+    $.ajax({
+        // all URLs are relative to http://localhost:3000/
+        url: `/search/orderspromotions/orderNumber=${orderNumber}`,
+        type: 'GET',
+        dataType: 'json', // this URL returns data in JSON format
+        success: (data) => {
+          // console.log('You received some data!', data);
+          promotionsAll = data;
+          console.log(promotionsAll);
+          writePromotions();
+        }
+    });
+}
+
 function writeOrders()
   {
-    let subt=0;
+    subt=0;
     ordertable.innerHTML="";
     for (var i = 0; i < ordersAll.length; i++) {
       let add=parseFloat(ordersAll[i].priceEach*ordersAll[i].quantityOrdered).toFixed(2);
@@ -173,6 +193,37 @@ function writeOrders()
 											</tr>
       `
     }
-    subtotaltext.innerHTML='$'+subt.toFixed(2);
-    ordertotaltext.innerHTML='$'+parseFloat((subt-discount)).toFixed(2);
+    subtotaltext.innerHTML='$'+subt;
+    tt=parseFloat((subt-discount));
+    if(tt<0)tt=0;
+    ordertotaltext.innerHTML='$'+parseFloat(tt);
+  }
+
+  function writePromotions()
+  {
+    let disc=0;
+    promotionstable.innerHTML="";
+    for (var i = 0; i <promotionsAll.length; i++) {
+      disc=parseFloat(promotionsAll[i].promotion.discount)
+
+      promotionstable.innerHTML+=
+      `
+      <tr class="cart_item">
+												<td class="product-code">
+											${promotionsAll[i].code}
+										</td>
+										<td class="product-discount">
+											<span class="amount">${promotionsAll[i].promotion.discount}</span>
+										</td>
+											</tr>
+      `
+    }
+    discount=disc;
+     discounttext.innerHTML='$'+discount.toFixed(2);
+     tt=parseFloat((subt-discount));
+     if(tt<0)
+     {
+         tt=0;
+     }
+    ordertotaltext.innerHTML='$'+parseFloat(tt);
   }

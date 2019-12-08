@@ -16,6 +16,9 @@ const employees = require('./tables/employees');
 const customers = require('./tables/customers');
 const promotions = require('./tables/promotions');
 const orderspromotions = require('./tables/orderspromotions');
+promotions.hasMany(orderspromotions, {foreignKey: 'code'})
+orderspromotions.belongsTo(promotions, {foreignKey: 'code'})
+
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt');
 const Op = Sequelize.Op;
@@ -28,11 +31,18 @@ db.authenticate()
   });
 
 //get address  
-
 router.get('/', (req, res, next) => {
 
 
   res.sendFile(path.join(__dirname, `..`, `..`, `createorder.html`));
+  // res.send(result);
+
+});
+
+router.get('/promotionRegister', (req, res, next) => {
+
+
+  res.sendFile(path.join(__dirname, `..`, `..`, `promotionRegister.html`));
   // res.send(result);
 
 });
@@ -80,7 +90,7 @@ router.get('/login/:email', (req, res, next) => {
 });
 
 //////////////////////products search api//////////////////////////
-router.get('/search/productsAll', (req, res, next) => {
+router.get('/search/products', (req, res, next) => {
   //console.log(`${req.params.size}`);
   /*
   ex. not select size and vendor
@@ -105,7 +115,7 @@ router.get('/search/preproducts', (req, res, next) => {
     where:
     {
       quantityInStock: {
-        [Op.eq]:0
+        [Op.eq]: 0
       }
     }
   })
@@ -138,7 +148,7 @@ router.get('/search/products/name=:name', (req, res, next) => {
     order: [`productName`, `productScale`, `productVendor`]
   })
     .then(result => {
-     // console.log(result);
+      // console.log(result);
       res.send(result);
     })
     .catch(err => { console.log(next); });
@@ -161,7 +171,7 @@ router.get('/data/products/:code', (req, res, next) => {
       productCode: `${code}`
     }
   }).then(result => {
-   // console.log(result);
+    // console.log(result);
     res.send(result);
   })
     .catch(err => { console.log(next); });
@@ -245,42 +255,46 @@ router.get('/data/customers/number=:number', (req, res, next) => {
     {
       customerNumber: `${req.params.number}`
     }
-   
+
   }).then(result => {
-      console.log(result);
-      res.send(result);
-    })
+    console.log(result);
+    res.send(result);
+  })
     .catch(err => { console.log(next); });
 });
 
-router.get('/customerInfo=:code',(req,res)=>{
-  res.sendFile(path.join(__dirname,`..`,`..`,`Profile.html`), { name: req.user });
+router.get('/customerInfo=:code', (req, res) => {
+  res.sendFile(path.join(__dirname, `..`, `..`, `Profile.html`), { name: req.user });
+  // res.send(result);
+});
+
+router.get('/customerlist', (req, res) => {
+  res.sendFile(path.join(__dirname, `..`, `..`, `CustomerList.html`));
+  // res.send(result);
+});
+
+
+router.get('/customerorder=:code', (req, res) => {
+  res.sendFile(path.join(__dirname, `..`, `..`, `Customer_DetailOrder.html`));
+  // res.send(result);
+});
+router.get('/addcustomer',(req,res)=>{
+  res.sendFile(path.join(__dirname,`..`,`..`,`addcustomer.html`));
  // res.send(result);
 });
 
-router.get('/customerlist',(req,res)=>{
-  res.sendFile(path.join(__dirname,`..`,`..`,`CustomerList.html`));
- // res.send(result);
-});
+router.get('/data/customers', (req, res) => {
 
-
-router.get('/customerorder=:code',(req,res)=>{
-  res.sendFile(path.join(__dirname,`..`,`..`,`Customer_DetailOrder.html`));
- // res.send(result);
-});
-
-router.get('/data/customers',(req,res)=>{
-  
   db.query(`SELECT *
   FROM customers
-  ORDER by customerNumber,customerName`, { type: db.QueryTypes.SELECT})
-  .then(result => {console.log(result);
-  res.send(result);
-  })
-  .catch(err => {console.log(err);});
+  ORDER by customerNumber,customerName`, { type: db.QueryTypes.SELECT })
+    .then(result => {
+      console.log(result);
+      res.send(result);
+    })
+    .catch(err => { console.log(err); });
 });
-
-router.post('/customer/update/', (req, res, next) =>{
+router.post('/customer/update/', (req, res, next) => {
   db.query(`update customers set contactFirstName = "${req.body.contactFirstName}",contactLastName = "${req.body.contactLastName}",
             customerName= "${req.body.customerName}",addressLine1= "${req.body.addressLine1}",addressLine2= "${req.body.addressLine2}"
             ,city= "${req.body.city}",state= "${req.body.state}",postalCode= "${req.body.postalCode}"
@@ -290,35 +304,48 @@ router.post('/customer/update/', (req, res, next) =>{
       console.log(result);
     })
     .catch(err => { console.log(next); });
- });
- 
- router.delete('/customer/delete/', (req, res, next) =>{
-  db.query(`delete from customers where customerNumber = "${req.body.customerNumber}"`, { type: db.QueryTypes.delete})
-            
+});
+
+router.delete('/customer/delete/', (req, res, next) => {
+  db.query(`delete from customers where customerNumber = "${req.body.customerNumber}"`, { type: db.QueryTypes.delete })
+
     .then(result => {
       console.log(result);
     })
     .catch(err => { console.log(next); });
 
  });
-///////////////////employees//////////////////////////
-router.get('/employeelist',(req,res)=>{
-  res.sendFile(path.join(__dirname,`..`,`..`,`EmployeeList.html`));
- // res.send(result);
+ router.post('/customer/insert/', (req, res, next) =>{
+  db.query(`INSERT INTO customers(contactFirstName,contactLastName,customerName,addressLine1,addressLine2,city,state,postalCode,salesRepEmployeeNumber,country,creditLimit,phone,customerNumber) VALUES("${req.body.contactFirstName}",   
+            "${req.body.contactLastName}","${req.body.customerName}","${req.body.addressLine1}","${req.body.addressLine2}"
+            ,"${req.body.city}","${req.body.state}","${req.body.postalCode}","${req.body.salesRepEmployeeNumber}"
+            ,"${req.body.country}","${req.body.creditLimit}","${req.body.phone}","${req.body.customerNumbers}")`, { type: db.QueryTypes.INSERT })
+    .then(result => {
+      console.log(result);
+    })
+    .catch(err => { console.log(err); });
+
 });
-router.get('/data/employee',(req,res)=>{
-  
+
+///////////////////employees//////////////////////////
+router.get('/employeelist', (req, res) => {
+  res.sendFile(path.join(__dirname, `..`, `..`, `EmployeeList.html`));
+  // res.send(result);
+});
+router.get('/data/employee', (req, res) => {
+
   db.query(`SELECT *
   FROM employees
-  ORDER by employeeNumber,firstName`, { type: db.QueryTypes.SELECT})
-  .then(result => {console.log(result);
-  res.send(result);
-  })
-  .catch(err => {console.log(err);});
+  ORDER by employeeNumber,firstName`, { type: db.QueryTypes.SELECT })
+    .then(result => {
+      console.log(result);
+      res.send(result);
+    })
+    .catch(err => { console.log(err); });
 });
-router.get('/employeeInfo',(req,res)=>{
-  res.sendFile(path.join(__dirname,`..`,`..`,`EmployeeInfo.html`), { name: req.user });
- // res.send(result);
+router.get('/employeeInfo', (req, res) => {
+  res.sendFile(path.join(__dirname, `..`, `..`, `EmployeeInfo.html`), { name: req.user });
+  // res.send(result);
 });
 
 
@@ -410,7 +437,7 @@ router.get('/data/employees/:number', (req, res, next) => {
     })
     .catch(err => { console.log(next); });
 });
-router.post('/employee/update/', (req, res, next) =>{
+router.post('/employee/update/', (req, res, next) => {
   db.query(`update employees set firstname = "${req.body.firstName}",lastName = "${req.body.lastName}",
             jobTitle= "${req.body.jobTitle}",email= "${req.body.email}",extension= "${req.body.extension}"
             where employeeNumber = "${req.body.employeeNumber}"`, { type: db.QueryTypes.update })
@@ -418,61 +445,75 @@ router.post('/employee/update/', (req, res, next) =>{
       console.log(result);
     })
     .catch(err => { console.log(next); });
- });
- 
- router.delete('/employee/delete/', (req, res, next) =>{
-  db.query(`delete from employees where employeeNumber = "${req.body.employeeNumber}"`, { type: db.QueryTypes.delete})
-            
+});
+
+router.delete('/employee/delete/', (req, res, next) => {
+  db.query(`delete from employees where employeeNumber = "${req.body.employeeNumber}"`, { type: db.QueryTypes.delete })
+
     .then(result => {
       console.log(result);
     })
     .catch(err => { console.log(next); });
 
+
  });
+ router.post('/employee/insert/', (req, res, next) =>{
+  db.query(`INSERT INTO employees(firstname,lastName,jobTitle,email,extension,OfficeCode,reportsTo,password,employeeNumber) VALUES("${req.body.firstName}",   
+            "${req.body.lastName}","${req.body.jobTitle}","${req.body.email}","${req.body.extension}"
+            ,"${req.body.OfficeCode}","${req.body.reportsTo}","${req.body.password}","${req.body.employeeNumber}")`, { type: db.QueryTypes.INSERT })
+    .then(result => {
+      console.log(result);
+    })
+    .catch(err => { console.log(err); });
+
+});
 //////////////order/////////////////////////////////////
-router.get('/orderlist',(req,res)=>{
-  res.sendFile(path.join(__dirname,`..`,`..`,`Order_list.html`));
- // res.send(result);
+router.get('/orderlist', (req, res) => {
+  res.sendFile(path.join(__dirname, `..`, `..`, `Order_list.html`));
+  // res.send(result);
 });
 
-router.get('/data/order/:orderNumber',(req,res,next)=>{
-  
+router.get('/data/order/:orderNumber', (req, res, next) => {
+
   orders.findAll({
     where:
     {
-      orderNumber:req.params.orderNumber
+      orderNumber: req.params.orderNumber
     }
   })
-  .then(result => {console.log(result);
-  res.send(result);
-  })
-  .catch(err => {console.log(next);});
+    .then(result => {
+      console.log(result);
+      res.send(result);
+    })
+    .catch(err => { console.log(next); });
 });
-router.get('/data/orderdetails/:orderNumber',(req,res,next)=>{
-  
+router.get('/data/orderdetails/:orderNumber', (req, res, next) => {
+
   orderdetails.findAll({
     where:
     {
-      orderNumber:req.params.orderNumber
+      orderNumber: req.params.orderNumber
     }
   })
-  .then(result => {console.log(result);
-  res.send(result);
-  })
-  .catch(err => {console.log(next);});
+    .then(result => {
+      console.log(result);
+      res.send(result);
+    })
+    .catch(err => { console.log(next); });
 });
 
-router.get('/data/orderdetailsproducts/:orderNumber',(req,res,next)=>{
-  
-db.query(
-  `SELECT *
+router.get('/data/orderdetailsproducts/:orderNumber', (req, res, next) => {
+
+  db.query(
+    `SELECT *
   FROM orderdetails  JOIN  products USING (productCode)
-  WHERE orderNumber =${req.params.orderNumber}`,{type:db.QueryTypes.SELECT}
-)
-  .then(result => {console.log(result);
-  res.send(result);
-  })
-  .catch(err => {console.log(next);});
+  WHERE orderNumber =${req.params.orderNumber}`, { type: db.QueryTypes.SELECT }
+  )
+    .then(result => {
+      console.log(result);
+      res.send(result);
+    })
+    .catch(err => { console.log(next); });
 });
 
 router.get('/search/orders', (req, res, next) => {
@@ -499,10 +540,10 @@ router.get('/search/orders/allTitle', (req, res, next) => {
 });
 
 router.get('/maxOrdersNumber', (req, res, next) => {
-orders.max('orderNumber').then(max => {
-      console.log(max);
-      res.send(max);
-});
+  orders.max('orderNumber').then(max => {
+    console.log(max);
+    res.send(max);
+  });
 });
 router.get('/search/customerorders/number=:number', (req, res, next) => {
   orders.findAll({
@@ -535,22 +576,35 @@ router.get('/search/promotions', (req, res, next) => {
     })
     .catch(err => { console.log(next); });
 });
-router.get('/search/promotions/:code', (req, res, next) => {
+
+router.get('/search/promotions/code=:code', (req, res, next) => {
   promotions.findAll(
-    {where:
+    {
+      where:
       {
         code: req.params.code,
         amount: {
           [Op.gt]: 0
-        },
-        expire: {
-          [Op.gte]: moment().toDate()
         }
-      
+
       }
-      
     }
-      
+  )
+    .then(result => {
+      console.log(result);
+      res.send(result);
+    })
+    .catch(err => { console.log(next); });
+});
+
+router.get('/search/orderspromotions/orderNumber=:num', (req, res, next) => {
+  orderspromotions.findAll(
+    {
+      include: [{
+        model: promotions,
+       }],
+       where: {orderNumber: req.params.num}
+    }
   )
     .then(result => {
       console.log(result);
@@ -583,7 +637,6 @@ router.get('/login', (req, res, next) => {
 router.post('/login', (req, res, next) => {
   // console.log(req);
   // (req, res) => res.sendFile('productslist', req.user)
-
   console.log(req.body.username);
   console.log(req.body.password);
   const username = req.body.username;
@@ -609,42 +662,65 @@ router.post('/login', (req, res, next) => {
       //   });
       // });
 
-      bcrypt.compare(password,user.password, function(err, resq) {
-        if(resq)
-        {
-        console.log("authirize succes");
-        res.send(user);
+      bcrypt.compare(password, user.password, function (err, resq) {
+        if (resq) {
+          console.log("authirize succes");
+          res.send(user);
         }
-        else
-        {
+        else {
           console.log("authirize fail worng password");
 
         }
-    });
+      });
       // if (user.password === hashPass) {
       //   console.log("authirize succes");
       //   res.send(user);
       // }
-       
+
     }
   });
 
 });
 
-router.post('/promotion', (req, res, next) => {
+router.post('/createpromotion', (req, res, next) => {
   const promotion = req.body;
+  console.log(promotion);
   return promotions.create({
-    code:promotion.code,
-    amount:promotion.amount,
-    discount:promotion.discount,
-    expire:promotion.expire
-}).then(function (promo) {
+    code: promotion.code,
+    amount: promotion.amount,
+    discount: promotion.discount,
+    expire: promotion.expire
+  }).then(function (promo) {
     if (promo) {
-        response.send(promo);
+      response.send(promo);
     } else {
-        response.status(400).send('Error in insert new promotion');
+      response.status(400).send('Error in insert new promotion');
     }
+  });
+
+
 });
+
+router.post('/product', (req, res, next) => {
+  const product = req.body;
+  console.log(product);
+  return products.create({
+    productCode: product.productCode,
+    productName: product.productName,
+    productLine: product.productLine,
+    productScale: product.productScale,
+    productVendor: product.productVendor,
+    productDescription: product.productDescription,
+    quantityInStock: product.quantityInStock,
+    buyPrice: product.buyPrice,
+    MSRP: product.MSRP
+  }).then(function (item) {
+    if (item) {
+      response.send(item);
+    } else {
+      response.status(400).send('Error in insert new product');
+    }
+  });
 
 
 });
@@ -652,91 +728,135 @@ router.post('/promotion', (req, res, next) => {
 router.post('/order', (req, res, next) => {
   const order = req.body;
   return orders.create({
-    orderNumber:order.orderNumber,
-    orderDate:order.orderDate,
-    requiredDate:order.requiredDate,
-    shippedDate:order.shippedDate,
-    status:"in process",
-    comments:order.comments,
-    customerNumber:order.customerNumber
+    orderNumber: order.orderNumber,
+    orderDate: order.orderDate,
+    requiredDate: order.requiredDate,
+    shippedDate: order.shippedDate,
+    status: "in process",
+    comments: order.comments,
+    customerNumber: order.customerNumber
   }).then(function (order) {
     if (order) {
-        response.send(order);
+      response.send(order);
     } else {
-        response.status(400).send('Error in insert new order');
+      response.status(400).send('Error in insert new order');
     }
+  });
 });
+
+router.post('/createorderspromotions', (req, res, next) => {
+  const promoorder = req.body;
+  return orderspromotions.create({
+    orderNumber:promoorder.orderNumber,
+    code: promoorder.code
+  }).then(function (order) {
+    if (order) {
+      response.send(order);
+    } else {
+      response.status(400).send('Error in insert new order');
+    }
+  });
 });
 
 router.post('/update/order', (req, res, next) => {
   const order = req.body;
   console.log(order);
   return orders.update({
-    requiredDate:order.requiredDate,
-    shippedDate:order.shippedDate,
-    status:order.status,
-    comments:order.comments,
+    requiredDate: order.requiredDate,
+    shippedDate: order.shippedDate,
+    status: order.status,
+    comments: order.comments,
 
-  },{
-    where :{ orderNumber:order.orderNumber}
+  }, {
+    where: { orderNumber: order.orderNumber }
   }).then(function (order) {
     if (order) {
-        response.send(order);
+      response.send(order);
     } else {
-        response.status(400).send('Error in insert new order');
+      response.status(400).send('Error in insert new order');
     }
-});
+  });
 });
 
 router.post('/creorderdetail', (req, res, next) => {
   const orderdetail = req.body;
   return orderdetails.create({
-    orderNumber:orderdetail.orderNumber,
-    productCode:orderdetail.productCode,
-    quantityOrdered:orderdetail.quantityOrdered,
-    priceEach:orderdetail.priceEach,
-    orderLineNumber:null,
-    status:null
+    orderNumber: orderdetail.orderNumber,
+    productCode: orderdetail.productCode,
+    quantityOrdered: orderdetail.quantityOrdered,
+    priceEach: orderdetail.priceEach,
+    orderLineNumber: null,
+    status: null
   }).then(function (order) {
     if (order) {
-        response.send(order);
+      response.send(order);
     } else {
-        response.status(400).send('Error in insert new order');
+      response.status(400).send('Error in insert new order');
     }
+  });
+
 });
 
+router.post('/removeproduct', (req, res, next) => {
+  const orderdetail = req.body;
+  return products.update({
+   quantityInStock: Sequelize.literal(`quantityInStock-${orderdetail.quantityOrdered}`)
 
+  }, {
+    where: {  productCode: orderdetail.productCode,}
+  }).then(function (order) {
+    if (order) {
+      response.send(order);
+    } else {
+      response.status(400).send('Error in insert new order');
+    }
+  });
 });
 
+router.post('/removepromotion', (req, res, next) => {
+  const promo = req.body;
+  return promotions.update({
+   amount: Sequelize.literal(`amount-1`)
+
+  }, {
+    where: {  code:  promo.code}
+  }).then(function (order) {
+    if (order) {
+      response.send(order);
+    } else {
+      response.status(400).send('Error in insert new order');
+    }
+  });
+});
 router.post('/preorder', (req, res, next) => {
   const order = req.body;
   return preOrders.create({
-   orderNumber:order.orderNumber,
-    orderDate:order.orderDate,
-    comments:order.comments,
-    customerNumber:order.customerNumber
+    orderNumber: order.orderNumber,
+    orderDate: order.orderDate,
+    comments: order.comments,
+    customerNumber: order.customerNumber
   }).then(function (order) {
     if (order) {
-        response.send(order);
+      response.send(order);
     } else {
-        response.status(400).send('Error in insert new order');
+      response.status(400).send('Error in insert new order');
     }
-});
+  });
 });
 
 router.post('/preorderdetail', (req, res, next) => {
   const orderdetail = req.body;
   return preorderdetails.create({
-    preOrderNumber:orderdetail.orderNumber,
-    productCode:orderdetail.productCode,
-    quantityOrdered:orderdetail. quantityOrdered,
-    priceEach:orderdetail.priceEach,
-    orderLineNumber:orderdetail.orderLineNumber
+    preOrderNumber: orderdetail.orderNumber,
+    productCode: orderdetail.productCode,
+    quantityOrdered: orderdetail.quantityOrdered,
+    priceEach: orderdetail.priceEach,
+    orderLineNumber: orderdetail.orderLineNumber
   }).then(function (order) {
     if (order) {
-        response.send(order);
+      response.send(order);
     } else {
-        response.status(400).send('Error in insert new order');
+      response.status(400).send('Error in insert new order');
     }
   });
 });
@@ -761,10 +881,10 @@ router.get('/search/products/allVendor', (req, res, next) => {
   })
     // db.query(`SELECT productVendor FROM products GROUP by productVendor`, { type: db.QueryTypes.SELECT})
     .then(result => {
-     // console.log(result);
+      // console.log(result);
       res.send(result);
     })
-   .catch(next);
+    .catch(next);
 
 });
 module.exports = router;
