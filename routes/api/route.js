@@ -67,6 +67,10 @@ router.get('/productslist', (req, res, next) => {
   res.sendFile(path.join(__dirname, `..`, `..`, `ProductLotList.html`), { name: req.user });
   // res.send(result);
 });
+router.get('/paymentlist', (req, res, next) => {
+  res.sendFile(path.join(__dirname, `..`, `..`, `payment.html`), { name: req.user });
+  // res.send(result);
+});
 
 router.get('/search/productlines', (req, res, next) => {
 
@@ -923,4 +927,26 @@ router.get('/search/products/allVendor', (req, res, next) => {
     .catch(next);
 
 });
+
+////////////////////////////payment/////////////////////////////
+router.get('/data/payment', (req, res, next) => {
+  //console.log(`${req.params.size}`);
+  /*
+  ex. not select size and vendor
+  http://localhost:9000/search/products/
+
+  */
+  //console.log(`${req.params.size}|${req.params.vender}|${req.params.name}`);
+  // db.query(`SELECT * FROM products ORDER BY productName,productScale,productVendor `, { type: db.QueryTypes.SELECT})
+  payments.findAll({
+
+    order: [`paymentDate`]
+  })
+    .then(result => {
+      //console.log(result);
+      res.send(result);
+    })
+    .catch(err => { console.log(next); });
+});
+
 module.exports = router;
