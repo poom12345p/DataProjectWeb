@@ -82,7 +82,7 @@ function updatePage(page) {
                         
                       </div>
                       <div class="product-price">
-                        <ins><span>Discount : ${dataMem[i].discount}</span></ins>
+                        <ins><span>Discount : $${dataMem[i].discount}</span></ins>
                       </div>
                     </div>
                   </div>

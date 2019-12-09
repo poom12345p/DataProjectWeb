@@ -68,21 +68,21 @@ function updatePage(page) {
                   <div class="col-md-12 col-sm-8 col-xs-12">
                     <div class="product-info">
                       <h5 class="product-title"><a
-                        href=""><font size="4"><b>CODE : ${dataMem[i].Cust}</b></font></h5></a>
+                        href=""><font size="4"><b>Customer Number : ${dataMem[i].customerNumber}</b></font></h5></a>
                       <div class="product-price">
                         <!--<ins><span>$360.00</span></ins>-->
                       </div>
                       
                       <div class="col-md-4 col-sm-4 col-xs-12">
-                        <h5>Amount : ${dataMem[i].amount}</h5>
+                        <h5>Check Number : ${dataMem[i].checkNumber}</h5>
                         
                       </div>
                       <div class="col-md-4 col-sm-4 col-xs-12">
-                        <h5>Expire	: ${dataMem[i].expire}</h5>
+                        <h5>Payment Date : ${dataMem[i].paymentDate}</h5>
                         
                       </div>
                       <div class="product-price">
-                        <ins><span>Discount : ${dataMem[i].discount}</span></ins>
+                        <ins><span>Amount : $${dataMem[i].amount}</span></ins>
                       </div>
                     </div>
                   </div>
@@ -123,7 +123,7 @@ function updatePage(page) {
 function updateFilther(data) {
   dataMem = [];
   for (var i = 0; i < data.length; i++) {
-    if (data[i].code.toUpperCase().search(textSearch.toUpperCase()) != -1) {
+    if (data[i].customerNumber.toUpperCase().search(textSearch.toUpperCase()) != -1) {
       dataMem.push(data[i]);
     }
   };
