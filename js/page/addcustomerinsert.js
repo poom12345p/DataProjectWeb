@@ -29,7 +29,9 @@ $(document).ready(function () {
       dataType: 'json', // this URL returns data in JSON format  
       });
       console.log(memvalue);
-      location.reload(true);
+      memvalue.customerNumber
+      linkpage = $('#cnumbers').val();
+      window.location.href = "/customerInfo="+linkpage;
     });
   $(document).on("click", ".cancle", function(){		
       location.reload(true);

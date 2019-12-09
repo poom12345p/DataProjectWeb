@@ -24,7 +24,8 @@ $(document).ready(function () {
       dataType: 'json', // this URL returns data in JSON format  
       });
       console.log(memvalue);
-      location.reload(true);
+      linkpage = $('#enumbers').val();
+      window.location.href = "http://localhost:9000/employeeInfo?employeeNumber="+linkpage;
     });
   $(document).on("click", ".cancle", function(){		
       location.reload(true);
