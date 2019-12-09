@@ -219,7 +219,7 @@ function updatePage(number) {
           </tr>
           <tr>
            <td align="left">
-            <img src="image/opoint.png" alt="" width="65" height="65">
+            <img src="image/points.png" alt="" width="57" height="57">
            </td>
            <td align="center">
             <table width="90%">
