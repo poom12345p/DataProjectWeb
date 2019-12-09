@@ -61,6 +61,7 @@ function updatePage(page) {
       // var page =urlParams.get('page');
       // list1.innerHTML+=`${data[i].productName}|${data[i].productScale} <br>`;
       // Product list
+      
       list1.innerHTML += `
                   <div class="item-product-list">
                   <div class="row">
@@ -78,7 +79,8 @@ function updatePage(page) {
                         
                       </div>
                       <div class="col-md-4 col-sm-4 col-xs-12">
-                        <h5>Expire	: ${dataMem[i].expire}</h5>
+                        
+                      <h5>Expire	: ${dataMem[i].expire.replace("00:00:00.000 +00:00","")} </h5>
                         
                       </div>
                       <div class="product-price">
@@ -88,9 +90,11 @@ function updatePage(page) {
                   </div>
                 </div>
                 </div>
-									<!-- End Item -->`;
+                  <!-- End Item -->`;
+                  
     }
   }
+ 
   catch (err) { }
   var bar = document.createElement('div');
   bar.className = 'pagi-bar';
