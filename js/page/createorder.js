@@ -266,6 +266,11 @@ $(document).ready(function () {
             });
           }
         }
+        location.replace(location.origin + `/orderdetails?orderNumber=${orderNumber}`);
+      }
+      else
+      {
+        
       }
     
     });
