@@ -20,7 +20,7 @@ $(document).ready(function () {
   var user = JSON.parse(localStorage.getItem('User'));
   console.log(user);
   console.log(list1);
-  const requestURL = '/data/order';
+  const requestURL = '/search/orders';
   console.log('making ajax request to:', requestURL);
   // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
   // Using the core $.ajax() method since it's the most flexible.
@@ -95,7 +95,7 @@ function updatePage(page) {
                   <div class="col-md-3 col-sm-4 col-xs-12">
                     <div class="item-pro-color">
                       <div class="product-thumb">
-                        <a href="http://demo.7uptheme.com/html/kuteshop/detail.html"
+                        <a href="http://localhost:9000/orderdetails?orderNumber=${dataMem[i].orderNumber}"
                           class="product-thumb-link">
                           <img data-color="black" class="active"
                             src="./image/2(1).png"
@@ -107,7 +107,7 @@ function updatePage(page) {
                   <div class="col-md-9 col-sm-8 col-xs-12">
                     <div class="product-info">
                       <h5 class="product-title"><a
-                        href="http://demo.7uptheme.com/html/kuteshop/detail.html"><font size="4"><b>Order : ${dataMem[i].orderNumber}</b></font></h5></a>
+                        href="http://localhost:9000/orderdetails?orderNumber=${dataMem[i].orderNumber}"><font size="4"><b>Order : ${dataMem[i].orderNumber}</b></font></h5></a>
                       <div class="product-price">
                         <h5>Status : <ins><span>${dataMem[i].status}</span></ins></h5>
                       </div>

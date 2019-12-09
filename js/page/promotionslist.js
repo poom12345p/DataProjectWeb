@@ -16,7 +16,7 @@ $(document).ready(function () {
   var user = JSON.parse(localStorage.getItem('User'));
   console.log(user);
   console.log(list1);
-  const requestURL = '/data/customers';
+  const requestURL = '/data/promotions';
   console.log('making ajax request to:', requestURL);
   // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
   // Using the core $.ajax() method since it's the most flexible.
@@ -64,35 +64,25 @@ function updatePage(page) {
       list1.innerHTML += `
                   <div class="item-product-list">
                   <div class="row">
-                  <div class="col-md-3 col-sm-4 col-xs-12">
-                    <div class="item-pro-color">
-                      <div class="product-thumb">
-                        <a href="/customerInfo=${dataMem[i].customerNumber}"
-                          class="product-thumb-link">
-                          <img data-color="black" class="active"
-                            src="./image/2(1).png"
-                            alt="">
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-9 col-sm-8 col-xs-12">
+                  
+                  <div class="col-md-12 col-sm-8 col-xs-12">
                     <div class="product-info">
                       <h5 class="product-title"><a
-                        href="/customerInfo=${dataMem[i].customerNumber}"><font size="4"><b>${dataMem[i].customerName}</b></font></h5><font size="3.5">Customer Number : ${dataMem[i].customerNumber}</font></a>
+                        href=""><font size="4"><b>CODE : ${dataMem[i].code}</b></font></h5></a>
                       <div class="product-price">
                         <!--<ins><span>$360.00</span></ins>-->
                       </div>
+                      
                       <div class="col-md-4 col-sm-4 col-xs-12">
-                        <h6>Contact : ${dataMem[i].contactFirstName} ${dataMem[i].contactLastName}</h6>
-                        <h6>Phone : ${dataMem[i].phone}</h6>
+                        <h5>Amount : ${dataMem[i].amount}</h5>
+                        
                       </div>
                       <div class="col-md-4 col-sm-4 col-xs-12">
-                        <h6>Postalcode	: ${dataMem[i].postalCode}</h6>
-                        <h6>Country	: ${dataMem[i].country}</h6>
+                        <h5>Expire	: ${dataMem[i].expire}</h5>
+                        
                       </div>
                       <div class="product-price">
-                        <ins><span>Point ${dataMem[i].creditLimit}</span></ins>
+                        <ins><span>Discount : ${dataMem[i].discount}</span></ins>
                       </div>
                     </div>
                   </div>
@@ -133,7 +123,7 @@ function updatePage(page) {
 function updateFilther(data) {
   dataMem = [];
   for (var i = 0; i < data.length; i++) {
-    if (data[i].customerName.toUpperCase().search(textSearch.toUpperCase()) != -1) {
+    if (data[i].code.toUpperCase().search(textSearch.toUpperCase()) != -1) {
       dataMem.push(data[i]);
     }
   };
