@@ -1,13 +1,21 @@
 let list03 = document.querySelector('.account-login');
 let list04 = document.querySelector('.AccountInfo');
 let list05 = document.querySelector('.AccountInfo2');
+console.log(URL);
+var parsURL = URL.replace('http://localhost:9000','');
+console.log(parsURL);
 
 if (sessionStorage.getItem('USER')) {
     var username = JSON.parse(sessionStorage.getItem('USER'));
     }
     else
     {
-      location.replace(location.origin + "/login")
+      if(parsURL == '/productslist' || parsURL == '/ProductLotList.html'){
+        console.log('this public');
+      }else{
+        location.replace(location.origin + "/login");
+      }
+      
     }
 list03.innerHTML=`
                   <a>${username.jobTitle}</a>
