@@ -961,4 +961,9 @@ router.get('/customer/payment/customer=:id', (req, res, next) => {
 
 });
 
+router.get('/customer_paymentlist', (req, res, next) => {
+  res.sendFile(path.join(__dirname, `..`, `..`, `customer_payment.html`), { name: req.user });
+  // res.send(result);
+});
+
 module.exports = router;
