@@ -210,7 +210,7 @@ function updatePage(number) {
               <div class="row">
                <div class="newsletter-form footer-box">
                  <h2 class="title14">My Points</h2>
-                     <input type="text" value="xxxxx">
+                     <input type="text" id="cpoint" value="${dataMem[0].point}">
                </div>
               </div>
              </div>
