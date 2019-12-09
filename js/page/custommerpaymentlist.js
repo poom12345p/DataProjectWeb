@@ -2,6 +2,7 @@ var urlParams = new URLSearchParams(location.search);
 let list1 = document.querySelector('.list-pro-color');
 let pagi = document.querySelector('.pagi-bar');
 let searchForm = document.querySelector('.smart-search-form');
+let widget = document.querySelector('.widget-content');
 searchForm.addEventListener('submit', searchText);
 let textSearch = "";
 let dataAll = [];
@@ -9,7 +10,24 @@ let dataMem = [];
 var numberRow = 10;
 var numberPage = 10;
 if (urlParams.get('page') == null) urlParams.set('page', '1');
-let productsCode = urlParams.get('productsCode');
+let URL = window.location.href;
+console.log(URL);
+var CustomerNumber = URL.replace('http://localhost:9000/customer_paymentlist?','');
+
+widget.innerHTML = `
+<ul>
+<li class="">
+  <a href="/customerInfo=${CustomerNumber}">Customer Profile</a>
+</li>
+<br>
+<li class="">
+  <a href="/customerorder=${CustomerNumber}">Order</a>
+</li>
+<br>
+<li class="">
+  <a href="/customer_paymentlist?${CustomerNumber}">Payment</a>
+</li>
+</ul>`;
 
 $(document).ready(function () {
 
@@ -17,7 +35,7 @@ $(document).ready(function () {
   var user = JSON.parse(localStorage.getItem('User'));
   console.log(user);
   console.log(list1);
-  const requestURL = `/customer/payment/customer=${}`;
+  const requestURL = `/customer/payment/customer=${CustomerNumber}`;
   console.log('making ajax request to:', requestURL);
   // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
   // Using the core $.ajax() method since it's the most flexible.

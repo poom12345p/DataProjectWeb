@@ -952,7 +952,7 @@ router.get('/data/payment', (req, res, next) => {
 router.get('/customer/payment/customer=:id', (req, res, next) => {
   payments.findAll({
     where: {
-      customerNumber: '${req.params.id}',
+      customerNumber: `${req.params.id}`,
     }
   }).then(result => {
     //console.log(result);

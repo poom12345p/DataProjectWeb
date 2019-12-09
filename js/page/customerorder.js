@@ -30,6 +30,10 @@ widget.innerHTML = `
 <li class="">
   <a href="/customerorder=${parsURL}">Order</a>
 </li>
+<br>
+<li class="">
+  <a href="/customer_paymentlist?${parsURL}">Payment</a>
+</li>
 </ul>`;
 
 bread.innerHTML = `<a href="/">Customer</a><span>Customer ID ${parsURL}</span>`;

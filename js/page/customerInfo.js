@@ -32,7 +32,7 @@ widget.innerHTML = `
 </li>
 <br>
 <li class="">
-  <a href="/customer/payment/customer=${parsURL}">Payment</a>
+  <a href="/customer_paymentlist?${parsURL}">Payment</a>
 </li>
 </ul>`;
 
