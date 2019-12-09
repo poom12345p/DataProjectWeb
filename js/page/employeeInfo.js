@@ -124,7 +124,7 @@ function updatePage(number) {
 																	<div class="newsletter-form footer-box">
 																		<h2 class="title14">Extension</h2>
 																		<input type="text" id="eexten"
-																			value="${dataMem[0].extension}">
+																			value="${dataMem[0].extension}" readonly>
 																	</div>
 																</div>
 															</div>
@@ -135,7 +135,7 @@ function updatePage(number) {
 																	<div class="newsletter-form footer-box">
 																		<h2 class="title14">Report To</h2>
 																		<input type="text" id="report"
-																			value="${dataMem[0].reportsTo}">
+																			value="${dataMem[0].reportsTo}" readonly>
 																	</div>
 																</div>
 															</div>
@@ -163,7 +163,7 @@ function updatePage(number) {
 																	<td align="center" width='55%'>
 																		<div class="newsletter-form footer-box">
 																			<h2 class="title14">FirstName</h2>
-																			<input type="text" id="efname" value="${dataMem[0].firstName}">
+																			<input type="text" id="efname" value="${dataMem[0].firstName}" readonly>
 																			
 																		</div>
 																	</td>
@@ -174,7 +174,7 @@ function updatePage(number) {
 																	<div class="newsletter-form footer-box">
 																	<h2 class="title14">LastName</h2>
 																	
-																	<input type="text" id ="elname" value="${dataMem[0].lastName}">
+																	<input type="text" id ="elname" value="${dataMem[0].lastName}" readonly>
 																</div>
 																	</td>
 																</tr>
@@ -191,7 +191,7 @@ function updatePage(number) {
 																	<td align="center" width='55%'>
 																		<div class="newsletter-form footer-box">
 																			<h2 class="title14">Email</h2>
-																			<input type="text" id="eemail" value="${dataMem[0].email}">
+																			<input type="text" id="eemail" value="${dataMem[0].email}" readonly>
 																		</div>
 																	</td>
 																</tr>
@@ -199,7 +199,7 @@ function updatePage(number) {
 																	<td align="center" width='55%'>
 																		<div class="newsletter-form footer-box">
 																			<h2 class="title14">Office Code</h2>
-																			<input type="text" id="ofc" value="${dataMem[0].officeCode}">
+																			<input type="text" id="ofc" value="${dataMem[0].officeCode}" readonly>
 																		</div>
 																	</td>
 																</tr>
@@ -261,7 +261,7 @@ function updatePage(number) {
 								  }else if(dataMem[0].jobTitle == 'Sales Rep'){
 									  rankinfo=1;
 								  }
-								  if(rank>rankinfo){
+								  if(rank>rankinfo || rank == 4){
 										document.querySelector('.buttonclick').innerHTML = `<button type="button" class="btn btn-info btn-lg edit" onclick="editclick()">Edit</button>`;
 								  }
 	}
@@ -299,8 +299,12 @@ function editclick(){
 	document.getElementById('title').style.visibility = 'hidden';
 	document.getElementById('number').style.visibility = 'hidden';
 	document.getElementById('enumbers').style.visibility = 'visible';
-	var rank=2;
-
+	document.getElementById("eexten").readOnly = false;
+	document.getElementById("report").readOnly = false;
+    document.getElementById("efname").readOnly = false;
+	document.getElementById("elname").readOnly = false;
+	document.getElementById("eemail").readOnly = false;
+	document.getElementById("ofc").readOnly = false;
 	if(username.jobTitle == 'President'){
 		document.querySelector('.rank').innerHTML = `<select id="etitle" >
 			<option value=""></option>

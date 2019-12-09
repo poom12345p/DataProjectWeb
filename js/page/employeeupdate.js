@@ -39,7 +39,7 @@ type: 'DELETE',
 data: memvalue,
 dataType: 'json', // this URL returns data in JSON format
 });
-location.reload(true);
+window.location.href = "EmployeeList.html";
 console.log(memvalue);
 });
 $(document).on("click", ".cancle", function(){		// ถ้า คลาส ที่ ปุ่ม cancle อยู่ ถูกคลิ๊กก็จะรีเฟรชหน้า 

@@ -115,7 +115,7 @@ function updatePage(number) {
 																
 																<td class ="buttonclick" align="right" width="40%">
 																	
-																<button type="button" class="btn btn-info btn-lg edit" onclick="editclick()">Add</button>
+																
 																</td>
 																
 																
@@ -230,7 +230,7 @@ function updatePage(number) {
 													<td align="right">
 													<br></br>
 														<button type="button"
-															class="btn btn-secondary btn-lg btn-block cancle" id = "cancle" style="visibility:hidden; onclick="cancleclick()">Cancal</button>
+															class="btn btn-secondary btn-lg btn-block cancle" id = "cancle"  onclick="cancleclick()">Cancal</button>
 															
 														</td>
 													
@@ -244,7 +244,7 @@ function updatePage(number) {
 													<td class= "buttonsave" align="right" >
 													<br></br>
 														<button type="button"
-															class="btn btn-warning btn-lg btn-block updatevalue" id = "save" style="visibility:hidden; onclick="">Save</button>
+															class="btn btn-warning btn-lg btn-block updatevalue" id = "save"  onclick="">Save</button>
 															
 													</td>
 													
@@ -276,15 +276,6 @@ function searchText(e) {
   if (textSearch == "Search...") textSearch = "";
   updateFilther(dataAll);
   updatePage(1);
-}
-
-function editclick(){
-	
-	document.getElementById('cancle').style.visibility = 'visible';
-	document.getElementById('save').style.visibility = 'visible';
-	
-	
-
 }
 
 

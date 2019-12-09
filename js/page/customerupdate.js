@@ -44,7 +44,7 @@ $(document).ready(function () {
   data: memvalue,
   dataType: 'json', // this URL returns data in JSON format
   });
-  location.reload(true);
+  window.location.href = "CustomerList.html";
   console.log(memvalue);
   });
   $(document).on("click", ".cancle", function(){		
