@@ -151,7 +151,7 @@ function updatePage(number) {
                 <div class="row">
                    <div class="newsletter-form footer-box">
                        <h2 class="title14">First Name</h2>
-                           <input type="text" id = "cfname" value="${dataMem[0].contactFirstName}">
+                           <input type="text" id = "cfname" value="${dataMem[0].contactFirstName}" readonly>
                    </div>
                 </div>
                </div>
@@ -159,7 +159,7 @@ function updatePage(number) {
                 <div class="row">
                  <div class="newsletter-form footer-box">
                    <h2 class="title14">Last Name</h2>
-                       <input type="text" id = "clname" value="${dataMem[0].contactLastName}">
+                       <input type="text" id = "clname" value="${dataMem[0].contactLastName}" readonly>
                  </div>
                 </div>
                </div>
@@ -167,7 +167,7 @@ function updatePage(number) {
                 <div class="row">
                  <div class="newsletter-form footer-box">
                    <h2 class="title14">Username</h2>
-                       <input type="text" id ="cname" value="${dataMem[0].customerName}">
+                       <input type="text" id ="cname" value="${dataMem[0].customerName}"readonly>
                  </div>
                 </div>
                </div>
@@ -175,7 +175,7 @@ function updatePage(number) {
                 <div class="row">
                  <div class="newsletter-form footer-box">
                    <h2 class="title14">Usernumber</h2>
-                       <input type="text" id = "cnumbers" value="${dataMem[0].customerNumber}">
+                       <input type="text" id = "cnumbers" value="${dataMem[0].customerNumber}" readonly>
                  </div>
                 </div>
                </div>
@@ -183,22 +183,8 @@ function updatePage(number) {
              </td>
             </tr>
            <tr>
-           <td align="left">
-               <img src="image/passwordo.png" alt="" width="55"
-                   height="55">
-           </td>
-           <td align="center">
-            <table width="90%">
-             <div class="footer-list-box">
-              <div class="row">
-               <div class="newsletter-form footer-box">
-                 <h2 class="title14">Change Password</h2>
-                     <input type="text" value="xxxxxxxx">
-               </div>
-              </div>
-             </div>
-            </table>
-           </td>
+           
+           
           </tr>
           <tr>
            <td align="left">
@@ -245,7 +231,7 @@ function updatePage(number) {
               <div class="row">
                <div class="newsletter-form footer-box">
                  <h2 class="title14">Credit Limit</h2>
-                     <input type="text" id = "ccredit" value="${dataMem[0].creditLimit}">
+                     <input type="text" id = "ccredit" value="${dataMem[0].creditLimit}" readonly>
                </div>
               </div>
              </div>
@@ -273,7 +259,7 @@ function updatePage(number) {
              <div class="row">
               <div class="newsletter-form footer-box">
                 <h2 class="title14">AddressLine1</h2>
-                    <input type="text" id = "caddr1" value="${dataMem[0].addressLine1}">
+                    <input type="text" id = "caddr1" value="${dataMem[0].addressLine1}" readonly>
               </div>
              </div>
             </div>
@@ -281,7 +267,7 @@ function updatePage(number) {
              <div class="row">
               <div class="newsletter-form footer-box">
                 <h2 class="title14">AddressLine2</h2>
-                    <input type="text" id = "caddr2" value="${dataMem[0].addressLine2}">
+                    <input type="text" id = "caddr2" value="${dataMem[0].addressLine2}" readonly>
               </div>
              </div>
             </div>
@@ -289,7 +275,7 @@ function updatePage(number) {
             <div class="row">
             <div class="newsletter-form footer-box">
                 <h2 class="title14">Country</h2>
-                    <input type="text" id = "country" value="${dataMem[0].country}">
+                    <input type="text" id = "country" value="${dataMem[0].country}" readonly>
             </div>
          </div>
                  </div>
@@ -297,7 +283,7 @@ function updatePage(number) {
                <div class="row">
                <div class="newsletter-form footer-box">
                    <h2 class="title14">City</h2>
-                       <input type="text" id = "city" value="${dataMem[0].city}">
+                       <input type="text" id = "city" value="${dataMem[0].city}" readonly>
                </div>
             </div>
                  </div>
@@ -305,7 +291,7 @@ function updatePage(number) {
                <div class="row">
                <div class="newsletter-form footer-box">
                    <h2 class="title14">State</h2>
-                       <input type="text" id = "state" value="${dataMem[0].state}">
+                       <input type="text" id = "state" value="${dataMem[0].state}" readonly>
                </div>
             </div>
                  </div>
@@ -313,7 +299,7 @@ function updatePage(number) {
                <div class="row">
                <div class="newsletter-form footer-box">
                    <h2 class="title14">PostalCode</h2>
-                       <input type="text" id = "postal" value="${dataMem[0].postalCode}">
+                       <input type="text" id = "postal" value="${dataMem[0].postalCode}" readonly>
                </div>
             </div>
             </div>
@@ -331,7 +317,7 @@ function updatePage(number) {
              <div class="row">
              <div class="newsletter-form footer-box">
                  <h2 class="title14">Number Phone</h2>
-                     <input type="text" id = "phone" value="${dataMem[0].phone}">
+                     <input type="text" id = "phone" value="${dataMem[0].phone}" readonly>
              </div>
           </div>
              </div>
@@ -391,4 +377,24 @@ function editclick(){
 	document.getElementById('delete').style.visibility = 'visible';
 	document.getElementById('cancle').style.visibility = 'visible';
 	document.getElementById('save').style.visibility = 'visible';
+  document.getElementById("cfname").readOnly = false;
+  document.getElementById("clname").readOnly = false;
+  document.getElementById("cname").readOnly = false;
+  document.getElementById("caddr1").readOnly = false;
+  document.getElementById("caddr2").readOnly = false;
+  document.getElementById("city").readOnly = false;
+  document.getElementById("state").readOnly = false;
+  document.getElementById("phone").readOnly = false;
+  document.getElementById("postal").readOnly = false;
+  document.getElementById("country").readOnly = false;
+  document.getElementById("ccredit").readOnly = false;
+  document.getElementById("cnumbers").readOnly = false;
+
+
+
+
+
+
+
+
 }
