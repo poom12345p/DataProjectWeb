@@ -319,7 +319,7 @@ router.get('/data/customers', (req, res) => {
 });
 router.post('/customer/update/', (req, res, next) => {
   db.query(`update customers set contactFirstName = "${req.body.contactFirstName}",contactLastName = "${req.body.contactLastName}",
-            customerName= "${req.body.customerName}",addressLine1= "${req.body.addressLine1}",addressLine2= "${req.body.addressLine2}"
+            customerName= "${req.body.customerName}",point= "${req.body.point}",addressLine1= "${req.body.addressLine1}",addressLine2= "${req.body.addressLine2}"
             ,city= "${req.body.city}",state= "${req.body.state}",postalCode= "${req.body.postalCode}"
             ,country= "${req.body.country}",creditLimit= "${req.body.creditLimit}",phone= "${req.body.phone}",customerNumber = "${req.body.customerNumbers}"
             where customerNumber = "${req.body.customerNumber}"`, { type: db.QueryTypes.update })
