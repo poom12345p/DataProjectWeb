@@ -1,14 +1,8 @@
 var urlParams = new URLSearchParams(location.search);
 let list1 = document.querySelector('.list-pro-color');
 let pagi = document.querySelector('.pagi-bar');
-let widget = document.querySelector('.widget-content');
-let bread = document.querySelector('.bread-crumb');
-let URL = window.location.href;
-console.log(URL);
-var parsURL = URL.replace('http://localhost:9000/customerorder=','');
-console.log(parsURL);
-
 let searchForm = document.querySelector('.smart-search-form');
+let widget = document.querySelector('.widget-content');
 searchForm.addEventListener('submit', searchText);
 let textSearch = "";
 let dataAll = [];
@@ -16,27 +10,24 @@ let dataMem = [];
 var numberRow = 10;
 var numberPage = 10;
 if (urlParams.get('page') == null) urlParams.set('page', '1');
-let statuses = [];
-if (urlParams.get('statuses') != null && urlParams.get('statuses') != '') urlParams.get('statuses').split(',').forEach(status => {
-  statuses.push(status);
-});
+let URL = window.location.href;
+console.log(URL);
+var CustomerNumber = URL.replace('http://localhost:9000/customer_paymentlist?','');
 
 widget.innerHTML = `
 <ul>
 <li class="">
-  <a href="/customerInfo=${parsURL}">Customer Profile</a>
+  <a href="/customerInfo=${CustomerNumber}">Customer Profile</a>
 </li>
 <br>
 <li class="">
-  <a href="/customerorder=${parsURL}">Order</a>
+  <a href="/customerorder=${CustomerNumber}">Order</a>
 </li>
 <br>
 <li class="">
-  <a href="/customer_paymentlist?${parsURL}">Payment</a>
+  <a href="/customer_paymentlist?${CustomerNumber}">Payment</a>
 </li>
 </ul>`;
-
-bread.innerHTML = `<a href="/">Customer</a><span>Customer ID ${parsURL}</span>`;
 
 $(document).ready(function () {
 
@@ -44,7 +35,7 @@ $(document).ready(function () {
   var user = JSON.parse(localStorage.getItem('User'));
   console.log(user);
   console.log(list1);
-  const requestURL = '/search/customerorders/number='+parsURL;
+  const requestURL = `/customer/payment/customer=${CustomerNumber}`;
   console.log('making ajax request to:', requestURL);
   // From: http://learn.jquery.com/ajax/jquery-ajax-methods/
   // Using the core $.ajax() method since it's the most flexible.
@@ -74,34 +65,10 @@ function pageclick(page) {
 }
 
 function nextpage() {
-  var current = parseInt(document.querySelector('.current-page').innerHTML) + 1;
-  console.log('np ' + current);
-  //location.href = `/Productslist?page=${current}&sizes=${sizes}&vendors=${vendors}`;
-  updatePage(current);
-}
-
-function findStatuses(data) {
-  let find = false;
-  statuses.forEach(status => {
-    if (data.status == status) {
-      find = true;
-    }
-  });
-  return find;
-}
-
-function statusclick(click) {
-  if (click.checked == true) statuses.push(click.value);
-  else {
-    let temp = [];
-    statuses.forEach(value => {
-      if (click.value != value) temp.push(value);
-    });
-    statuses = temp;
-  }
-  //location.href = `/Productslist?page=1&sizes=${sizes}&vendors=${vendors}`;
-  updateFilther(dataAll);
-  updatePage(1);
+  var next = parseInt(document.querySelector('.current-page').innerHTML) + 1;
+  console.log('np ' + next);
+  //location.href = `/Productslist?page=${next}&sizes=${sizes}&vendors=${vendors}`;
+  updatePage(next);
 }
 
 function updatePage(page) {
@@ -116,40 +83,31 @@ function updatePage(page) {
       list1.innerHTML += `
                   <div class="item-product-list">
                   <div class="row">
-                  <div class="col-md-3 col-sm-4 col-xs-12">
-                    <div class="item-pro-color">
-                      <div class="product-thumb">
-                        <a href="http://localhost:9000/orderdetails?orderNumber=${dataMem[i].orderNumber}"
-                          class="product-thumb-link">
-                          <img data-color="black" class="active"
-                            src="./image/2(1).png"
-                            alt="">
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-9 col-sm-8 col-xs-12">
+                  
+                  <div class="col-md-12 col-sm-8 col-xs-12">
                     <div class="product-info">
                       <h5 class="product-title"><a
-                        href="http://localhost:9000/orderdetails?orderNumber=${dataMem[i].orderNumber}"><font size="4"><b>Order : ${dataMem[i].orderNumber}</b></font></h5></a>
+                        href=""><font size="4"><b>Customer Number : ${dataMem[i].customerNumber}</b></font></h5></a>
                       <div class="product-price">
-                        <h5>Status : <ins><span>${dataMem[i].status}</span></ins></h5>
+                        <!--<ins><span>$360.00</span></ins>-->
+                      </div>
+                      
+                      <div class="col-md-4 col-sm-4 col-xs-12">
+                        <h5>Check Number : ${dataMem[i].checkNumber}</h5>
+                        
                       </div>
                       <div class="col-md-4 col-sm-4 col-xs-12">
-                        <h6>Order Date : ${dataMem[i].orderDate}</h6>
+                        <h5>Payment Date : ${dataMem[i].paymentDate}</h5>
+                        
                       </div>
-                      <div class="col-md-4 col-sm-4 col-xs-12">
-                        <h6>Shipped Date : ${dataMem[i].shippedDate}</h6>
-                      </div>
-                      <div class="col-md-4 col-sm-4 col-xs-12">
-                        <h6>Required Date	: ${dataMem[i].requiredDate}</h6>
+                      <div class="product-price">
+                        <ins><span>Amount : $${dataMem[i].amount}</span></ins>
                       </div>
                     </div>
                   </div>
                 </div>
                 </div>
 									<!-- End Item -->`;
-
     }
   }
   catch (err) { }
@@ -184,10 +142,10 @@ function updatePage(page) {
 function updateFilther(data) {
   dataMem = [];
   for (var i = 0; i < data.length; i++) {
-    if ((statuses.length > 0 ? findStatuses(data[i]) : true) && (data[i].orderNumber.toUpperCase().search(textSearch.toUpperCase()) != -1)) {
+    if (data[i].customerNumber.toUpperCase().search(textSearch.toUpperCase()) != -1) {
       dataMem.push(data[i]);
     }
-  }
+  };
 }
 
 function searchText(e) {

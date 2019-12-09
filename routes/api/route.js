@@ -949,4 +949,21 @@ router.get('/data/payment', (req, res, next) => {
     .catch(err => { console.log(next); });
 });
 
+router.get('/customer/payment/customer=:id', (req, res, next) => {
+  payments.findAll({
+    where: {
+      customerNumber: `${req.params.id}`,
+    }
+  }).then(result => {
+    //console.log(result);
+    res.send(result);
+  }).catch(err => { console.log(next); });
+
+});
+
+router.get('/customer_paymentlist', (req, res, next) => {
+  res.sendFile(path.join(__dirname, `..`, `..`, `customer_payment.html`), { name: req.user });
+  // res.send(result);
+});
+
 module.exports = router;
