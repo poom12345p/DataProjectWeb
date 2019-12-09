@@ -949,4 +949,16 @@ router.get('/data/payment', (req, res, next) => {
     .catch(err => { console.log(next); });
 });
 
+router.get('/customer/payment/customer=:id', (req, res, next) => {
+  payments.findAll({
+    where: {
+      customerNumber: '${req.params.id}',
+    }
+  }).then(result => {
+    //console.log(result);
+    res.send(result);
+  }).catch(err => { console.log(next); });
+
+});
+
 module.exports = router;
